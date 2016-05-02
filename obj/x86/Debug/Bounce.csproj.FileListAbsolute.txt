@@ -37,3 +37,7 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\soundEffects\decision21
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\cursor.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\sp1.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\sp2.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\label-multiplay.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\label-singleplay.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\back-label.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\label-GameSelect.png

@@ -35,6 +35,10 @@ namespace Bounce
         public override void update(float delta)
         {
             base.update(delta);
+            back.setLocation(X, Y);
+            back.setSize(Width, Height);
+            front.setLocation(X, Y);
+            front.setSize(Width, Height);
             back.update(delta);
             front.update(delta);
             

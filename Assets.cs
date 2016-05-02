@@ -24,6 +24,10 @@ namespace Bounce
                 public static Texture2D wideButtonBack;
                 public static Texture2D label_play;
                 public static Texture2D label_settings;
+                public static Texture2D label_gameselect;
+                public static Texture2D label_back;
+                public static Texture2D label_multiplay;
+                public static Texture2D label_singleplay;
                 public static Texture2D back_title;
                 public static Texture2D cursor;
                 public static Texture2D sp1;
@@ -64,6 +68,10 @@ namespace Bounce
             graphics.ui.back_title = Content.Load<Texture2D>("back-title");
             graphics.ui.sp1 = Content.Load<Texture2D>("sp1");
             graphics.ui.sp2 = Content.Load<Texture2D>("sp2");
+            graphics.ui.label_gameselect = Content.Load<Texture2D>("label-GameSelect");
+            graphics.ui.label_singleplay = Content.Load<Texture2D>("label-singleplay");
+            graphics.ui.label_multiplay = Content.Load<Texture2D>("label-multiplay");
+            graphics.ui.label_back = Content.Load<Texture2D>("back-label");
         }
         public static void LoadSoundEffects(ContentManager Content)
         {

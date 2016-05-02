@@ -24,6 +24,7 @@ namespace Bounce
         {
             get { return _selectedItem; }
             set { _selectedItem = value;
+               
                foreach (uiObject o in Controls) if(o!=null)o.Selected = false;
 
                 if (_selectedItem.X == -1) _selectedItem = new Point(maxItem.X - 1, _selectedItem.Y);
@@ -35,10 +36,12 @@ namespace Bounce
             }
         }
 
-        public Screen(Game1 game)
+        public Screen(Game1 game,int sx=0,int sy=0)
         {
             this.Content = game.Content;
             this.game = game;
+            X = sx;
+            Y = sy;
             animator = new ScreenAnimator(this, game);
 
         }

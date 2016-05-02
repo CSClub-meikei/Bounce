@@ -88,8 +88,9 @@ namespace Bounce
                 SettingForm f = new SettingForm(this);
                 f.ShowDialog();
             }
-            // TODO: Add your update logic here
-            try
+            if (Input.onKeyDown(Keys.T)) { screens.Clear(); screens.Add(new BackScreen(this)); screens.Add(new UItestScreen(this)); }
+                // TODO: Add your update logic here
+                try
             {
 foreach(Screen s in screens)
             {

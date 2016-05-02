@@ -36,7 +36,8 @@ namespace Bounce
         public const int GLOW = 2;//Option 1 動きあり1  2 拡大率 3透明度 4標準長さ  5広がり長さ 6広がり保持時間 7縮まる長さ 
         public const int SLIDE = 3;//Option 1 登場:0 移動:1  (2,3移動先X,Y)  4移動時間(目標) 5アニメーターバッファ適用レイヤー 5加速v 6減速v
         public const int fadeInOut = 4;//Option  1 0:in 1:out  2長さ 3limit
-        public const int EXPLOSION = 5;
+        public const int ZOOMINOUT = 5;//Option 1 移動時間 2 初期拡大率 3移動後拡大率 4 X移動有効無効 5 Y移動有効無効 6 W移動有効無効 7 H移動有効無効
+        public const int EXPLOSION = 6;
 
         public event EventHandler FinishAnimation;
 
@@ -125,6 +126,12 @@ namespace Bounce
 
                     if (option[0] == 1) o.alpha = 1;
                     break;
+                case ZOOMINOUT:
+                    tmp = new float[] { (float)o.X, (float)o.Y, (float)o.Width, (float)o.Height ,option[2]-option[1]};
+
+                 //   System.Windows.Forms.MessageBox.Show((option[2] - option[1]).ToString());
+
+                    break;
             }
         }
         public void setDelay(float d)
@@ -164,6 +171,10 @@ namespace Bounce
                 case fadeInOut:
                     fade(deltaTime);
                     break;
+                case ZOOMINOUT:
+                    ZoomInOut(deltaTime);
+                    break;
+
                 case EXPLOSION:
                     explosion(deltaTime);
                     break;
@@ -365,7 +376,21 @@ namespace Bounce
                    
             }
         }
+        public void ZoomInOut(float deltaTime)
+        {
+            time += deltaTime / 1000;
 
+            if(option[3] ==1 && tmp[4] < 0) o.X = (tmp[0]+tmp[2]* (tmp[4]+1) / 2) - tmp[2] * ((time*(1/option[0]) * tmp[4])) / 2;
+            if (option[3] == 1 && tmp[4] >= 0) o.X = (tmp[0] + tmp[2] * (tmp[4]-0) / 2) - tmp[2] * ((time * (1 / option[0]) * tmp[4])) / 2;
+            if (option[4] == 1 && tmp[4] < 0) o.Y = (tmp[1] + tmp[3] * (tmp[4] + 1) / 2) - tmp[3] * ((time * (1 / option[0]) * tmp[4])) / 2;
+            if (option[4] == 1 && tmp[4] >= 0) o.Y = (tmp[1] + tmp[3] *(tmp[4]-0)  / 2) - tmp[3] * ((time * (1 / option[0]) * tmp[4])) / 2;
+            if (option[5] == 1) o.Width = ( tmp[2] *option[1]) + (tmp[2]*(time * (1 / option[0]) * tmp[4]));
+            if (option[6] == 1) o.Height = (tmp[3] * option[1]) + (tmp[3] * (time * (1 / option[0]) * tmp[4]));
+
+            if (tmp[4] >= 0) if (o.Width >= (tmp[2] * (option[2])) && o.Height >= (tmp[3] * option[2])) {// System.Windows.Forms.MessageBox.Show((tmp[1] + tmp[3] *tmp[4] / 2).ToString());
+                    this.stop(); }
+            if (tmp[4] < 0) if (o.Width <= (tmp[2] * (option[2])) && o.Height <= (tmp[3] * option[2]) ) this.stop();
+        }
         public void explosion(float deltaTime)
         {
             //System.Windows.Forms.MessageBox.Show("update");
