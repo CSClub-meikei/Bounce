@@ -89,6 +89,12 @@ namespace Bounce
                 f.ShowDialog();
             }
             if (Input.onKeyDown(Keys.T)) { screens.Clear(); screens.Add(new BackScreen(this)); screens.Add(new UItestScreen(this)); }
+            if (Input.onKeyDown(Keys.G))
+            {
+                screens.Clear();
+                screens.Add(new worldScreen(this));
+                screens.Add(new GameScreen(this));
+            }
                 // TODO: Add your update logic here
                 try
             {

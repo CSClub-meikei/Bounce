@@ -300,7 +300,7 @@ namespace Bounce
                 c2++;
                 if (c == c2) this.stop();
               
-                Console.WriteLine("XXXXX:" + screen.Y.ToString() + "VX" + vy.ToString());
+               // Console.WriteLine("XXXXX:" + screen.Y.ToString() + "VX" + vy.ToString());
             }
 
 

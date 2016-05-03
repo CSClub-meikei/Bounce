@@ -14,7 +14,7 @@ namespace Bounce
     {
         GraphicalGameObject back, front;
         public Rectangle frontPosition;
-
+        float al=1;
         public WideButton(Game1 game, Screen screen, Texture2D back,Texture2D front, float x, float y, float width, float height,  float fx=0, float fy=0, float fwidth=0, float fheight=0) : base(game, screen, back, x, y, width, height)
         {
             if(fx==0 && fy==0 && fwidth==0 && fheight == 0)
@@ -25,7 +25,7 @@ namespace Bounce
             this.back.alpha = 0f;
             this.back.addAnimator(1);
             this.front = new GraphicalGameObject(game, screen, front, fx, fy, fwidth, fheight);
-            this.front.addAnimator(2);
+            this.front.addAnimator(3);
             frontPosition = new Rectangle((int)fx, (int)fy, (int)fwidth, (int)fheight);
             GotFocus += new EventHandler(this.got);
             LostFocus += new EventHandler(this.lost);
@@ -37,8 +37,10 @@ namespace Bounce
             base.update(delta);
             back.setLocation(X, Y);
             back.setSize(Width, Height);
+            //back.alpha = this.alpha;
             front.setLocation(X, Y);
             front.setSize(Width, Height);
+            front.alpha = this.alpha*al;
             back.update(delta);
             front.update(delta);
             
@@ -51,7 +53,9 @@ namespace Bounce
         public void got(object sender,EventArgs e)
         {
             Assets.soundEffects.s.Play();
-            back.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.5f });
+            back.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.1f });
+            al = 1;
+            //front.animator[2].start(GameObjectAnimator.fadeInOut, new float[] { 0, 1});
             front.animator[0].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.5F, 0F, 0.4F, 0.0F, 1F });
             front.animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 0 });
             // System.Windows.Forms.MessageBox.Show("got");
@@ -59,6 +63,8 @@ namespace Bounce
         public void lost(object sender, EventArgs e)
         {
             back.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.5f });
+            //front.animator[2].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.1f ,0.5f});
+            al = 0.5f;
             front.animator[0].stop();
             front.animator[1].stop();
             //System.Windows.Forms.MessageBox.Show("lost");

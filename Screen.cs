@@ -54,7 +54,7 @@ namespace Bounce
             
             foreach (uiObject o in Controls) if (o != null) o.update(deltaTime);
             animator.update(deltaTime);
-            Console.WriteLine(selectedItem.ToString());
+           // Console.WriteLine(selectedItem.ToString());
         }
         public virtual void Draw(SpriteBatch batch)
         {

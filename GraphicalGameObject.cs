@@ -20,8 +20,11 @@ namespace Bounce
         public Vector2 origin = new Vector2(-100,-100);
         public GraphicalGameObject(Game1 game,Screen screen,Texture2D Texture, float x, float y, float width, float height) :base(game,screen)
         {
-            this.Texture = Texture;
-            origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
+            if (Texture != null)
+            {
+                this.Texture = Texture;
+                origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
+            }
             animator = new List<GameObjectAnimator>();
             this.setLocation(x, y);
             this.setSize(width, height);

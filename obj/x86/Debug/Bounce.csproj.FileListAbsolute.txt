@@ -41,3 +41,11 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\label-multi
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\label-singleplay.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\back-label.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\label-GameSelect.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\block.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\font.xnb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\font.xnb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\ball.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\frame.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Box2DX.dll
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Box2DX.pdb

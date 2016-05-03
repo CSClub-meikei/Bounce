@@ -53,16 +53,20 @@ namespace Bounce
         }
         public void ClickPlay(object sender,EventArgs e)
         {
-            Controls[0,0].addAnimator(1);
-            Controls[0, 0].animator[0].start(GameObjectAnimator.ZOOMINOUT, new float[] { 0.1f, 1,0,0,1,0,1 });
-            animator.setDelay(0.5f);
+            Controls[0,0].addAnimator(2);
+            Controls[0, 0].animator[0].setDelay(0.5f);
+            Controls[0, 0].animator[1].setLimit(0.5f);
+            Controls[0, 0].animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.02f, 0, 0.02f, 0, -1 });
+           Controls[0, 0].animator[0].start(GameObjectAnimator.ZOOMINOUT, new float[] { 0.1f, 1,0,0,1,0,1 });
+            animator.setDelay(1f);
             animator.start(ScreenAnimator.SLIDE, new float[] { 1, -1280, 0, 0, -1, 5f, 5f });
             Screen ns = new SelectGameScreen(game, 1280, 0);
-            ns.animator.setDelay(0.5f);
+            ns.animator.setDelay(1f);
             ns.animator.start(GameObjectAnimator.SLIDE, new float[] { 1, 0, 0, 0, -1, 5f, 5f });
-
+            ns.animator.FinishAnimation += new EventHandler((se, ee) => { game.screens.Remove(this); });
             game.screens.Add(ns);
-
+            game.screens[0].animator.setDelay(1f);
+            game.screens[0].animator.start(GameObjectAnimator.SLIDE, new float[] { 1, -100, 0, 0, 0,1f, 1f });
         }
     }
 }

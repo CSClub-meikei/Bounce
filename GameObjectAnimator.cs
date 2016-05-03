@@ -202,7 +202,7 @@ namespace Bounce
 
                   //  batch.Draw(texture: game.assets.exAnimaton, destinationRectangle: new Rectangle((int)o.actX, (int)o.actY, (int)o.Width, (int)o.Height), sourceRectangle: new Rectangle(frame * 96, 0, 96, 96));
 
-                    Console.WriteLine("frame=" + frame.ToString());
+                    //Console.WriteLine("frame=" + frame.ToString());
 
 
 
@@ -342,7 +342,7 @@ namespace Bounce
                 c2++;
                 if (c == c2) this.stop();
                 if (option[4] != -1) o.animator[(int)option[4]].tmp[1] = (float)o.Y;
-                Console.WriteLine("XXXXX:" + o.Y.ToString() + "VX" + vy.ToString());
+              //  Console.WriteLine("XXXXX:" + o.Y.ToString() + "VX" + vy.ToString());
             }
 
 

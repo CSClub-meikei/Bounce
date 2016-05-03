@@ -17,6 +17,9 @@ namespace Bounce
         public Color color;
         public TextObject(Game1 game, Screen screen,SpriteFont font, String text,Color color, float x, float y) :base(game,screen,null,x,y,0,0)
         {
+            animator = new List<GameObjectAnimator>();
+            this.setLocation(x, y);
+            
             this.font = font;
             this.text = text;
             this.color = color;

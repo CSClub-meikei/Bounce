@@ -24,7 +24,10 @@ namespace Bounce
         {
             Input.game = game;
         }
-        
+        public static bool IsKeyDown(Keys key)
+        {
+            return Keyboard.GetState().IsKeyDown(key);
+        }
         public static bool onKeyDown(Keys key)
         {
             KeyboardState newState = Keyboard.GetState();  // get the newest state
