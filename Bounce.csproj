@@ -43,8 +43,10 @@
     <Compile Include="BackScreen.cs" />
     <Compile Include="ball.cs" />
     <Compile Include="block.cs" />
+    <Compile Include="EditorScreen.cs" />
     <Compile Include="frame.cs" />
     <Compile Include="GameScreen.cs" />
+    <Compile Include="mapChip.cs" />
     <Compile Include="SelectGameScreen.cs" />
     <Compile Include="SettingForm.cs">
       <SubType>Form</SubType>
@@ -52,6 +54,7 @@
     <Compile Include="SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="singleFrame.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="thorn.cs" />
     <Compile Include="WideButton.cs" />
@@ -234,6 +237,12 @@
     <Content Include="Content\graphics\game\frame.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\frameW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\FrameH.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\thorn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -241,6 +250,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\cursor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\HL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\label-GameSelect.png">

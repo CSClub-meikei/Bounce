@@ -94,3 +94,6 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\animation
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\animation\ball\7.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\animation\ball\8.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\animation\ball\9.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\frameW.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\FrameH.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\HL.png

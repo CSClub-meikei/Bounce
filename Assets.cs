@@ -32,13 +32,15 @@ namespace Bounce
                 public static Texture2D cursor;
                 public static Texture2D sp1;
                 public static Texture2D sp2;
+                public static Texture2D HL;
 
                 public static SpriteFont font;
             }
             public static class game
             {
                 public static Texture2D block;
-                public static Texture2D frame;
+                public static Texture2D frameW;
+                public static Texture2D frameH;
                 public static Texture2D ball;
                 public static Texture2D thorn;
                 public static Texture2D[] ball_animation;
@@ -83,13 +85,16 @@ namespace Bounce
             graphics.ui.label_singleplay = Content.Load<Texture2D>("label-singleplay");
             graphics.ui.label_multiplay = Content.Load<Texture2D>("label-multiplay");
             graphics.ui.label_back = Content.Load<Texture2D>("back-label");
+            graphics.ui.HL = Content.Load<Texture2D>("HL");
             graphics.ui.font= Content.Load<SpriteFont>("font");
+
         }
         public static void LoadGame(ContentManager Content)
         {
             Content.RootDirectory = "Content/graphics/game";
             graphics.game.block= Content.Load<Texture2D>("block");
-            graphics.game.frame= Content.Load<Texture2D>("frame");
+            graphics.game.frameW= Content.Load<Texture2D>("frameW");
+            graphics.game.frameH = Content.Load<Texture2D>("frameH");
             graphics.game.ball = Content.Load<Texture2D>("ball");
             graphics.game.thorn = Content.Load<Texture2D>("thorn");
 

@@ -95,6 +95,11 @@ namespace Bounce
                 screens.Add(new worldScreen(this));
                 screens.Add(new GameScreen(this));
             }
+            if (Input.onKeyDown(Keys.E))
+            {
+                screens.Clear();
+                screens.Add(new EditorScreen(this));
+            }
                 // TODO: Add your update logic here
                 try
             {
@@ -129,7 +134,7 @@ foreach(Screen s in screens)
             }
 
             spriteBatch.Begin(transformMatrix: GetScaleMatrix());
-            spriteBatch.Draw(Assets.graphics.ui.cursor, new Rectangle(Input.getPosition().X, Input.getPosition().Y, 100, 100), Color.White);
+            spriteBatch.Draw(Assets.graphics.ui.cursor, new Rectangle(Input.getPosition().X-20, Input.getPosition().Y-10, 100, 100), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }
