@@ -26,7 +26,7 @@ namespace Bounce
         public override void update(float deltaTime)
         {
             if (Input.onKeyDown(Keys.A)) chips.Add(new mapChip(game, this, Assets.graphics.game.block,1, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
-            if (Input.onKeyDown(Keys.Z)) chips.Add(new mapChip(game, this, Assets.graphics.game.thorn, 2, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
+            if (Input.onKeyDown(Keys.Z)) chips.Add(new mapChip(game, this, Assets.graphics.game.thorn[0], 2, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
             if (Input.IsKeyDown(Keys.S)) save("test.txt");
                 if (!selecting)
             {
@@ -66,7 +66,7 @@ namespace Bounce
             String s ="";
             foreach(mapChip c in chips)
             {
-                s += c.mode.ToString() + "," + c.X.ToString() + "," + c.Y.ToString() + "," + c.Width.ToString() + "," + c.Height.ToString() + "/";
+                s += c.mode.ToString() + "," + c.X.ToString() + "," + c.Y.ToString() + "," + c.Width.ToString() + "," + c.Height.ToString() + "," + c.rotate.ToString() + "/";
             }
 
             //Shift JISで書き込む
@@ -103,7 +103,7 @@ namespace Bounce
                 }
                 else if (tmp[0] == "2")
                 {
-                    chips.Add(new mapChip(game, this, Assets.graphics.game.thorn, 2, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
+                    chips.Add(new mapChip(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], 2, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
                 }
             }
         }

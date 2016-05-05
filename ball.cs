@@ -116,8 +116,12 @@ namespace Bounce
                 }
             if (flag1 != 0 && flag2 != 0 && flag1 == flag2) { die(); return; }
             //Console.WriteLine("vx:" + velocityX.ToString());
-            X += velocityX * delta;
-            Y += velocityY * delta;
+            if (parent.Status == worldScreen.RUNNING)
+            {
+                X += velocityX * delta;
+                Y += velocityY * delta;
+            }
+            
 
 
             base.update(delta);

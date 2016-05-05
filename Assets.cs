@@ -42,7 +42,7 @@ namespace Bounce
                 public static Texture2D frameW;
                 public static Texture2D frameH;
                 public static Texture2D ball;
-                public static Texture2D thorn;
+                public static Texture2D[] thorn;
                 public static Texture2D[] ball_animation;
             }
         }
@@ -91,19 +91,24 @@ namespace Bounce
         }
         public static void LoadGame(ContentManager Content)
         {
+            int i = 0;
+
             Content.RootDirectory = "Content/graphics/game";
             graphics.game.block= Content.Load<Texture2D>("block");
             graphics.game.frameW= Content.Load<Texture2D>("frameW");
             graphics.game.frameH = Content.Load<Texture2D>("frameH");
             graphics.game.ball = Content.Load<Texture2D>("ball");
-            graphics.game.thorn = Content.Load<Texture2D>("thorn");
+
+            graphics.game.thorn = new Texture2D[4];
+
+            for(i=0;i<=3;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
 
 
 
 
             Content.RootDirectory = "Content/graphics/game/animation/ball";
             graphics.game.ball_animation = new Texture2D[45];
-            int i = 0;
+           
             for(i=0;i<=44;i++)graphics.game.ball_animation[i] = Content.Load<Texture2D>(i.ToString());
         }
         public static void LoadSoundEffects(ContentManager Content)

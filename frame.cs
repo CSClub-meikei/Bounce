@@ -74,17 +74,23 @@ namespace Bounce
         }
         public override void update(float deltaTime)
         {
-            if (Input.IsKeyDown(Keys.Right)) { X += (int)(0.3f * deltaTime);  }
-            if (Input.IsKeyDown(Keys.Left)) { X -= (int)(0.3f * deltaTime); }
-            if (Input.IsKeyDown(Keys.Up)) { Y -= (int)(0.3f * deltaTime);}
-            if (Input.IsKeyDown(Keys.Down)) { Y += (int)(0.3f * deltaTime);}
-            foreach (singleFrame g in frames)
+            if (parent.Status == worldScreen.RUNNING)
             {
-
+                if (Input.IsKeyDown(Keys.Right)) { X += (int)(0.3f * deltaTime); }
+                if (Input.IsKeyDown(Keys.Left)) { X -= (int)(0.3f * deltaTime); }
+                if (Input.IsKeyDown(Keys.Up)) { Y -= (int)(0.3f * deltaTime); }
+                if (Input.IsKeyDown(Keys.Down)) { Y += (int)(0.3f * deltaTime); }
+            }
+              foreach (singleFrame g in frames)
+              {
+                g.update(deltaTime);
                 g.X = X + g.dfX;
                 g.Y = Y + g.dfY;
-                g.update(deltaTime);
-            }
+                
+               }
+
+           
+            
                 base.update(deltaTime);
         }
         public override void Draw(SpriteBatch batch, float screenAlpha)

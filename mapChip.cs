@@ -20,7 +20,7 @@ namespace Bounce
         public String ssize;
         new EditorScreen parent;
         public int mode = 0;
-
+        public int rotate=0;
 
         public event EventHandler Onselect;
         public mapChip(Game1 game, Screen screen, Texture2D Texture,int mode, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
@@ -61,7 +61,7 @@ namespace Bounce
         public override void Draw(SpriteBatch batch, float screenAlpha)
         {
             batch.Begin(transformMatrix: game.GetScaleMatrix());
-            int i = 0;
+            int i = 0; 
             int j = 0;
             for (i = 0; i < Width / size; i++)
             {
@@ -79,6 +79,12 @@ namespace Bounce
         public void num()
         {
             if (Input.onKeyDown(Keys.Delete)) parent.Rchips.Add(this);
+            if (Input.onKeyDown(Keys.Space) && mode==2)
+            {
+                rotate++;
+                if (rotate == 4) rotate = 0;
+                Texture = Assets.graphics.game.thorn[rotate];
+            }
             if (Input.onKeyDown(Keys.Right)) Width += 40;
             if (Input.onKeyDown(Keys.Down)) Height += 40;
             if (Input.onKeyDown(Keys.Left) && Width!=40) Width -= 40;

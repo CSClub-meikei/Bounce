@@ -46,7 +46,6 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\font.xnb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\font.xnb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\ball.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\frame.png
-D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Box2DX.dll
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Box2DX.pdb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\animation\ball\0.png
@@ -97,3 +96,7 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\animation
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\frameW.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\FrameH.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\HL.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn1.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn2.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn3.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn4.png

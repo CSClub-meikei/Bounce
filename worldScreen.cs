@@ -48,33 +48,34 @@ namespace Bounce
         }
         public override void update(float deltaTime)
         {
-            
-            if (Status == RUNNING)
+            if (Status != PAUSE)
             {
-                if (Input.onKeyDown(Keys.C)) { frame.LoadFrame(2); }
-                if (Input.IsKeyDown(Keys.Right)) { X -= (int)(0.3f * deltaTime); }
-                if (Input.IsKeyDown(Keys.Left)) { X += (int)(0.3f * deltaTime); }
-                if (Input.IsKeyDown(Keys.Up)) { Y += (int)(0.3f * deltaTime); }
-                if (Input.IsKeyDown(Keys.Down)) { Y -= (int)(0.3f * deltaTime); }
+                if (Input.onKeyDown(Keys.Space) && Status == RUNNING) Status = CHANGING;
+                else if (Input.onKeyDown(Keys.Space) && Status == CHANGING) Status = RUNNING;
+                
+                frame.update(deltaTime);
+                time.update(deltaTime);
+                X = (int)-frame.X + 540;
+                Y = (int)-frame.Y + 260;
+
                 foreach (block b in blocks) b.update(deltaTime);
                 foreach (thorn b in thorns) b.update(deltaTime);
                 ball.update(deltaTime);
+            }
+            if (Status == RUNNING)
+            {
+
+                
+
+            
             }
             if (Status == CHANGING)
             {
                 if (Input.onKeyDown(Keys.Right)) { frameShape++; frame.LoadFrame(frameShape); }
                 if (Input.onKeyDown(Keys.Left)) { frameShape--; frame.LoadFrame(frameShape); }
             }
-            if (Status != PAUSE)
-            {
-                if (Input.onKeyDown(Keys.Space) && Status == RUNNING) Status = CHANGING;
-                else if (Input.onKeyDown(Keys.Space) && Status == CHANGING) Status = RUNNING;
+            base.update(deltaTime);
 
-                frame.update(deltaTime);
-                time.update(deltaTime);
-                base.update(deltaTime);
-            }
-          
         }
         public override void Draw(SpriteBatch batch)
         {
@@ -105,7 +106,7 @@ namespace Bounce
                     blocks.Add(new block(game, this, Assets.graphics.game.block, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
                 }else if (tmp[0] == "2")
                 {
-                    thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
+                    thorns.Add(new thorn(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
                 }
             }
         }
