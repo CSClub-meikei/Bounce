@@ -13,7 +13,7 @@ namespace Bounce
         public BackScreen(Game1 game) : base(game)
         {
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_title, 0, 0, 1920, 1920);
-            back.alpha = 0.5f;
+            back.alpha = 0.3f;
             setUIcell(1, 1);
         }
         public override void update(float deltaTime)

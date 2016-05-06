@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
 
 namespace Bounce
 {
@@ -32,6 +33,7 @@ namespace Bounce
             Controls[0, 0].addAnimator(2);
             Controls[0, 0].animator[0].setDelay(1.8f);
             Controls[0, 0].animator[1].setDelay(1.8f);
+            Controls[0, 0].animator[0].FinishAnimation += new EventHandler((sender, e) => { selectedItem = new Point(0, 0); });
             Controls[0, 0].animator[0].start(GameObjectAnimator.ZOOMINOUT,new float []{0.1f,0,1,0,1,0,1});
             Controls[0, 0].animator[1].start(GameObjectAnimator.fadeInOut, new float[] {0,0.1f});
             Controls[0, 1].addAnimator(2);
@@ -40,6 +42,7 @@ namespace Bounce
             Controls[0, 1].animator[0].start(GameObjectAnimator.ZOOMINOUT, new float[] { 0.1f, 0, 1, 0, 1, 0, 1 });
             Controls[0, 1].animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.1f});
             Controls[0, 0].Enter += new EventHandler(this.Single);
+            
         }
         public override void update(float deltaTime)
         {

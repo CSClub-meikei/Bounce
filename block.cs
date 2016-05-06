@@ -10,11 +10,12 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Bounce
 {
-    class block:GraphicalGameObject
+    class block: LevelObject
     {
         public block(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
         {
-
+            flagChanged += new EventHandler(this.FlagEvent);
+            addAnimator(2);
         }
         const int size = 40;
         public override void update(float delta)
@@ -55,6 +56,18 @@ namespace Bounce
                 }
             }
             batch.End();
+        }
+        public void FlagEvent(object sender,EventArgs e)
+        {
+            if (flagType == 2)
+            {
+             
+                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, moveLocation.X, moveLocation.Y, 1, -1 });
+
+                DebugConsole.write("イベント作動！！！！！！！");
+
+
+            }
         }
     }
 }

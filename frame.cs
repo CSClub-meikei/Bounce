@@ -35,39 +35,37 @@ namespace Bounce
             {
                 case 1:
                     setSize(fw,fh);
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW,X,Y, (int)X, (int)Y, (int)Width,HABA));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X+Width-HABA), (int)Y, HABA, (int)Height));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)X, (int)(Y+Height-HABA), (int)Width,HABA));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X), (int)Y,HABA, (int)Height));
-                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X - (Width / 2)+ parent.ball.Width/2), (float)(parent.ball.Y - (Height / 2) + parent.ball.Height / 2), 0, 0, 2f, 2f });
-                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X - (Width / 2) + parent.ball.Width / 2), (float)(parent.ball.Y - (Height / 2)+ parent.ball.Height/2), 0, 0, 2f, 2f });
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW,X,Y, (int)(X-(Width/2)), (int)(Y-(Height/2)), (int)Width,HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)((X - (Width / 2)) + Width-HABA), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)((Y - (Height / 2)) + Height-HABA), (int)Width,HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X +parent.ball.Width/2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
+                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height/2), 0, 0, 2f, 2f });
                    
                     break;
                 case 2:
                    
                     setSize(fw*1.6, fh/2);
-                   // setLocation(parent.ball.X-(Width/2),parent.ball.Y-(Height/2));
-                    
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)X, (int)Y, (int)Width, HABA));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X + Width - HABA), (int)Y, HABA, (int)Height));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)X, (int)(Y + Height - HABA), (int)Width, HABA));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X), (int)Y, HABA, (int)Height));
+                    // setLocation(parent.ball.X-(Width/2),parent.ball.Y-(Height/2));
 
-                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X - (Width / 2) + parent.ball.Width / 2), (float)(parent.ball.Y - (Height / 2) + parent.ball.Height / 2), 0, 0, 2f, 2f });
-                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X - (Width / 2) + parent.ball.Width / 2), (float)(parent.ball.Y - (Height / 2) + parent.ball.Height / 2), 0, 0, 2f, 2f });
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), (int)Width, HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)((X - (Width / 2)) + Width - HABA), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)((Y - (Height / 2)) + Height - HABA), (int)Width, HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
+                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
 
                     break;
                 case 3:
                     setSize(fw /2, fh *1.6);
                     // setLocation(parent.ball.X-(Width/2),parent.ball.Y-(Height/2));
 
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)X, (int)Y, (int)Width, HABA));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X + Width - HABA), (int)Y, HABA, (int)Height));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)X, (int)(Y + Height - HABA), (int)Width, HABA));
-                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X), (int)Y, HABA, (int)Height));
-
-                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X - (Width / 2)  ), (float)(parent.ball.Y - (Height / 2) + parent.ball.Height / 2), 0, 0, 2f, 2f });
-                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X - (Width / 2) ), (float)(parent.ball.Y - (Height / 2) + parent.ball.Height / 2), 0, 0, 2f, 2f });
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), (int)Width, HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)((X - (Width / 2)) + Width - HABA), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)((Y - (Height / 2)) + Height - HABA), (int)Width, HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
+                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
 
                     break;
             }

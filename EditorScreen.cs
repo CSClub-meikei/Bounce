@@ -25,8 +25,10 @@ namespace Bounce
         }
         public override void update(float deltaTime)
         {
-            if (Input.onKeyDown(Keys.A)) chips.Add(new mapChip(game, this, Assets.graphics.game.block,1, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
-            if (Input.onKeyDown(Keys.Z)) chips.Add(new mapChip(game, this, Assets.graphics.game.thorn[0], 2, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
+            if (Input.onKeyDown(Keys.A)) chips.Add(new mapChip(game, this, Assets.graphics.game.block,1, 1,1,Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
+            if (Input.onKeyDown(Keys.Z)) chips.Add(new mapChip(game, this, Assets.graphics.game.thorn[0], 2,1,1, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
+            if (Input.onKeyDown(Keys.W)) chips.Add(new mapChip(game, this, Assets.graphics.game.Switch[0], 3, 1,1, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
+            if (Input.onKeyDown(Keys.C)) chips.Add(new mapChip(game, this, Assets.graphics.game.changePoint,4, 1, 2,Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
             if (Input.IsKeyDown(Keys.S)) save("test.txt");
                 if (!selecting)
             {
@@ -53,11 +55,14 @@ namespace Bounce
                 }
                 selecting = false;
             }
+            label.setLocation(-X, -Y);
+            label.update(deltaTime);
             base.update(deltaTime);
         }
         public override void Draw(SpriteBatch batch)
         {
             foreach (mapChip m in chips) m.Draw(batch, screenAlpha);
+            label.Draw(batch, screenAlpha);
             base.Draw(batch);
         }
         public void save(String fileName)
@@ -66,7 +71,7 @@ namespace Bounce
             String s ="";
             foreach(mapChip c in chips)
             {
-                s += c.mode.ToString() + "," + c.X.ToString() + "," + c.Y.ToString() + "," + c.Width.ToString() + "," + c.Height.ToString() + "," + c.rotate.ToString() + "/";
+                s += c.mode.ToString() + "," + c.X.ToString() + "," + c.Y.ToString() + "," + c.Width.ToString() + "," + c.Height.ToString() + "," + c.rotate.ToString() + "," + c.flagType.ToString() + "," + c.flagNum.ToString() + "," + c.mx.ToString() + "," + c.my.ToString() + "," + c.EventVisible.ToString() + "/";
             }
 
             //Shift JISで書き込む
@@ -98,12 +103,53 @@ namespace Bounce
                 String[] tmp = str.Split(',');
                 if (tmp[0] == "1")
                 {
-                    chips.Add(new mapChip(game, this, Assets.graphics.game.block, 1, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
+                    mapChip chip = new mapChip(game, this, Assets.graphics.game.block, 1, 1, 1,int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+                    chip.flagType = int.Parse(tmp[6]);
+                    chip.flagNum = int.Parse(tmp[7]);
+                    chip.mx = int.Parse(tmp[8]);
+                    chip.my = int.Parse(tmp[9]);
+                    chip.EventVisible = int.Parse(tmp[10]);
+                    chips.Add(chip);
     
                 }
                 else if (tmp[0] == "2")
                 {
-                    chips.Add(new mapChip(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], 2, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4])));
+
+                    mapChip chip = new mapChip(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], 2, int.Parse(tmp[5]),1, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+
+                    chip.flagType = int.Parse(tmp[6]);
+                    chip.flagNum = int.Parse(tmp[7]);
+                    chip.mx = int.Parse(tmp[8]);
+                    chip.my = int.Parse(tmp[9]);
+                    chip.EventVisible = int.Parse(tmp[10]);
+                    chips.Add(chip);
+
+                }
+                else if (tmp[0] == "3")
+                {
+
+                    mapChip chip = new mapChip(game, this, Assets.graphics.game.Switch[int.Parse(tmp[5])], 3, int.Parse(tmp[5]), 1,int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+
+                    chip.flagType = int.Parse(tmp[6]);
+                    chip.flagNum = int.Parse(tmp[7]);
+                    chip.mx = int.Parse(tmp[8]);
+                    chip.my = int.Parse(tmp[9]);
+                    chip.EventVisible = int.Parse(tmp[10]);
+                    chips.Add(chip);
+
+                }
+                else if (tmp[0] == "4")
+                {
+
+                    mapChip chip = new mapChip(game, this, Assets.graphics.game.changePoint, 4, int.Parse(tmp[5]),2, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+
+                    chip.flagType = int.Parse(tmp[6]);
+                    chip.flagNum = int.Parse(tmp[7]);
+                    chip.mx = int.Parse(tmp[8]);
+                    chip.my = int.Parse(tmp[9]);
+                    chip.EventVisible = int.Parse(tmp[10]);
+                    chips.Add(chip);
+
                 }
             }
         }

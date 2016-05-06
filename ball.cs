@@ -24,8 +24,8 @@ namespace Bounce
             parent = (worldScreen)screen;
             setLocation(x, y);
             setSize(width, height);
-            velocityX = Speed;
-            velocityY = Speed;
+           // velocityX = Speed;
+           // velocityY = Speed;
         }
         public override void update(float delta)
         {
@@ -37,13 +37,24 @@ namespace Bounce
             int flag1 = 0;
             int flag2 = 0;
 
-            foreach(GraphicalGameObject b in parent.frame.frames)
+            foreach (shapeChangePoint b in parent.changePoints) if (overlapTester.overlapRectangles(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                {
+                    if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING) parent.Status = worldScreen.CHANGING;
+                    else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
+                }
+                    foreach (Switch b in parent.switchs) if (overlapTester.overlapRectangles(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                {
+                    parent.flags[b.flagNum] = true;
+                    DebugConsole.write("イベント: " + b.flagNum.ToString());
+                }
+
+                    foreach (GraphicalGameObject b in parent.frame.frames)
             {
                 switch (overlapTester.overlapRectanglesEX(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                 {
                     case 1:
                         velocityX = -Speed;
-                        parent.time.text += ",1";
+                        DebugConsole.write(",1");
                         // X = b.X - Width;
                         // System.Windows.Forms.MessageBox.Show("1");
                         flag1 = 2;
@@ -52,13 +63,13 @@ namespace Bounce
                         velocityX = Speed;
                         // X = b.X+b.Width;
                         // System.Windows.Forms.MessageBox.Show("2");
-                        parent.time.text += ",2";
+                        DebugConsole.write(",2");
                         flag1 = 1;
                         break;
                     case 3:
                         velocityY = -Speed;
                         // Y = b.Y - Height;
-                        parent.time.text += ",3";
+                        DebugConsole.write(",3");
                         // System.Windows.Forms.MessageBox.Show("3");
 
                         flag1 = 4;
@@ -67,7 +78,7 @@ namespace Bounce
                         velocityY = Speed;
                         //  Y = b.Y + b.Height;
                         //  System.Windows.Forms.MessageBox.Show("4");]
-                        parent.time.text += ",4";
+                        DebugConsole.write(",4");
                         flag1 = 3;
                         break;
                 }
@@ -85,7 +96,7 @@ namespace Bounce
                 {
                     case 1:
                         velocityX = -Speed;
-                        parent.time.text += ",1";
+                        DebugConsole.write(",1");
                         // X = b.X - Width;
                        // System.Windows.Forms.MessageBox.Show("1");
                         flag2 = 1;
@@ -94,13 +105,13 @@ namespace Bounce
                         velocityX = Speed;
                         // X = b.X+b.Width;
                         // System.Windows.Forms.MessageBox.Show("2");
-                        parent.time.text += ",2";
+                        DebugConsole.write(",2");
                         flag2 = 2;
                         break;
                     case 3:
                         velocityY = -Speed;
                         // Y = b.Y - Height;
-                        parent.time.text += ",3";
+                        DebugConsole.write(",3");
                         // System.Windows.Forms.MessageBox.Show("3");
                        
                         flag2 = 3;
@@ -109,7 +120,7 @@ namespace Bounce
                         velocityY = Speed;
                         //  Y = b.Y + b.Height;
                         //  System.Windows.Forms.MessageBox.Show("4");]
-                        parent.time.text += ",4";
+                        DebugConsole.write(",4");
                         flag2 = 4;
                         break;
 
@@ -137,6 +148,7 @@ namespace Bounce
             breaking =true;
             setLocation(X - 210, Y - 180);
             setSize(266, 266);
+            Assets.soundEffects.glass.Play();
         }
         public void spread(float deltaTime)
         {

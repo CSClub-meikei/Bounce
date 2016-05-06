@@ -13,8 +13,18 @@ namespace Bounce
 {
     public static class Assets
     {
-       
-     
+        public delegate void AssetsLoadEventHandler(object sender, AssetsLoadEventArgs e);
+
+        public static event AssetsLoadEventHandler progress;
+        public static event AssetsLoadEventHandler Loaded;
+        public static ContentManager Content;
+
+        public  class AssetsLoadEventArgs : EventArgs
+        {
+            public int progress;
+            public string message;
+        }
+
        public static  class graphics
         {
             public static class ui
@@ -42,6 +52,8 @@ namespace Bounce
                 public static Texture2D frameW;
                 public static Texture2D frameH;
                 public static Texture2D ball;
+                public static Texture2D changePoint;
+                public static Texture2D[] Switch;
                 public static Texture2D[] thorn;
                 public static Texture2D[] ball_animation;
             }
@@ -54,19 +66,33 @@ namespace Bounce
         {
             public static SoundEffect d;
             public static SoundEffect s;
+            public static SoundEffect glass;
+        }
+        public static void Initialize(Game1 game)
+        {
+            Content = game.Content;
+            Content.RootDirectory = "Content/graphics/ui";
+            graphics.ui.font = Content.Load<SpriteFont>("font");
+            Content.RootDirectory = "Content";
         }
         public static void Load(Game1 game)
         {
-            ContentManager Content = game.Content;
+            report(0, "グラフィックを読み込んでいます...");
             LoadGraphics(Content);
+            report(70, "サウンドエフェクトを読み込んでいます...");
             LoadSoundEffects(Content);
+            report(85, "BGMを読み込んでいます...");
             LoadBGM(Content);
+            report(100, "処理中...");
+            Loaded(null, null);
         }
         public static void LoadGraphics(ContentManager Content)
         {
+            
             Content.RootDirectory = "Content/graphics";
-
+            report(0, "グラフィックを読み込んでいます... 1/2 (UI)");
             LoadUI(Content);
+            report(30, "グラフィックを読み込んでいます... 2/2 (GAME)");
             LoadGame(Content);
         }
         public static void LoadUI(ContentManager Content)
@@ -87,7 +113,7 @@ namespace Bounce
             graphics.ui.label_back = Content.Load<Texture2D>("back-label");
             graphics.ui.HL = Content.Load<Texture2D>("HL");
             graphics.ui.font= Content.Load<SpriteFont>("font");
-
+           
         }
         public static void LoadGame(ContentManager Content)
         {
@@ -98,10 +124,12 @@ namespace Bounce
             graphics.game.frameW= Content.Load<Texture2D>("frameW");
             graphics.game.frameH = Content.Load<Texture2D>("frameH");
             graphics.game.ball = Content.Load<Texture2D>("ball");
-
+            graphics.game.changePoint = Content.Load<Texture2D>("changePoint");
+            graphics.game.Switch = new Texture2D[4];
             graphics.game.thorn = new Texture2D[4];
 
-            for(i=0;i<=3;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
+            for (i = 0; i <= 3; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
+            for (i=0;i<=3;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
 
 
 
@@ -116,6 +144,7 @@ namespace Bounce
             Content.RootDirectory = "Content/soundEffects";
             soundEffects.d = Content.Load<SoundEffect>("decision21");
             soundEffects.s = Content.Load<SoundEffect>("cursor6");
+            soundEffects.glass = Content.Load<SoundEffect>("glass-break2");
         }
         public static void LoadBGM(ContentManager Content)
         {
@@ -130,6 +159,13 @@ namespace Bounce
             t.SetData<Color>(color);
 
             return t;
+        }
+        public static void report(int i,string s)
+        {
+            AssetsLoadEventArgs e = new AssetsLoadEventArgs();
+            e.progress = i;
+            e.message = s;
+            if(progress!=null)progress(null, e);
         }
     }
 }

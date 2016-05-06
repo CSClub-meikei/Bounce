@@ -22,6 +22,7 @@ namespace Bounce
         FPSCounter counter;
 
         public List<Screen> screens;
+        public debugScreen debugScreen;
        
         public Game1()
         {
@@ -45,6 +46,7 @@ namespace Bounce
            
             screens = new List<Screen>();
             Input.Initialize(this);
+            Assets.Initialize(this);
             counter = new FPSCounter();
             base.Initialize();
         }
@@ -57,8 +59,9 @@ namespace Bounce
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Assets.Load(this);
-            screens.Add(new SplashScreen(this));
+            debugScreen = new debugScreen(this);
+            debugScreen.screenAlpha = 0;
+            screens.Add(new AssetsLoadScreen(this));
             // TODO: use this.Content to load your game content here
         }
 
@@ -100,6 +103,18 @@ namespace Bounce
                 screens.Clear();
                 screens.Add(new EditorScreen(this));
             }
+
+            if (Input.IsKeyDown(Keys.D) && Input.IsKeyDown(Keys.LeftShift))
+            {
+               // debugScreen.AutoScroll = !debugScreen.AutoScroll;
+            }
+            else if (Input.onKeyDown(Keys.D))
+            {
+                if (debugScreen.screenAlpha == 0) debugScreen.screenAlpha = 1;
+                else if (debugScreen.screenAlpha == 1) debugScreen.screenAlpha = 0;
+            }
+           
+
                 // TODO: Add your update logic here
                 try
             {
@@ -114,7 +129,7 @@ foreach(Screen s in screens)
 
                // throw;
             }
-            
+            debugScreen.update(deltaTime);
             Input.update();
             base.Update(gameTime);
         }
@@ -136,6 +151,8 @@ foreach(Screen s in screens)
             spriteBatch.Begin(transformMatrix: GetScaleMatrix());
             spriteBatch.Draw(Assets.graphics.ui.cursor, new Rectangle(Input.getPosition().X-20, Input.getPosition().Y-10, 100, 100), Color.White);
             spriteBatch.End();
+
+            debugScreen.Draw(spriteBatch);
             base.Draw(gameTime);
         }
         public Matrix GetScaleMatrix()

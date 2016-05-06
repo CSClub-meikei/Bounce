@@ -96,6 +96,10 @@ namespace Bounce
             
             return GlobalToLocal(Mouse.GetState().Position);
         }
+        public static int getWheel()
+        {
+            return Mouse.GetState().ScrollWheelValue;
+        }
         public static bool OnMouseDown(int button)
         {
             MouseState newState = Mouse.GetState();

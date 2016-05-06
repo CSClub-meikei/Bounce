@@ -100,3 +100,9 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn1.pn
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn2.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn3.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn4.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch1.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch2.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch3.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch4.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\changePoint.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\soundEffects\glass-break2.xnb
