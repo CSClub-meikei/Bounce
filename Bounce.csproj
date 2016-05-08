@@ -44,13 +44,20 @@
     <Compile Include="BackScreen.cs" />
     <Compile Include="ball.cs" />
     <Compile Include="block.cs" />
+    <Compile Include="ChipToolbar.cs" />
+    <Compile Include="ChipToolBarChip.cs" />
     <Compile Include="DebugConsole.cs" />
     <Compile Include="debugScreen.cs" />
     <Compile Include="EditorScreen.cs" />
+    <Compile Include="EditorScreen_p.cs" />
+    <Compile Include="eventEditScreen.cs" />
     <Compile Include="frame.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="LevelObject.cs" />
     <Compile Include="mapChip.cs" />
+    <Compile Include="mapChip_p.cs" />
+    <Compile Include="mapData.cs" />
+    <Compile Include="moveScreenObject.cs" />
     <Compile Include="progressBar.cs" />
     <Compile Include="SelectGameScreen.cs" />
     <Compile Include="SettingForm.cs">
@@ -60,6 +67,7 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="shapeChangePoint.cs" />
+    <Compile Include="SimpleButton.cs" />
     <Compile Include="singleFrame.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Switch.cs" />
@@ -277,6 +285,21 @@
     <Content Include="Content\graphics\game\thorn4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\arrow+.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\arrow-.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\arrowL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\arrowR.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\back-ChipToolbar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\back-label.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -304,6 +327,9 @@
     <Content Include="Content\graphics\ui\label-singleplay.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\moveEditButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\sp1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -314,6 +340,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\title.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\trashBox.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\wideButtonBack.png">

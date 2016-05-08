@@ -43,6 +43,13 @@ namespace Bounce
                 public static Texture2D sp1;
                 public static Texture2D sp2;
                 public static Texture2D HL;
+                public static Texture2D back_ChipToolbar;
+                public static Texture2D trashBox;
+                public static Texture2D arrowA;
+                public static Texture2D arrowS;
+                public static Texture2D arrowR;
+                public static Texture2D arrowL;
+                public static Texture2D moveEditButton;
 
                 public static SpriteFont font;
             }
@@ -112,8 +119,15 @@ namespace Bounce
             graphics.ui.label_multiplay = Content.Load<Texture2D>("label-multiplay");
             graphics.ui.label_back = Content.Load<Texture2D>("back-label");
             graphics.ui.HL = Content.Load<Texture2D>("HL");
-            graphics.ui.font= Content.Load<SpriteFont>("font");
-           
+            graphics.ui.arrowA = Content.Load<Texture2D>("arrow+");
+            graphics.ui.arrowS = Content.Load<Texture2D>("arrow-");
+            graphics.ui.arrowR = Content.Load<Texture2D>("arrowR");
+            graphics.ui.arrowL = Content.Load<Texture2D>("arrowL");
+            graphics.ui.back_ChipToolbar = Content.Load<Texture2D>("back-ChipToolbar");
+            graphics.ui.trashBox = Content.Load<Texture2D>("trashBox");
+            graphics.ui.moveEditButton = Content.Load<Texture2D>("moveEditButton");
+
+            graphics.ui.font = Content.Load<SpriteFont>("font");
         }
         public static void LoadGame(ContentManager Content)
         {

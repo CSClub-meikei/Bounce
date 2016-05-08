@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
@@ -13,145 +12,125 @@ namespace Bounce
 {
     class EditorScreen:Screen
     {
-        public List<mapChip> chips=new List<mapChip>();
-        public List<mapChip> Rchips = new List<mapChip>();
-        public TextObject label;
-        public bool selecting;
+        mapData map = new mapData();
+        public  List<mapChip> selectedChips = new List<mapChip>();
+        public List<mapChip> RemoveChips = new List<mapChip>();
+        ChipToolbar ChipToolbar;
+        public eventEditScreen eventEditScreen;
+
+        mapChip MoveEditChip;
+        bool Moveeditting = false;
+        Point mp,op;
+        public int selectedLayor = 0;
+
         public EditorScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
-            label = new TextObject(game, this, Assets.graphics.ui.font, "", Color.White, 0, 0);
-            setUIcell(1, 1);
-            load("test.txt");
+            map.Load();
+            ChipToolbar = new ChipToolbar(game);
+            eventEditScreen = new eventEditScreen(game,1000,0);
+            eventEditScreen.MoveEdit += new EventHandler(this.startMoveEdit);
+            foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.onClick += new EventHandler(this.onSelect);
+
+            foreach (ChipToolBarChip c in ChipToolbar.Controls) c.Drag += new EventHandler((sender, e) => { AddChip(selectedLayor,c.ChipNum); });
+           
+
+
+
+                    setUIcell(1, 1);
+        }
+        public void AddChip(int layor,int type)
+        {
+
+           mapChip newChip = new mapChip(game, this, type, 0, (int)(Input.getPosition().X - X), (int)(Input.getPosition().Y - Y), 40, 40);
+            newChip.onClick+= new EventHandler(this.onSelect);
+            map.Layor[layor].Add(newChip);
+
+        }
+        public void startMoveEdit(object sender, EventArgs e)
+        {
+            if (!Moveeditting)
+            {
+                MoveEditChip = new mapChip(game, this, selectedChips[0].type, 0, (int)(selectedChips[0].eventData[0]), (int)(selectedChips[0].eventData[1]), (int)selectedChips[0].Width, (int)selectedChips[0].Height);
+                MoveEditChip.isSelected = true;
+                MoveEditChip.AllowResize = false;
+                MoveEditChip.onUnSelect += new EventHandler(this.endMoveEdit);
+                MoveEditChip.alpha = 0.5f;
+                MoveEditChip.addAnimator(2);
+                // MoveEditChip.animator[0].start(GameObjectAnimator.FLASH, new float[] { 1f, 0.2f, 0, 0.2f, -1 });
+                //MoveEditChip.animator[0].setLimit(2f);
+               // MoveEditChip.animator[1].setLimit(2f);
+                MoveEditChip.animator[0].GLOWHL = Assets.graphics.ui.HL;
+                MoveEditChip.animator[0].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.4F, 0F, 0.4F, 0.0F, 1F });
+                MoveEditChip.animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 0 });
+                  selectedChips[0].alpha = 0.8f;
+                selectedChips[0].ShowMoveLocation = false;
+                Moveeditting = true;
+            }else
+            {
+
+                endMoveEdit(null, null);
+
+            }
+               
+        }
+        public void endMoveEdit(object sender,EventArgs e)
+        {
+            Moveeditting = false;
+
+            selectedChips[0].eventData[0] = (int)MoveEditChip.X;
+            selectedChips[0].eventData[1] = (int)MoveEditChip.Y;
+           selectedChips[0].alpha = 1;
+            selectedChips[0].ShowMoveLocation = true;
+            MoveEditChip = null;
         }
         public override void update(float deltaTime)
         {
-            if (Input.onKeyDown(Keys.A)) chips.Add(new mapChip(game, this, Assets.graphics.game.block,1, 1,1,Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
-            if (Input.onKeyDown(Keys.Z)) chips.Add(new mapChip(game, this, Assets.graphics.game.thorn[0], 2,1,1, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
-            if (Input.onKeyDown(Keys.W)) chips.Add(new mapChip(game, this, Assets.graphics.game.Switch[0], 3, 1,1, Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
-            if (Input.onKeyDown(Keys.C)) chips.Add(new mapChip(game, this, Assets.graphics.game.changePoint,4, 1, 2,Input.getPosition().X - X, Input.getPosition().Y - Y, 40, 40));
-            if (Input.IsKeyDown(Keys.S)) save("test.txt");
-                if (!selecting)
-            {
-                if (Input.IsKeyDown(Keys.Right)) { X -= (int)(0.8f * deltaTime); }
-                if (Input.IsKeyDown(Keys.Left)) { X += (int)(0.8f * deltaTime); }
-                if (Input.IsKeyDown(Keys.Up)) { Y += (int)(0.8f * deltaTime); }
-                if (Input.IsKeyDown(Keys.Down)) { Y -= (int)(0.8f * deltaTime); }
-            }
-           
-            if (Input.OnMouseDown(Input.LeftButton))
-            {
-                foreach (mapChip m in chips) m.selected = false;
-            }
-            foreach (mapChip m in chips) m.update(deltaTime);
 
-            foreach (mapChip m in Rchips) chips.Remove(m);
-
-            foreach (mapChip m in chips)
+            ChipToolbar.update(deltaTime);
+            eventEditScreen.update(deltaTime);
+            if (MoveEditChip != null) { MoveEditChip.update(deltaTime);}
+            
+            if (Input.OnMouseDown(Input.MiddleButton))
             {
-                if (m.selected)
-                {
-                    selecting = true;
-                    break;
-                }
-                selecting = false;
+                mp = new Point(Input.getPosition().X, Input.getPosition().Y);
+                op = new Point(X, Y);
             }
-            label.setLocation(-X, -Y);
-            label.update(deltaTime);
+            if (Input.IsMouseDown(Input.MiddleButton))
+            {
+                X = op.X - (mp.X - Input.getPosition().X);
+                Y = op.Y - (mp.Y - Input.getPosition().Y);
+            }
+            if (Moveeditting) return;
             base.update(deltaTime);
+            foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.update(deltaTime);
+            foreach (mapChip c in RemoveChips) foreach (List<mapChip> layor in map.Layor) if (layor.IndexOf(c) != -1) layor.Remove(c);
+            if (selectedChips.Count == 0) eventEditScreen.screenAlpha = 0;
+            else eventEditScreen.screenAlpha = 1;
+
         }
         public override void Draw(SpriteBatch batch)
         {
-            foreach (mapChip m in chips) m.Draw(batch, screenAlpha);
-            label.Draw(batch, screenAlpha);
+            foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.Draw(batch, screenAlpha);
+            ChipToolbar.Draw(batch);
+            eventEditScreen.Draw(batch);
+            if (MoveEditChip != null) MoveEditChip.Draw(batch, screenAlpha);
             base.Draw(batch);
         }
-        public void save(String fileName)
+        public void onSelect(object sender,EventArgs e)
         {
-
-            String s ="";
-            foreach(mapChip c in chips)
+            if (Input.IsKeyDown(Keys.LeftShift))
             {
-                s += c.mode.ToString() + "," + c.X.ToString() + "," + c.Y.ToString() + "," + c.Width.ToString() + "," + c.Height.ToString() + "," + c.rotate.ToString() + "," + c.flagType.ToString() + "," + c.flagNum.ToString() + "," + c.mx.ToString() + "," + c.my.ToString() + "," + c.EventVisible.ToString() + "/";
+                selectedChips.Add((mapChip)sender);
             }
-
-            //Shift JISで書き込む
-            //書き込むファイルが既に存在している場合は、上書きする
-            System.IO.StreamWriter sw = new System.IO.StreamWriter(
-                fileName,
-                false,
-                System.Text.Encoding.GetEncoding("shift_jis"));
-            //TextBox1.Textの内容を書き込む
-            sw.Write(s);
-            //閉じる
-            sw.Close();
-        }
-        public void load(String fileName)
-        {
-            //コース再読み込み
-            //"C:\test\1.txt"をShift-JISコードとして開く
-            System.IO.StreamReader sr = new System.IO.StreamReader(
-                fileName,
-                System.Text.Encoding.GetEncoding("shift_jis"));
-            //内容をすべて読み込む
-            string s = sr.ReadToEnd();
-            //閉じる
-            sr.Close();
-            String[] data;
-            data = s.Split('/');
-            foreach (String str in data)
-            {
-                String[] tmp = str.Split(',');
-                if (tmp[0] == "1")
-                {
-                    mapChip chip = new mapChip(game, this, Assets.graphics.game.block, 1, 1, 1,int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-                    chip.flagType = int.Parse(tmp[6]);
-                    chip.flagNum = int.Parse(tmp[7]);
-                    chip.mx = int.Parse(tmp[8]);
-                    chip.my = int.Parse(tmp[9]);
-                    chip.EventVisible = int.Parse(tmp[10]);
-                    chips.Add(chip);
-    
-                }
-                else if (tmp[0] == "2")
-                {
-
-                    mapChip chip = new mapChip(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], 2, int.Parse(tmp[5]),1, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-
-                    chip.flagType = int.Parse(tmp[6]);
-                    chip.flagNum = int.Parse(tmp[7]);
-                    chip.mx = int.Parse(tmp[8]);
-                    chip.my = int.Parse(tmp[9]);
-                    chip.EventVisible = int.Parse(tmp[10]);
-                    chips.Add(chip);
-
-                }
-                else if (tmp[0] == "3")
-                {
-
-                    mapChip chip = new mapChip(game, this, Assets.graphics.game.Switch[int.Parse(tmp[5])], 3, int.Parse(tmp[5]), 1,int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-
-                    chip.flagType = int.Parse(tmp[6]);
-                    chip.flagNum = int.Parse(tmp[7]);
-                    chip.mx = int.Parse(tmp[8]);
-                    chip.my = int.Parse(tmp[9]);
-                    chip.EventVisible = int.Parse(tmp[10]);
-                    chips.Add(chip);
-
-                }
-                else if (tmp[0] == "4")
-                {
-
-                    mapChip chip = new mapChip(game, this, Assets.graphics.game.changePoint, 4, int.Parse(tmp[5]),2, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-
-                    chip.flagType = int.Parse(tmp[6]);
-                    chip.flagNum = int.Parse(tmp[7]);
-                    chip.mx = int.Parse(tmp[8]);
-                    chip.my = int.Parse(tmp[9]);
-                    chip.EventVisible = int.Parse(tmp[10]);
-                    chips.Add(chip);
-
-                }
+            else{
+                selectedChips.Clear();
+                selectedChips.Add((mapChip)sender);
             }
+            eventEditScreen.Load(selectedChips[0]);
+            eventEditScreen.screenAlpha = 1;
+            foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.isSelected = false;
+
+                    foreach (mapChip chip in selectedChips) chip.isSelected = true;
         }
     }
 }

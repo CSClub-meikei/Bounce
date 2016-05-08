@@ -16,13 +16,13 @@ namespace Bounce
     {
         GraphicalGameObject o;
         Game1 game;
-        int type;
+        public int type;
         float[] option;
         int step = 0;
         public float time;
         public float time2;
         int frame = 0;
-        float[] tmp;//定義 x,y,w,h, アニメーターレイヤ x,y,w,h,alpha
+        public float[] tmp;//定義 x,y,w,h, アニメーターレイヤ x,y,w,h,alpha
         public bool isAnimate = false;
         bool isAnimatedelay = false;
         float vx = 0;
@@ -31,6 +31,8 @@ namespace Bounce
         int c2 = 0;
         float delay = 0;
         float limit = 0;
+
+        public Texture2D GLOWHL;
 
         public const int FLASH = 1;//Option 1 表示長さ 2フェードアウト 3非表示長さ 4フェードイン長さ　 5適用レイヤー -1本体 0~アニメーター
         public const int GLOW = 2;//Option 1 動きあり1  2 拡大率 3透明度 4標準長さ  5広がり長さ 6広がり保持時間 7縮まる長さ 
@@ -194,7 +196,10 @@ namespace Bounce
                     break;
                 case GLOW:
 
-                    batch.Draw(o.Texture, new Rectangle((int)tmp[4]+o.parent.X, (int)tmp[5]+o.parent.Y, (int)tmp[6], (int)tmp[7]), Color.White * option[2] * screenAlpha * tmp[8]);
+                    if(GLOWHL==null)
+                        batch.Draw(o.Texture, new Rectangle((int)tmp[4]+o.parent.X, (int)tmp[5]+o.parent.Y, (int)tmp[6], (int)tmp[7]), Color.White * option[2] * screenAlpha * tmp[8]);
+                    else
+                        batch.Draw(GLOWHL, new Rectangle((int)tmp[4] + o.parent.X, (int)tmp[5] + o.parent.Y, (int)tmp[6], (int)tmp[7]), Color.White * option[2] * screenAlpha * tmp[8]);
 
                     break;
                 case EXPLOSION:

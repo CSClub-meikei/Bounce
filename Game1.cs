@@ -28,6 +28,7 @@ namespace Bounce
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 720;
             graphics.ApplyChanges();
@@ -43,7 +44,7 @@ namespace Bounce
         {
             // TODO: Add your initialization logic here
 
-           
+            IsMouseVisible = true;
             screens = new List<Screen>();
             Input.Initialize(this);
             Assets.Initialize(this);

@@ -106,3 +106,10 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch3.p
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch4.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\changePoint.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\soundEffects\glass-break2.xnb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\back-ChipToolbar.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\trashBox.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\arrow+.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\arrow-.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\arrowL.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\arrowR.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\ui\moveEditButton.png

@@ -18,6 +18,7 @@ namespace Bounce
 
         public const int LeftButton = 1;
         public const int RightButton = 2;
+        public const int MiddleButton = 3;
 
         static Game1 game;
         public static void Initialize(Game1 game)
@@ -113,6 +114,11 @@ namespace Bounce
                 if (newState.RightButton == ButtonState.Pressed && MouseOldState.RightButton != ButtonState.Pressed) return true;
                 else return false;
             }
+            else if (button == MiddleButton)
+            {
+                if (newState.MiddleButton == ButtonState.Pressed && MouseOldState.MiddleButton != ButtonState.Pressed) return true;
+                else return false;
+            }
             return false;
         }
         public static bool OnMouseUp(int button)
@@ -129,6 +135,11 @@ namespace Bounce
                 if (newState.RightButton != ButtonState.Pressed && MouseOldState.RightButton == ButtonState.Pressed) return true;
                 else return false;
             }
+            else if (button == MiddleButton)
+            {
+                if (newState.MiddleButton != ButtonState.Pressed && MouseOldState.MiddleButton == ButtonState.Pressed) return true;
+                else return false;
+            }
             return false;
         }
         public static bool IsMouseDown(int button)
@@ -143,6 +154,11 @@ namespace Bounce
             else if (button == RightButton)
             {
                 if (newState.RightButton == ButtonState.Pressed) return true;
+                else return false;
+            }
+            else if (button == MiddleButton)
+            {
+                if (newState.MiddleButton == ButtonState.Pressed) return true;
                 else return false;
             }
             return false;
