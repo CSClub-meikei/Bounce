@@ -7,11 +7,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace Bounce
 {
     class worldScreen:Screen
     {
+        public mapData map;
+
        public TextObject time;
         GraphicalGameObject b;
         public ball ball;
@@ -20,6 +24,8 @@ namespace Bounce
         public List<block> blocks = new List<block>();
         public List<thorn> thorns = new List<thorn>();
         public List<Switch> switchs = new List<Switch>();
+        public List<List<LevelObject>> Layor;
+
         public List<shapeChangePoint> changePoints = new List<shapeChangePoint>();
 
         public const int RUNNING = 1;
@@ -32,16 +38,21 @@ namespace Bounce
         {
 
 
-            load("test.txt");
-           // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 200, 360, 40));
-           // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 240, 40,640));
-          //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 240, 40, 400));
-          //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 600, 800, 40));
-          //  thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 520, 840, 600, 40));
-          //  blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 880, 1200, 40));
-        //    thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 1050, 760, 600, 40));
-         //   blocks.Add(new block(game, this, Assets.graphics.game.block, 1050, 800, 600, 80));
+            load("test.xml");
+            // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 200, 360, 40));
+            // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 240, 40,640));
+            //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 240, 40, 400));
+            //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 600, 800, 40));
+            //  thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 520, 840, 600, 40));
+            //  blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 880, 1200, 40));
+            //    thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 1050, 760, 600, 40));
+            //   blocks.Add(new block(game, this, Assets.graphics.game.block, 1050, 800, 600, 80));
             // thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 500, 460, 120, 40));
+
+
+            //Layor = new List<List<LevelObject>>();
+            //Layor.Add(new List<LevelObject>());
+            
 
             ball = new ball(game, this, Assets.graphics.game.ball, 620, 340, 40, 40);
             frame = new frame(game, this, Assets.graphics.game.frameW, 640, 360, 200, 200);
@@ -66,6 +77,9 @@ namespace Bounce
                 foreach (thorn b in thorns) b.update(deltaTime);
                 foreach (Switch b in switchs) b.update(deltaTime);
                 foreach (shapeChangePoint b in changePoints) b.update(deltaTime);
+
+                foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.update(deltaTime);
+
                 ball.update(deltaTime);
             }
             if (Status == RUNNING)
@@ -85,7 +99,7 @@ namespace Bounce
         }
         public override void Draw(SpriteBatch batch)
         {
-            
+            foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
             foreach (thorn b in thorns) b.Draw(batch, screenAlpha);
             foreach (Switch b in switchs) b.Draw(batch, screenAlpha);
             foreach (shapeChangePoint b in changePoints) b.Draw(batch, screenAlpha);
@@ -95,8 +109,49 @@ namespace Bounce
             time.Draw(batch, screenAlpha);
             base.Draw(batch);
         }
-        public void load(String fileName)
+        public void load(string fileName)
         {
+            if (System.IO.File.Exists(fileName))
+            {
+                //DataContractSerializerオブジェクトを作成
+                DataContractSerializer serializer =
+                    new DataContractSerializer(typeof(mapData));
+                //読み込むファイルを開く
+                XmlReader xr = XmlReader.Create(fileName);
+                //XMLファイルから読み込み、逆シリアル化する
+                map = (mapData)serializer.ReadObject(xr);
+                //ファイルを閉じる
+                xr.Close();
+                Layor = new List<List<LevelObject>>();
+                Layor.Add(new List<LevelObject>());
+                foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor)
+                    {
+                        switch (chip.type)
+                        {
+                            case mapChip.BLOCK:
+                                this.Layor[0].Add(new block(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                                break;
+                            case mapChip.THORN:
+                                this.Layor[0].Add(new thorn(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                                break;
+                            case mapChip.SWITCH:
+                                this.Layor[0].Add(new Switch(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                                break;
+
+                        }
+                        
+                    }
+
+            }
+            else
+            {
+                map = new mapData();
+
+            }
+        }
+        public void load_old(String fileName)
+        {
+
             //"C:\test\1.txt"をShift-JISコードとして開く
             System.IO.StreamReader sr = new System.IO.StreamReader(
                 fileName,
@@ -112,42 +167,42 @@ namespace Bounce
                 String[] tmp = str.Split(',');
                 if (tmp[0] == "1")
                 {
-                    block b = new block(game, this, Assets.graphics.game.block, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-                    b.flagType= int.Parse(tmp[6]);
-                    b.flagNum= int.Parse(tmp[7]);
-                    b.moveLocation.X = int.Parse(tmp[8]);
-                    b.moveLocation.Y = int.Parse(tmp[9]);
-                    b.EventVisible = int.Parse(tmp[10]);
-                    blocks.Add(b);
+                  //  block b = new block(game, this, Assets.graphics.game.block, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+                  //  b.eventData.type = int.Parse(tmp[6]);
+                  //  b.eventData.num= int.Parse(tmp[7]);
+                   // b.moveLocation.X = int.Parse(tmp[8]);
+                   // b.moveLocation.Y = int.Parse(tmp[9]);
+                   // b.EventVisible = int.Parse(tmp[10]);
+                  //  blocks.Add(b);
                 }else if (tmp[0] == "2")
                 {
-                    thorn t = new thorn(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-                    t.flagType = int.Parse(tmp[6]);
-                    t.flagNum = int.Parse(tmp[7]);
-                   t.moveLocation.X = int.Parse(tmp[8]);
-                    t.moveLocation.Y = int.Parse(tmp[9]);
-                    t.EventVisible = int.Parse(tmp[10]);
-                    thorns.Add(t);
+                  //  thorn t = new thorn(game, this, Assets.graphics.game.thorn[int.Parse(tmp[5])], int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+                  //  t.eventData.type = int.Parse(tmp[6]);
+                  //  t.eventData.num = int.Parse(tmp[7]);
+                   // t.moveLocation.X = int.Parse(tmp[8]);
+                  //  t.moveLocation.Y = int.Parse(tmp[9]);
+                  //  t.EventVisible = int.Parse(tmp[10]);
+                   // thorns.Add(t);
                 }
                 else if (tmp[0] == "3")
                 {
-                    Switch t = new Switch(game, this, Assets.graphics.game.Switch[int.Parse(tmp[5])], int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-                    t.flagType = int.Parse(tmp[6]);
-                    t.flagNum = int.Parse(tmp[7]);
-                    t.moveLocation.X = int.Parse(tmp[8]);
-                   t.moveLocation.Y = int.Parse(tmp[9]);
-                    t.EventVisible = int.Parse(tmp[10]);
-                    switchs.Add(t);
+                  //  Switch t = new Switch(game, this, Assets.graphics.game.Switch[int.Parse(tmp[5])], int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+                  //  t.eventData.type = int.Parse(tmp[6]);
+                  //  t.eventData.num = int.Parse(tmp[7]);
+                  //  t.moveLocation.X = int.Parse(tmp[8]);
+                  // t.moveLocation.Y = int.Parse(tmp[9]);
+                  //  t.EventVisible = int.Parse(tmp[10]);
+                  //  switchs.Add(t);
                 }
                 else if (tmp[0] == "4")
                 {
-                    shapeChangePoint t = new shapeChangePoint(game, this, Assets.graphics.game.changePoint, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
-                    t.flagType = int.Parse(tmp[6]);
-                    t.flagNum = int.Parse(tmp[7]);
-                    t.moveLocation.X = int.Parse(tmp[8]);
-                    t.moveLocation.Y = int.Parse(tmp[9]);
-                    t.EventVisible = int.Parse(tmp[10]);
-                    changePoints.Add(t);
+                   // shapeChangePoint t = new shapeChangePoint(game, this, Assets.graphics.game.changePoint, int.Parse(tmp[1]), int.Parse(tmp[2]), int.Parse(tmp[3]), int.Parse(tmp[4]));
+                   // t.eventData.type = int.Parse(tmp[6]);
+                  //  t.eventData.num = int.Parse(tmp[7]);
+                   // t.moveLocation.X = int.Parse(tmp[8]);
+                  //  t.moveLocation.Y = int.Parse(tmp[9]);
+                  //  t.EventVisible = int.Parse(tmp[10]);
+                  //  changePoints.Add(t);
                 }
             }
         }

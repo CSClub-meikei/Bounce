@@ -12,9 +12,15 @@ namespace Bounce
 {
     class Switch: LevelObject
     {
-        public Switch(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
+        public Switch(Game1 game, Screen screen,eventData ed,int rotate, float x, float y, float width, float height) : base(game, screen, ed, x, y, width, height)
         {
-            
+            this.Texture = getChipTexture(mapChip.SWITCH, rotate);
+
+            if (Texture != null)
+            {
+
+                origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
+            }
         }
 
         

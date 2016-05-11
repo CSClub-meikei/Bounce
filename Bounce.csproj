@@ -50,7 +50,10 @@
     <Compile Include="debugScreen.cs" />
     <Compile Include="EditorScreen.cs" />
     <Compile Include="EditorScreen_p.cs" />
-    <Compile Include="eventEditScreen.cs" />
+    <Compile Include="eventData.cs" />
+    <Compile Include="eventData_1.cs" />
+    <Compile Include="eventData_2.cs" />
+    <Compile Include="eventEditScreen_p.cs" />
     <Compile Include="frame.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="LevelObject.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="singleFrame.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Switch.cs" />
+    <Compile Include="test.cs" />
     <Compile Include="thorn.cs" />
     <Compile Include="WideButton.cs" />
     <Compile Include="FPSCounter.cs" />
@@ -101,6 +105,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>

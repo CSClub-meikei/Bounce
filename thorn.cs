@@ -12,8 +12,15 @@ namespace Bounce
 {
     class thorn: LevelObject
     {
-        public thorn(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
+        public thorn(Game1 game, Screen screen,eventData ed,int rotate, float x, float y, float width, float height) : base(game, screen, ed, x, y, width, height)
         {
+            this.Texture = getChipTexture(mapChip.THORN, rotate);
+
+            if (Texture != null)
+            {
+
+                origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
+            }
             flagChanged += new EventHandler(this.FlagEvent);
             addAnimator(1);
         }
@@ -60,10 +67,10 @@ namespace Bounce
         }
         public void FlagEvent(object sender, EventArgs e)
         {
-            if (flagType == 2)
+            if (eventData.type == 2)
             {
 
-                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, moveLocation.X, moveLocation.Y, 1, -1 });
+                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, ((eventData_2)eventData).speed, -1 });
 
                 DebugConsole.write("イベント作動！！！！！！！");
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bounce
 {
-    class mapData
+    public class mapData
     {
         public string title;
         public int level;
@@ -14,11 +14,16 @@ namespace Bounce
 
         public List<List<mapChip>> Layor;
 
-        public void Load()
+        public void Load(Game1 game, Screen screen)
         {
-            Layor = new List<List<mapChip>>();
-            Layor.Add(new List<mapChip>());
+            if (Layor == null)
+            {
+                Layor = new List<List<mapChip>>();
 
+                Layor.Add(new List<mapChip>());
+            }
+            
+            foreach (List<mapChip> layor in Layor) foreach (mapChip chip in layor) { chip.reLoad(game, screen); }
         }
 
     }

@@ -7,10 +7,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
-
+using System.Runtime.Serialization;
+using System.Xml;
 namespace Bounce
 {
-    class mapChip:GraphicalGameObject
+    [DataContract]
+    public class mapChip:GraphicalGameObject
     {
         new EditorScreen parent;
         
@@ -26,14 +28,13 @@ namespace Bounce
         public const int MOVING = 1;
         public const int RESIZEING = 2;
 
-        const int size = 40;
-        public int type=0;
-        public int rotate = 0;
+        [DataMember]const int size = 40;
+        [DataMember]public int type=0;
+        [DataMember]public int rotate = 0;
         public int DrawMode = 1;
 
-        public int eventType=0;
-        public int eventNum = 0;
-        public int[] eventData = new int[2];
+        [DataMember]public eventData eventData;
+       
 
         public int clickedX, clickedY;
         public int EditingMode = 0;
@@ -68,9 +69,34 @@ namespace Bounce
             this.Texture = getChipTexture(type);
             this.type = type;
             this.rotate = rotate;
-
+            eventData = new eventData();
             onDoubleClick += new EventHandler(this.Rotate);
 
+
+        }
+        public void reLoad(Game1 game, Screen screen)
+        {
+            this.game = game;
+            this.Content = game.Content;
+
+            this.parent = (EditorScreen)screen;
+            base.parent = screen;
+            this.Texture = getChipTexture(this.type);
+            if (Texture != null)
+            {
+
+                origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
+            }
+            animator = new List<GameObjectAnimator>();
+
+
+            AllowResize = true;
+            ShowMoveLocation = true;
+            actX = X;
+            actY = Y;
+            onDoubleClick += new EventHandler(this.Rotate);
+            DrawMode = 1;
+            alpha = 1;
 
         }
 
@@ -133,11 +159,7 @@ namespace Bounce
                 }
             }
 
-            if (eventType == 0)
-            {
-                eventData[0] =(int) X;
-                eventData[1] = (int)Y;
-            }
+          
             foreach(GameObjectAnimator a in animator)
             {
                 if (a.type == GameObjectAnimator.GLOW)
@@ -287,7 +309,7 @@ namespace Bounce
                     for (j = 0; j < Height / size; j++)
                     {
                         batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha);
-                        if(eventType==2 && ShowMoveLocation) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(eventData[0] + parent.X + i * size), (int)(eventData[1] + parent.Y + j * size), (int)size, (int)size), color: Color.White * 0.5f * screenAlpha);
+                        if(eventData.type==2 && ShowMoveLocation) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(((eventData_2)eventData).X + parent.X + i * size), (int)(((eventData_2)eventData).Y + parent.Y + j * size), (int)size, (int)size), color: Color.White * 0.5f * screenAlpha);
                     }
 
                 }
@@ -296,7 +318,7 @@ namespace Bounce
                 if (isSelected)
                 {
                     batch.Draw(Assets.graphics.ui.HL, destinationRectangle: new Rectangle((int)actX , (int)actY , (int)Width, (int)Height), color: Color.White * 0.5f * alpha * screenAlpha);
-                    if (eventType == 2 && ShowMoveLocation) batch.Draw(Assets.graphics.ui.HL, destinationRectangle: new Rectangle((int)eventData[0] + parent.X , (int)eventData[1] + parent.Y, (int)Width, (int)Height), color: Color.White * 0.2f * alpha * screenAlpha);
+                    if (eventData.type == 2 && ShowMoveLocation) batch.Draw(Assets.graphics.ui.HL, destinationRectangle: new Rectangle((int)((eventData_2)eventData).X + parent.X , (int)((eventData_2)eventData).Y + parent.Y, (int)Width, (int)Height), color: Color.White * 0.2f * alpha * screenAlpha);
                 }
                 batch.End();
             }
@@ -304,10 +326,10 @@ namespace Bounce
             {
                 batch.Begin(transformMatrix: game.GetScaleMatrix());
                 batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX), (int)(actY), (int)Width, (int)Height), color: Color.White * alpha * screenAlpha);
-                if (eventType == 2) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(eventData[0] + parent.X), (int)(eventData[1] + parent.Y), (int)Width, (int)Height), color: Color.White * 0.5f * alpha * screenAlpha);
+                if (eventData.type == 2) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(((eventData_2)eventData).X + parent.X), (int)(((eventData_2)eventData).Y + parent.Y), (int)Width, (int)Height), color: Color.White * 0.5f * alpha * screenAlpha);
 
                 batch.Draw(Assets.graphics.ui.HL, destinationRectangle: new Rectangle((int)actX, (int)actY, (int)Width, (int)Height), color: Color.White * 0.5f * screenAlpha);
-                if (eventType == 2 && ShowMoveLocation) batch.Draw(Assets.graphics.ui.HL, destinationRectangle: new Rectangle((int)eventData[0] + parent.X, (int)eventData[1] + parent.Y, (int)Width, (int)Height), color: Color.White * 0.2f * alpha * screenAlpha);
+                if (eventData.type == 2 && ShowMoveLocation) batch.Draw(Assets.graphics.ui.HL, destinationRectangle: new Rectangle((int)((eventData_2)eventData).X + parent.X, (int)((eventData_2)eventData).Y + parent.Y, (int)Width, (int)Height), color: Color.White * 0.2f * alpha * screenAlpha);
 
                 batch.End();
             }

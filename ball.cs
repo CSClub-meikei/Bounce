@@ -37,18 +37,7 @@ namespace Bounce
             int flag1 = 0;
             int flag2 = 0;
 
-            foreach (shapeChangePoint b in parent.changePoints) if (overlapTester.overlapRectangles(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
-                {
-                    if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING) parent.Status = worldScreen.CHANGING;
-                    else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
-                }
-                    foreach (Switch b in parent.switchs) if (overlapTester.overlapRectangles(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
-                {
-                    parent.flags[b.flagNum] = true;
-                    DebugConsole.write("イベント: " + b.flagNum.ToString());
-                }
-
-                    foreach (GraphicalGameObject b in parent.frame.frames)
+            foreach (GraphicalGameObject b in parent.frame.frames)
             {
                 switch (overlapTester.overlapRectanglesEX(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                 {
@@ -85,47 +74,102 @@ namespace Bounce
             }
 
 
-           
-            foreach (thorn b in parent.thorns) {
-                if (overlapTester.overlapRectangles(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
-                { die();return; }
-                        
-                        }
-                foreach (block b in parent.blocks)
-                switch(overlapTester.overlapRectanglesEX(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height),new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
-                {
-                    case 1:
-                        velocityX = -Speed;
-                        DebugConsole.write(",1");
-                        // X = b.X - Width;
-                       // System.Windows.Forms.MessageBox.Show("1");
-                        flag2 = 1;
-                        break;
-                    case 2:
-                        velocityX = Speed;
-                        // X = b.X+b.Width;
-                        // System.Windows.Forms.MessageBox.Show("2");
-                        DebugConsole.write(",2");
-                        flag2 = 2;
-                        break;
-                    case 3:
-                        velocityY = -Speed;
-                        // Y = b.Y - Height;
-                        DebugConsole.write(",3");
-                        // System.Windows.Forms.MessageBox.Show("3");
-                       
-                        flag2 = 3;
-                        break;
-                    case 4:
-                        velocityY = Speed;
-                        //  Y = b.Y + b.Height;
-                        //  System.Windows.Forms.MessageBox.Show("4");]
-                        DebugConsole.write(",4");
-                        flag2 = 4;
-                        break;
+            int flag21 = 0;
+            int flag22 = 0;
 
+
+                foreach (List<LevelObject> l in parent.Layor) foreach (LevelObject o in l)
+                {
+                    if(o is block)
+                    {
+                        switch (overlapTester.overlapRectanglesEX(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        {
+                            case 1:
+                                velocityX = -Speed;
+                                DebugConsole.write(",1");
+                                // X = b.X - Width;
+                                // System.Windows.Forms.MessageBox.Show("1");
+                                if (flag21 == 0)
+                                {
+                                    flag21 = 1;
+                                }else
+                                {
+                                    flag22 = 2;
+                                }
+                                
+                                break;
+                            case 2:
+                                velocityX = Speed;
+                                // X = b.X+b.Width;
+                                // System.Windows.Forms.MessageBox.Show("2");
+                                DebugConsole.write(",2");
+                                if (flag21 == 0)
+                                {
+                                    flag21 = 2;
+                                }
+                                else
+                                {
+                                    flag22 = 1;
+                                }
+                                break;
+                            case 3:
+                                velocityY = -Speed;
+                                // Y = b.Y - Height;
+                                DebugConsole.write(",3");
+                                // System.Windows.Forms.MessageBox.Show("3");
+
+                                if (flag21 == 0)
+                                {
+                                    flag21 = 3;
+                                }
+                                else
+                                {
+                                    flag22 = 4;
+                                }
+                                break;
+                            case 4:
+                                velocityY = Speed;
+                                //  Y = b.Y + b.Height;
+                                //  System.Windows.Forms.MessageBox.Show("4");]
+                                DebugConsole.write(",4");
+                                if (flag21 == 0)
+                                {
+                                    flag21 = 4;
+                                }
+                                else
+                                {
+                                    flag22 = 3;
+                                }
+                                break;
+
+                        }
+                    }
+                    else if(o is thorn)
+                    {
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        { die(); return; }
+                    }
+                    else if(o is Switch)
+                    {
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        {
+                            parent.flags[o.eventData.num] = true;
+                            DebugConsole.write("イベント: " + o.eventData.num.ToString());
+                        }
+                    }
+                    else if (o is shapeChangePoint)
+                    {
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        {
+                            if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING) parent.Status = worldScreen.CHANGING;
+                            else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
+                        }
+                           
+                    }
                 }
-            if (flag1 != 0 && flag2 != 0 && flag1 == flag2) { die(); return; }
+
+            if (flag1 != 0 && flag21 != 0 && flag1 == flag21) { die(); return; }
+            if (flag21 == flag22 && flag21!=0 && flag22!=0) { die();return; }
             //Console.WriteLine("vx:" + velocityX.ToString());
             if (parent.Status == worldScreen.RUNNING)
             {
@@ -137,6 +181,10 @@ namespace Bounce
 
             base.update(delta);
         }
+        
+
+
+
         public override void Draw(SpriteBatch batch, float screenAlpha)
         {
 

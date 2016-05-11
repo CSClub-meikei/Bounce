@@ -10,16 +10,17 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Bounce
 {
-    class eventEditScreen:Screen
+    class eventEditScreen_p:Screen
     {
         mapChip chip;
         SimpleButton modeUp, modeDown, flagUp, flagDown,MoveSetting,optionUp,optionDown;
         TextObject modeLabel, flagLabel,optionLabel;
-        moveScreenObject back;
+        //moveScreenObject back;
+        GraphicalGameObject back;
         bool moveEditting = false;
         public event EventHandler MoveEdit;
 
-        public eventEditScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
+        public eventEditScreen_p(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             setUIcell(2, 4);
             modeLabel = new TextObject(game, this, Assets.graphics.ui.font, "0", Color.White, 100, 0);
@@ -31,16 +32,41 @@ namespace Bounce
             MoveSetting = new SimpleButton(game, this, Assets.graphics.ui.moveEditButton, 0, 80, 250, 50);
             optionUp = new SimpleButton(game, this, Assets.graphics.ui.arrowR, 200, 80, 40, 40);
             optionDown = new SimpleButton(game, this, Assets.graphics.ui.arrowL, 0, 80, 40, 40);
-            back = new moveScreenObject(game, this, Assets.graphics.ui.back_ChipToolbar, 0, 0, 300, 400);
+            back = new GraphicalGameObject(game, this, Assets.getColorTexture(game,Color.Black), 0, 0, 250, 720);
             optionLabel = new TextObject(game, this, Assets.graphics.ui.font, "0", Color.White, 100, 80);
 
             MoveSetting.Enter += new EventHandler((sender, e) => { if (chip != null) { moveEditting = true; MoveEdit(this, EventArgs.Empty); } });
-            modeUp.Enter += new EventHandler((sender, e) => { if (chip != null) { chip.eventType++; chip.eventData = new int[2]; }; });
-            modeDown.Enter += new EventHandler((sender, e) => { if (chip != null) { chip.eventType--; chip.eventData = new int[2]; } });
-            flagUp.Enter += new EventHandler((sender, e) => { if (chip != null) chip.eventNum++; });
-            flagDown.Enter += new EventHandler((sender, e) => { if (chip != null) chip.eventNum--; });
-            optionUp.Enter += new EventHandler((sender, e) => { if (chip != null) chip.eventData[0]++; });
-            optionDown.Enter += new EventHandler((sender, e) => { if (chip != null) chip.eventData[0]--; });
+            modeUp.Enter += new EventHandler((sender, e) => {
+                if (chip != null) {
+                    chip.eventData.type++;
+                    chip.eventData = getEventInstance(chip.eventData.type);
+                    if (chip.eventData.type == 2) { ((eventData_2)chip.eventData).X = (int)chip.X;
+                        ((eventData_2)chip.eventData).Y = (int)chip.Y;
+                    }
+                   // System.Windows.Forms.MessageBox.Show(chip.eventData.type.ToString());
+                }
+            });
+
+            modeDown.Enter += new EventHandler((sender, e) => {
+
+                if (chip != null)
+                {
+                    chip.eventData.type--;
+                    chip.eventData = getEventInstance(chip.eventData.type);
+                    if (chip.eventData.type == 2)
+                    {
+                        ((eventData_2)chip.eventData).X = (int)chip.X;
+                        ((eventData_2)chip.eventData).Y = (int)chip.Y;
+                    }
+                  //  System.Windows.Forms.MessageBox.Show(chip.eventData.type.ToString());
+                }
+
+            });
+
+            flagUp.Enter += new EventHandler((sender, e) => { if (chip != null) chip.eventData.num++; });
+            flagDown.Enter += new EventHandler((sender, e) => { if (chip != null) chip.eventData.num--; });
+            optionUp.Enter += new EventHandler((sender, e) => { if (chip != null && chip.eventData is eventData_1) ((eventData_1)chip.eventData).mode=1; });
+            optionDown.Enter += new EventHandler((sender, e) => { if (chip != null && chip.eventData is eventData_1) ((eventData_1)chip.eventData).mode = 0; });
 
             Controls[0, 0] = modeDown;
             Controls[1, 0] = modeUp;
@@ -49,6 +75,8 @@ namespace Bounce
             Controls[0, 1] = MoveSetting;
             Controls[0, 1] = optionDown;
             Controls[1, 1] = optionUp;
+
+            back.alpha = 0.5f;
         }
         public void Load(mapChip chip)
         {
@@ -59,21 +87,22 @@ namespace Bounce
             base.update(deltaTime);
             if (chip != null)
             {
-                flagLabel.text = chip.eventNum.ToString();
-                modeLabel.text = getEventTitle(chip.eventType);
-                optionLabel.text = chip.eventData[0].ToString();
-                if (chip.eventType == 0)
+                flagLabel.text = chip.eventData.num.ToString();
+                modeLabel.text = getEventTitle(chip.eventData.type);
+                
+                if (chip.eventData.type == 0)
                 {
                     
                     Controls[0, 1] = null;
                     Controls[1, 1] = null;
                 }
-                else if (chip.eventType == 1)
+                else if (chip.eventData.type == 1)
                 {
                     Controls[0, 1] = optionDown;
                     Controls[1, 1] = optionUp;
+                    optionLabel.text = ((eventData_1)chip.eventData).mode.ToString();
                 }
-                else if (chip.eventType == 2)
+                else if (chip.eventData.type == 2)
                 {
                     Controls[0, 1] = MoveSetting;
                     Controls[1, 1] = null;
@@ -89,21 +118,21 @@ namespace Bounce
 
                 if (moveEditting)
             {
-                if (Input.onKeyDown(Keys.Right))
-                {
-                    chip.eventData[0] += 40;
-                }else if (Input.onKeyDown(Keys.Left))
-                {
-                    chip.eventData[0] -= 40;
-                }
-                else if (Input.onKeyDown(Keys.Up))
-                {
-                    chip.eventData[1] -= 40;
-                }
-                else if (Input.onKeyDown(Keys.Down))
-                {
-                    chip.eventData[1] += 40;
-                }
+               // if (Input.onKeyDown(Keys.Right))
+               // {
+               //     chip.eventData[0] += 40;
+               // }else if (Input.onKeyDown(Keys.Left))
+               // {
+              //      chip.eventData[0] -= 40;
+              //  }
+              //  else if (Input.onKeyDown(Keys.Up))
+              //  {
+              //      chip.eventData[1] -= 40;
+              //  }
+             //   else if (Input.onKeyDown(Keys.Down))
+             //   {
+             //       chip.eventData[1] += 40;
+             //   }
             }
 
 
@@ -135,6 +164,28 @@ namespace Bounce
 
             return "イベントが定義されていません。";
 
+        }
+        public eventData getEventInstance(int num)
+        {
+            eventData res = new eventData();
+            res.type = 0;
+            switch (num)
+            {
+                case 0:
+                    res = new eventData();
+                    res.type = 0;
+                    break;
+                case 1:
+                    res = new eventData_1();
+                    res.type = 1;
+                    break;
+                case 2:
+                    res = new eventData_2();
+                    res.type = 2;
+                    break;
+
+            }
+            return res;
         }
     }
 }

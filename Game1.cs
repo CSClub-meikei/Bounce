@@ -114,22 +114,24 @@ namespace Bounce
                 if (debugScreen.screenAlpha == 0) debugScreen.screenAlpha = 1;
                 else if (debugScreen.screenAlpha == 1) debugScreen.screenAlpha = 0;
             }
-           
 
-                // TODO: Add your update logic here
-                try
-            {
-foreach(Screen s in screens)
-            {
-                s.update(deltaTime);
-            }
 
+            // TODO: Add your update logic here
+            try
+            {
+                foreach(Screen s in screens)
+             {
+                 s.update(deltaTime);
+              }
             }
             catch (Exception)
             {
 
-               // throw;
+              // throw;
             }
+            
+
+
             debugScreen.update(deltaTime);
             Input.update();
             base.Update(gameTime);

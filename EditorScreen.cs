@@ -7,16 +7,18 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace Bounce
 {
     class EditorScreen:Screen
     {
-        mapData map = new mapData();
+        mapData map ;
         public  List<mapChip> selectedChips = new List<mapChip>();
         public List<mapChip> RemoveChips = new List<mapChip>();
         ChipToolbar ChipToolbar;
-        public eventEditScreen eventEditScreen;
+        public eventEditScreen_p eventEditScreen;
 
         mapChip MoveEditChip;
         bool Moveeditting = false;
@@ -25,9 +27,10 @@ namespace Bounce
 
         public EditorScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
-            map.Load();
+            Load("test.xml");
+            map.Load(game,this);
             ChipToolbar = new ChipToolbar(game);
-            eventEditScreen = new eventEditScreen(game,1000,0);
+            eventEditScreen = new eventEditScreen_p(game,0,0);
             eventEditScreen.MoveEdit += new EventHandler(this.startMoveEdit);
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.onClick += new EventHandler(this.onSelect);
 
@@ -50,7 +53,9 @@ namespace Bounce
         {
             if (!Moveeditting)
             {
-                MoveEditChip = new mapChip(game, this, selectedChips[0].type, 0, (int)(selectedChips[0].eventData[0]), (int)(selectedChips[0].eventData[1]), (int)selectedChips[0].Width, (int)selectedChips[0].Height);
+               
+
+                MoveEditChip = new mapChip(game, this, selectedChips[0].type, 0,((eventData_2)selectedChips[0].eventData).X, ((eventData_2)selectedChips[0].eventData).Y, (int)selectedChips[0].Width, (int)selectedChips[0].Height);
                 MoveEditChip.isSelected = true;
                 MoveEditChip.AllowResize = false;
                 MoveEditChip.onUnSelect += new EventHandler(this.endMoveEdit);
@@ -62,7 +67,7 @@ namespace Bounce
                 MoveEditChip.animator[0].GLOWHL = Assets.graphics.ui.HL;
                 MoveEditChip.animator[0].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.4F, 0F, 0.4F, 0.0F, 1F });
                 MoveEditChip.animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 0 });
-                  selectedChips[0].alpha = 0.8f;
+                //  selectedChips[0].alpha = 0.8f;
                 selectedChips[0].ShowMoveLocation = false;
                 Moveeditting = true;
             }else
@@ -77,9 +82,9 @@ namespace Bounce
         {
             Moveeditting = false;
 
-            selectedChips[0].eventData[0] = (int)MoveEditChip.X;
-            selectedChips[0].eventData[1] = (int)MoveEditChip.Y;
-           selectedChips[0].alpha = 1;
+            ((eventData_2)selectedChips[0].eventData).X = (int)MoveEditChip.X;
+            ((eventData_2)selectedChips[0].eventData).Y = (int)MoveEditChip.Y;
+          // selectedChips[0].alpha = 1;
             selectedChips[0].ShowMoveLocation = true;
             MoveEditChip = null;
         }
@@ -100,12 +105,15 @@ namespace Bounce
                 X = op.X - (mp.X - Input.getPosition().X);
                 Y = op.Y - (mp.Y - Input.getPosition().Y);
             }
+            if (Input.onKeyDown(Keys.S)) Save("test.xml");
+
+
             if (Moveeditting) return;
             base.update(deltaTime);
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.update(deltaTime);
             foreach (mapChip c in RemoveChips) foreach (List<mapChip> layor in map.Layor) if (layor.IndexOf(c) != -1) layor.Remove(c);
-            if (selectedChips.Count == 0) eventEditScreen.screenAlpha = 0;
-            else eventEditScreen.screenAlpha = 1;
+           // if (selectedChips.Count == 0) eventEditScreen.screenAlpha = 0;
+           // else eventEditScreen.screenAlpha = 1;
 
         }
         public override void Draw(SpriteBatch batch)
@@ -131,6 +139,43 @@ namespace Bounce
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.isSelected = false;
 
                     foreach (mapChip chip in selectedChips) chip.isSelected = true;
+        }
+        public void Save(string fileName)
+        {
+
+            
+
+            //DataContractSerializerオブジェクトを作成
+            //オブジェクトの型を指定する
+            DataContractSerializer serializer =
+                new DataContractSerializer(typeof(mapData));
+            //BOMが付かないUTF-8で、書き込むファイルを開く
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Encoding = new System.Text.UTF8Encoding(false);
+            XmlWriter xw = XmlWriter.Create(fileName, settings);
+            //シリアル化し、XMLファイルに保存する
+            serializer.WriteObject(xw, map);
+            //ファイルを閉じる
+            xw.Close();
+        }
+        public void Load(string fileName)
+        {
+            if (System.IO.File.Exists(fileName))
+            {
+                //DataContractSerializerオブジェクトを作成
+                DataContractSerializer serializer =
+                    new DataContractSerializer(typeof(mapData));
+                //読み込むファイルを開く
+                XmlReader xr = XmlReader.Create(fileName);
+                //XMLファイルから読み込み、逆シリアル化する
+                map = (mapData)serializer.ReadObject(xr);
+                //ファイルを閉じる
+                xr.Close();
+            }else
+            {
+                map = new mapData();
+
+            }
         }
     }
 }

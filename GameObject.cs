@@ -7,15 +7,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
-
+using System.Runtime.Serialization;
+using System.Xml;
 namespace Bounce
 {
+    [DataContract]
     public class GameObject
     {
         
         protected ContentManager Content;
-        public double X = 0;
-        public double Y = 0;
+        [DataMember]public double X = 0;
+        [DataMember]public double Y = 0;
         /// <summary>
         /// 最終的に描画される位置 Draw内ではこれを使う
         /// </summary>
@@ -24,8 +26,8 @@ namespace Bounce
         /// 最終的に描画される位置 Draw内ではこれを使う
         /// </summary>
         public double actY = 0;
-        public double Width = 100;
-        public double Height = 100;
+        [DataMember]public double Width = 100;
+        [DataMember]public double Height = 100;
         public double velocityX = 0;
         public double velocityY = 0;
         public float alpha = 1.0F;
