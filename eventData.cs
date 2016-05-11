@@ -16,7 +16,7 @@ namespace Bounce
         public int type;
         public int num;
 
-        public float delay=1;
+        public float delay=0;
         
     }
 }

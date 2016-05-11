@@ -21,12 +21,10 @@ namespace Bounce
         public ball ball;
         public frame frame;
         public List<bool> flags = new List<bool>();
-        public List<block> blocks = new List<block>();
-        public List<thorn> thorns = new List<thorn>();
-        public List<Switch> switchs = new List<Switch>();
+        
         public List<List<LevelObject>> Layor;
 
-        public List<shapeChangePoint> changePoints = new List<shapeChangePoint>();
+        
 
         public const int RUNNING = 1;
         public const int PAUSE = 0;
@@ -73,11 +71,8 @@ namespace Bounce
                 X = (int)-frame.X + 640;
                 Y = (int)-frame.Y + 360;
 
-                foreach (block b in blocks) b.update(deltaTime);
-                foreach (thorn b in thorns) b.update(deltaTime);
-                foreach (Switch b in switchs) b.update(deltaTime);
-                foreach (shapeChangePoint b in changePoints) b.update(deltaTime);
-
+               
+              
                 foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.update(deltaTime);
 
                 ball.update(deltaTime);
@@ -100,10 +95,7 @@ namespace Bounce
         public override void Draw(SpriteBatch batch)
         {
             foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
-            foreach (thorn b in thorns) b.Draw(batch, screenAlpha);
-            foreach (Switch b in switchs) b.Draw(batch, screenAlpha);
-            foreach (shapeChangePoint b in changePoints) b.Draw(batch, screenAlpha);
-            foreach (block b in blocks) b.Draw(batch, screenAlpha);
+           
             ball.Draw(batch, screenAlpha);
             frame.Draw(batch, screenAlpha);
             time.Draw(batch, screenAlpha);
@@ -137,7 +129,9 @@ namespace Bounce
                             case mapChip.SWITCH:
                                 this.Layor[0].Add(new Switch(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
                                 break;
-
+                            case mapChip.SHPOINT:
+                                this.Layor[0].Add(new shapeChangePoint(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                                break;
                         }
                         
                     }

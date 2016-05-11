@@ -80,6 +80,7 @@ namespace Bounce
 
                 foreach (List<LevelObject> l in parent.Layor) foreach (LevelObject o in l)
                 {
+                    if (!o.enable) continue;
                     if(o is block)
                     {
                         switch (overlapTester.overlapRectanglesEX(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))

@@ -18,6 +18,7 @@ namespace Bounce
         public float FlagDelayTime;
         public eventData eventData;
         public event EventHandler flagChanged;
+        public bool enable=true;
         new worldScreen parent;
 
 
@@ -34,6 +35,11 @@ namespace Bounce
         {
             parent = (worldScreen)screen;
             eventData=ed;
+            flagChanged += new EventHandler(this.flagEvent);
+            if (eventData.type == 1)
+            {
+                if (((eventData_1)eventData).mode == 1) enable = false;
+            }
         }
         public override void update(float delta)
         {
@@ -50,6 +56,11 @@ namespace Bounce
             }
 
             base.update(delta);
+        }
+        public override void Draw(SpriteBatch batch, float screenAlpha)
+        {
+            if (!enable) return;
+            base.Draw(batch, screenAlpha);
         }
         public Texture2D getChipTexture(int num, int rotate)
         {
@@ -83,5 +94,33 @@ namespace Bounce
             return res;
 
         }
+
+        public virtual void flagEvent(object sender,EventArgs e)
+        {
+            if (eventData.type == 1)
+            {
+
+                if (((eventData_1)eventData).mode == 0)
+                {
+                    enable = false;
+                }
+                else if (((eventData_1)eventData).mode == 1)
+                {
+                    enable = true;
+                }
+
+
+            }
+            else if (eventData.type == 2)
+            {
+
+                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, ((eventData_2)eventData).speed, -1 });
+
+                DebugConsole.write("イベント作動！！！！！！！");
+
+
+            }
+        }
+
     }
 }
