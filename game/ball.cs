@@ -215,8 +215,13 @@ namespace Bounce
         }
       public void died()
         {
+            if (parent.testPlay)
+            {
+                parent.stopTest();
+                return;
+            }
             game.screens.Clear();
-            game.screens.Add(new worldScreen(game));
+            game.screens.Add(new worldScreen(game,"test.xml"));
             game.screens.Add(new GameScreen(game));
         }
     }

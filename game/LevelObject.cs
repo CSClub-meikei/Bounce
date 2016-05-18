@@ -21,6 +21,7 @@ namespace Bounce
         public bool enable=true;
         new worldScreen parent;
 
+        int event1Loop_tmp=0;
 
         public bool flag
         {
@@ -86,7 +87,7 @@ namespace Bounce
                     res = Assets.graphics.game.block;
                     break;
                 case mapChip.GOAL:
-                    res = Assets.graphics.game.block;
+                    res = Assets.graphics.game.goal;
                     break;
             }
 
@@ -108,7 +109,26 @@ namespace Bounce
                 {
                     enable = true;
                 }
+                if ((((eventData_1)eventData).isLoop)){
 
+                    addAnimator(1);
+                    animator[0].setDelay((((eventData_1)eventData).interval));
+                    animator[0].FinishAnimation += new EventHandler((sender2, e2) => {
+                        if (event1Loop_tmp == 1) event1Loop_tmp = 0;
+                        else event1Loop_tmp = 1;
+                        animator[0].start(GameObjectAnimator.fadeInOut, new float[] { event1Loop_tmp, 0 });
+
+                    });
+                    if (((eventData_1)eventData).mode == 0)
+                    {
+                        event1Loop_tmp = 1;
+                        animator[0].start(GameObjectAnimator.fadeInOut, new float[] { event1Loop_tmp, 0 });
+                    }
+                    if (((eventData_1)eventData).mode == 1)
+                        event1Loop_tmp = 0;
+                    animator[0].start(GameObjectAnimator.fadeInOut, new float[] { event1Loop_tmp, 0 });
+
+                }
 
             }
             else if (eventData.type == 2)

@@ -71,7 +71,7 @@ namespace Bounce
            
             game.screens[0].animator.FinishAnimation += new EventHandler((ss, ee) => {
                 game.screens.Clear();
-                game.screens.Add(new worldScreen(game));
+                game.screens.Add(new worldScreen(game, "test.xml"));
                 game.screens.Add(new GameScreen(game));
             });
            game.screens[0].animator.setDelay(1f);

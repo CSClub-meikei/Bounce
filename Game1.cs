@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Bounce.editor;
 namespace Bounce
 {
     /// <summary>
@@ -96,7 +96,7 @@ namespace Bounce
             if (Input.onKeyDown(Keys.G))
             {
                 screens.Clear();
-                screens.Add(new worldScreen(this));
+                screens.Add(new worldScreen(this, "test.xml"));
                 screens.Add(new GameScreen(this));
             }
             if (Input.onKeyDown(Keys.E))
@@ -119,17 +119,18 @@ namespace Bounce
             // TODO: Add your update logic here
             try
             {
-                foreach(Screen s in screens)
-             {
-                 s.update(deltaTime);
-              }
+                foreach (Screen s in screens)
+                {
+                    s.update(deltaTime);
+                }
             }
             catch (Exception)
             {
 
-              // throw;
+                //throw;
             }
-            
+             
+           
 
 
             debugScreen.update(deltaTime);

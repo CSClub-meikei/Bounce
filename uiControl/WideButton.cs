@@ -14,6 +14,7 @@ namespace Bounce
     {
         GraphicalGameObject back, front;
         public Rectangle frontPosition;
+        public bool enableSound=true;
         float al=1;
         public WideButton(Game1 game, Screen screen, Texture2D back,Texture2D front, float x, float y, float width, float height,  float fx=0, float fy=0, float fwidth=0, float fheight=0) : base(game, screen, back, x, y, width, height)
         {
@@ -52,7 +53,7 @@ namespace Bounce
         }
         public void got(object sender,EventArgs e)
         {
-            Assets.soundEffects.s.Play();
+            if(enableSound) Assets.soundEffects.s.Play();
             back.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.1f });
             al = 1;
             //front.animator[2].start(GameObjectAnimator.fadeInOut, new float[] { 0, 1});
@@ -71,7 +72,7 @@ namespace Bounce
         }
         public void accepted(object sender, EventArgs e)
         {
-            Assets.soundEffects.d.Play();
+            if (enableSound) Assets.soundEffects.d.Play();
         }
     }
 }

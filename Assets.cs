@@ -51,6 +51,30 @@ namespace Bounce
                 public static Texture2D arrowL;
                 public static Texture2D moveEditButton;
 
+                public static Texture2D check;
+
+                public static Texture2D button_file_d;
+                public static Texture2D button_file_h;
+
+                public static Texture2D back_uibutton;
+
+                public static Texture2D button_newfile;
+                public static Texture2D button_openfile;
+                public static Texture2D button_savefile;
+                public static Texture2D button_savenewfile;
+
+                public static Texture2D button_mapSetting_d;
+                public static Texture2D button_mapSetting_h;
+                public static Texture2D back_submenu;
+
+                public static Texture2D back_textbox;
+                public static Texture2D back_dialog;
+
+
+                public static Texture2D startChip;
+                public static Texture2D button_testplay;
+
+
                 public static SpriteFont font;
             }
             public static class game
@@ -63,6 +87,7 @@ namespace Bounce
                 public static Texture2D[] Switch;
                 public static Texture2D[] thorn;
                 public static Texture2D[] ball_animation;
+                public static Texture2D goal;
             }
         }
         public static class bgm
@@ -127,6 +152,27 @@ namespace Bounce
             graphics.ui.trashBox = Content.Load<Texture2D>("trashBox");
             graphics.ui.moveEditButton = Content.Load<Texture2D>("moveEditButton");
 
+            graphics.ui.check = Content.Load<Texture2D>("check");
+
+            graphics.ui.back_submenu = Content.Load<Texture2D>("back-submenu");
+
+            graphics.ui.back_uibutton = Content.Load<Texture2D>("back-uibutton");
+            graphics.ui.button_file_d = Content.Load<Texture2D>("button-file-d");
+            graphics.ui.button_file_h = Content.Load<Texture2D>("button-file-h");
+            graphics.ui.button_newfile = Content.Load<Texture2D>("button-newfile");
+            graphics.ui.button_openfile = Content.Load<Texture2D>("button-openfile");
+            graphics.ui.button_savefile = Content.Load<Texture2D>("button-savefile");
+            graphics.ui.button_savenewfile = Content.Load<Texture2D>("button-savenewfile");
+
+            graphics.ui.button_mapSetting_d = Content.Load<Texture2D>("button-mapSetting-d");
+            graphics.ui.button_mapSetting_h = Content.Load<Texture2D>("button-mapSetting-h");
+
+            graphics.ui.back_textbox = Content.Load<Texture2D>("back-textbox");
+            graphics.ui.back_dialog = Content.Load<Texture2D>("back-dialog");
+
+            graphics.ui.startChip = Content.Load<Texture2D>("startChip");
+            graphics.ui.button_testplay = Content.Load<Texture2D>("button-testPlay");
+
             graphics.ui.font = Content.Load<SpriteFont>("font");
         }
         public static void LoadGame(ContentManager Content)
@@ -141,7 +187,7 @@ namespace Bounce
             graphics.game.changePoint = Content.Load<Texture2D>("changePoint");
             graphics.game.Switch = new Texture2D[4];
             graphics.game.thorn = new Texture2D[4];
-
+            graphics.game.goal= Content.Load<Texture2D>("goal");
             for (i = 0; i <= 3; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
             for (i=0;i<=3;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
 

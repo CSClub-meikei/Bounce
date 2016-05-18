@@ -31,6 +31,7 @@ namespace Bounce
         }
         public override void Draw(SpriteBatch batch, float screenAlpha)
         {
+            if (!enable) return;
             batch.Begin(transformMatrix: game.GetScaleMatrix(), blendState: BlendState.Additive);
             if (animatorLayor == 0)
             {

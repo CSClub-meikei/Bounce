@@ -32,11 +32,13 @@ namespace Bounce
         public int Status = RUNNING;
         public int frameShape = 1;
 
-        public worldScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
+        public bool testPlay = false;
+        public event EventHandler stop;
+        public worldScreen(Game1 game,string file, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
 
-
-            load("test.xml");
+            load(file);
+            
             // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 200, 360, 40));
             // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 240, 40,640));
             //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 240, 40, 400));
@@ -92,11 +94,20 @@ namespace Bounce
                 if (Input.onKeyDown(Keys.Left)) { frameShape--; frame.LoadFrame(frameShape); }
             }
             base.update(deltaTime);
-
+            if (Input.onKeyDown(Keys.P) && testPlay)
+            {
+                // game.screens.Remove(this);
+                stopTest();
+            }
+        }
+        public void stopTest()
+        {
+            if (stop != null) stop(this, EventArgs.Empty);
+            
         }
         public override void Draw(SpriteBatch batch)
         {
-            foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
+           if(Layor!=null) foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
            
             ball.Draw(batch, screenAlpha);
             frame.Draw(batch, screenAlpha);

@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using System.Runtime.Serialization;
 using System.Xml;
+
+using Bounce.editor;
 namespace Bounce
 {
     [DataContract]
@@ -23,6 +25,7 @@ namespace Bounce
         public const int WARPPOINT = 5;
         public const int GUMPOINT = 6;
         public const int GOAL = 7;
+        public const int START = 8;
 
         public const int DEFULT = 0;
         public const int MOVING = 1;
@@ -34,7 +37,7 @@ namespace Bounce
         public int DrawMode = 1;
 
         [DataMember]public eventData eventData;
-       
+        [DataMember]public int specialData;
 
         public int clickedX, clickedY;
         public int EditingMode = 0;
@@ -45,6 +48,7 @@ namespace Bounce
         public bool doubleClickFlag = false;
         public bool AllowResize = true;
         public bool ShowMoveLocation = true;
+        public bool AllowDelete=true;
 
         public event EventHandler onClick;
         public event EventHandler onDoubleClick;
@@ -57,6 +61,7 @@ namespace Bounce
                 _isSelect = value;
                 if (_isSelect)
                 {
+                    parent.eventEditScreen.load(this);
                     EditingMode = MOVING;
                 }
             }
@@ -102,9 +107,12 @@ namespace Bounce
 
         public override void update(float delta)
         {
-            if(Input.OnMouseDown(Input.LeftButton) && !Input.IsHover(new Rectangle((int)actX-10, (int)actY-10, (int)Width+20, (int)Height+20)) && !Input.IsHover(new Rectangle((int)parent.eventEditScreen.X, (int)parent.eventEditScreen.Y, (int)300, (int)400)))
+            if (Input.OnMouseDown(Input.LeftButton) && !Input.IsHover(new Rectangle((int)actX - 10, (int)actY - 10, (int)Width + 20, (int)Height + 20)) && isSelected && !Input.IsHover(new Rectangle(parent.eventEditScreen.X, parent.eventEditScreen.Y, 200, 720)))
+
             {
+              //  System.Windows.Forms.MessageBox.Show("un");
                 isSelected = false;
+                parent.RefreshMap();
                 parent.selectedChips.Remove(this);
                 if(onUnSelect!=null)onUnSelect(this, EventArgs.Empty);
             }
@@ -173,7 +181,7 @@ namespace Bounce
         }
         public void updateDefult(float deltaTime)
         {
-            if (Input.onKeyDown(Keys.Delete)) { parent.RemoveChips.Add(this); DebugConsole.write("削除"); }
+            if (Input.onKeyDown(Keys.Delete)&&AllowDelete) { parent.RemoveChips.Add(this); DebugConsole.write("削除"); }
             if (Input.IsHover(new Rectangle((int)(actX + Width - 10), (int)actY+10, (int)20, (int)Height-20)) && Input.OnMouseDown(Input.LeftButton))
             {
                 EditingMode = RESIZEING;
@@ -249,7 +257,7 @@ namespace Bounce
             if (Input.OnMouseUp(Input.LeftButton))
             {
                 EditingMode = DEFULT;
-
+               // parent.RefreshMap();
             }
 
 
@@ -290,6 +298,7 @@ namespace Bounce
             }else if (Input.OnMouseUp(Input.LeftButton))
             {
                 EditingMode = DEFULT;
+                //parent.RefreshMap();
             }
             
         }
@@ -373,7 +382,10 @@ namespace Bounce
                     res = Assets.graphics.game.block;
                     break;
                 case GOAL:
-                    res = Assets.graphics.game.block;
+                    res = Assets.graphics.game.goal;
+                    break;
+                case START:
+                    res = Assets.graphics.ui.startChip;
                     break;
             }
 

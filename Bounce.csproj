@@ -41,6 +41,15 @@
     <Compile Include="appSettings.cs" />
     <Compile Include="Assets.cs" />
     <Compile Include="AssetsLoadScreen.cs" />
+    <Compile Include="deepCopy.cs" />
+    <Compile Include="editor\eventEditScreen.cs" />
+    <Compile Include="editor\eventEditScreen_1.cs" />
+    <Compile Include="editor\FileMenu.cs" />
+    <Compile Include="editor\mapSettingScreen.cs" />
+    <Compile Include="editor\menuBar.cs" />
+    <Compile Include="game\goal.cs" />
+    <Compile Include="uiControl\checkBox.cs" />
+    <Compile Include="uiControl\NumUpDown.cs" />
     <Compile Include="screens\BackScreen.cs" />
     <Compile Include="game\ball.cs" />
     <Compile Include="game\block.cs" />
@@ -55,12 +64,13 @@
     <Compile Include="map\eventData_2.cs" />
     <Compile Include="editor\eventEditScreen_p.cs" />
     <Compile Include="game\frame.cs" />
-    <Compile Include="gameObject\GameScreen.cs" />
+    <Compile Include="game\GameScreen.cs" />
     <Compile Include="game\LevelObject.cs" />
     <Compile Include="map\mapChip.cs" />
     <Compile Include="map\mapChip_p.cs" />
     <Compile Include="map\mapData.cs" />
     <Compile Include="gameObject\moveScreenObject.cs" />
+    <Compile Include="uiControl\ToggleButton.cs" />
     <Compile Include="uiControl\progressBar.cs" />
     <Compile Include="screens\SelectGameScreen.cs" />
     <Compile Include="SettingForm.cs">
@@ -93,7 +103,7 @@
     <Compile Include="gameObject\TextObject.cs" />
     <Compile Include="gameObject\uiObject.cs" />
     <Compile Include="screens\UItestScreen.cs" />
-    <Compile Include="editor\worldScreen.cs" />
+    <Compile Include="game\worldScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Box2DX">
@@ -305,7 +315,19 @@
     <Content Include="Content\graphics\ui\back-ChipToolbar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\back-dialog.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\back-label.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\back-textbox.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\back-uibutton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\back-submenu.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\button-file-d.png">
@@ -314,7 +336,34 @@
     <Content Include="Content\graphics\ui\button-file-h.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\button-mapSetting-d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-mapSetting-h.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-newfile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-openFile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-savefile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-savenewfile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-testPlay.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\check.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\cursor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\goal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\HL.png">
@@ -345,6 +394,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\sp2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\startChip.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\title-Square.png">
