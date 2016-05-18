@@ -30,8 +30,8 @@ namespace Bounce
             Load("test.xml");
             map.Load(game,this);
             ChipToolbar = new ChipToolbar(game);
-            eventEditScreen = new eventEditScreen_p(game,0,0);
-            eventEditScreen.MoveEdit += new EventHandler(this.startMoveEdit);
+            //eventEditScreen = new eventEditScreen_p(game,0,0);
+           // eventEditScreen.MoveEdit += new EventHandler(this.startMoveEdit);
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.onClick += new EventHandler(this.onSelect);
 
             foreach (ChipToolBarChip c in ChipToolbar.Controls) c.Drag += new EventHandler((sender, e) => { AddChip(selectedLayor,c.ChipNum); });
@@ -92,7 +92,7 @@ namespace Bounce
         {
 
             ChipToolbar.update(deltaTime);
-            eventEditScreen.update(deltaTime);
+           // eventEditScreen.update(deltaTime);
             if (MoveEditChip != null) { MoveEditChip.update(deltaTime);}
             
             if (Input.OnMouseDown(Input.MiddleButton))
@@ -120,7 +120,7 @@ namespace Bounce
         {
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.Draw(batch, screenAlpha);
             ChipToolbar.Draw(batch);
-            eventEditScreen.Draw(batch);
+            //eventEditScreen.Draw(batch);
             if (MoveEditChip != null) MoveEditChip.Draw(batch, screenAlpha);
             base.Draw(batch);
         }
@@ -134,8 +134,8 @@ namespace Bounce
                 selectedChips.Clear();
                 selectedChips.Add((mapChip)sender);
             }
-            eventEditScreen.Load(selectedChips[0]);
-            eventEditScreen.screenAlpha = 1;
+            //eventEditScreen.Load(selectedChips[0]);
+           // eventEditScreen.screenAlpha = 1;
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.isSelected = false;
 
                     foreach (mapChip chip in selectedChips) chip.isSelected = true;

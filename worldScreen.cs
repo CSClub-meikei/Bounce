@@ -50,10 +50,12 @@ namespace Bounce
 
             //Layor = new List<List<LevelObject>>();
             //Layor.Add(new List<LevelObject>());
-            
 
-            ball = new ball(game, this, Assets.graphics.game.ball, 620, 340, 40, 40);
-            frame = new frame(game, this, Assets.graphics.game.frameW, 640, 360, 200, 200);
+
+            ball = new ball(game, this, Assets.graphics.game.ball, map.start.X, map.start.Y, 40, 40);
+            frame = new frame(game, this, Assets.graphics.game.frameW, map.start.X, map.start.Y, 200, 200);
+            X = (int)-frame.X + 640;
+            Y = (int)-frame.Y + 360;
             //  ball=new GraphicalGameObject(game,this,Assets.graphics.game.ball,)
             setUIcell(1, 1);
             time = new TextObject(game, this, Assets.graphics.ui.font, "time: 0", Color.White, 0, 0);

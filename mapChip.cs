@@ -185,6 +185,7 @@ namespace Bounce
                 FirstHeight = (int)Height;
                 FirstX = (int)X;
                 FirstY = (int)Y;
+                
             }
             else if (Input.IsHover(new Rectangle((int)(actX+10), (int)(actY+Height-10), (int)Width-20, (int)20)) && Input.OnMouseDown(Input.LeftButton))
             {
