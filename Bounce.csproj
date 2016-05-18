@@ -41,59 +41,59 @@
     <Compile Include="appSettings.cs" />
     <Compile Include="Assets.cs" />
     <Compile Include="AssetsLoadScreen.cs" />
-    <Compile Include="BackScreen.cs" />
-    <Compile Include="ball.cs" />
-    <Compile Include="block.cs" />
-    <Compile Include="ChipToolbar.cs" />
-    <Compile Include="ChipToolBarChip.cs" />
+    <Compile Include="screens\BackScreen.cs" />
+    <Compile Include="game\ball.cs" />
+    <Compile Include="game\block.cs" />
+    <Compile Include="editor\ChipToolbar.cs" />
+    <Compile Include="editor\ChipToolBarChip.cs" />
     <Compile Include="DebugConsole.cs" />
     <Compile Include="debugScreen.cs" />
-    <Compile Include="EditorScreen.cs" />
-    <Compile Include="EditorScreen_p.cs" />
-    <Compile Include="eventData.cs" />
-    <Compile Include="eventData_1.cs" />
-    <Compile Include="eventData_2.cs" />
-    <Compile Include="eventEditScreen_p.cs" />
-    <Compile Include="frame.cs" />
-    <Compile Include="GameScreen.cs" />
-    <Compile Include="LevelObject.cs" />
-    <Compile Include="mapChip.cs" />
-    <Compile Include="mapChip_p.cs" />
-    <Compile Include="mapData.cs" />
-    <Compile Include="moveScreenObject.cs" />
-    <Compile Include="progressBar.cs" />
-    <Compile Include="SelectGameScreen.cs" />
+    <Compile Include="editor\EditorScreen.cs" />
+    <Compile Include="editor\EditorScreen_p.cs" />
+    <Compile Include="map\eventData.cs" />
+    <Compile Include="map\eventData_1.cs" />
+    <Compile Include="map\eventData_2.cs" />
+    <Compile Include="editor\eventEditScreen_p.cs" />
+    <Compile Include="game\frame.cs" />
+    <Compile Include="gameObject\GameScreen.cs" />
+    <Compile Include="game\LevelObject.cs" />
+    <Compile Include="map\mapChip.cs" />
+    <Compile Include="map\mapChip_p.cs" />
+    <Compile Include="map\mapData.cs" />
+    <Compile Include="gameObject\moveScreenObject.cs" />
+    <Compile Include="uiControl\progressBar.cs" />
+    <Compile Include="screens\SelectGameScreen.cs" />
     <Compile Include="SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="shapeChangePoint.cs" />
-    <Compile Include="SimpleButton.cs" />
-    <Compile Include="singleFrame.cs" />
-    <Compile Include="SplashScreen.cs" />
-    <Compile Include="Switch.cs" />
+    <Compile Include="game\shapeChangePoint.cs" />
+    <Compile Include="uiControl\SimpleButton.cs" />
+    <Compile Include="game\singleFrame.cs" />
+    <Compile Include="screens\SplashScreen.cs" />
+    <Compile Include="game\Switch.cs" />
     <Compile Include="test.cs" />
-    <Compile Include="thorn.cs" />
-    <Compile Include="WideButton.cs" />
+    <Compile Include="game\thorn.cs" />
+    <Compile Include="uiControl\WideButton.cs" />
     <Compile Include="FPSCounter.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameObject.cs" />
-    <Compile Include="GameObjectAnimator.cs" />
-    <Compile Include="GraphicalGameObject.cs" />
+    <Compile Include="gameObject\GameObject.cs" />
+    <Compile Include="gameObject\GameObjectAnimator.cs" />
+    <Compile Include="gameObject\GraphicalGameObject.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="overlapTester.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Screen.cs" />
-    <Compile Include="ScreenAnimation.cs" />
-    <Compile Include="ScreenAnimator.cs" />
+    <Compile Include="screens\Screen.cs" />
+    <Compile Include="screens\ScreenAnimation.cs" />
+    <Compile Include="screens\ScreenAnimator.cs" />
     <Compile Include="SettingData.cs" />
-    <Compile Include="TextObject.cs" />
-    <Compile Include="uiObject.cs" />
-    <Compile Include="UItestScreen.cs" />
-    <Compile Include="worldScreen.cs" />
+    <Compile Include="gameObject\TextObject.cs" />
+    <Compile Include="gameObject\uiObject.cs" />
+    <Compile Include="screens\UItestScreen.cs" />
+    <Compile Include="editor\worldScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Box2DX">
@@ -306,6 +306,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\back-label.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-file-d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-file-h.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\cursor.png">
