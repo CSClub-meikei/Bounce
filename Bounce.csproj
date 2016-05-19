@@ -44,6 +44,7 @@
     <Compile Include="deepCopy.cs" />
     <Compile Include="editor\eventEditScreen.cs" />
     <Compile Include="editor\eventEditScreen_1.cs" />
+    <Compile Include="editor\eventEditScreen_2.cs" />
     <Compile Include="editor\FileMenu.cs" />
     <Compile Include="editor\mapSettingScreen.cs" />
     <Compile Include="editor\menuBar.cs" />

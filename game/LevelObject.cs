@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Bounce
 {
-    class LevelObject:GraphicalGameObject
+    class LevelObject : GraphicalGameObject
     {
 
         public bool _flag;
@@ -18,33 +18,43 @@ namespace Bounce
         public float FlagDelayTime;
         public eventData eventData;
         public event EventHandler flagChanged;
-        public bool enable=true;
+        
+        public float tmpTime=0f;
+        public bool type1tmp;
+        public bool type2tmp;
+        public int type2tmpX, type2tmpY;
+
+
+        public bool enable = true;
         new worldScreen parent;
 
-        int event1Loop_tmp=0;
+
 
         public bool flag
         {
             get { return _flag; }
-            set {
+            set
+            {
                 _flag = value;
                 if (eventData.delay == 0) flagChanged?.Invoke(this, EventArgs.Empty);
                 else _startFlagDelay = true;
             }
         }
-        public LevelObject(Game1 game, Screen screen ,eventData ed, float x, float y, float width, float height) : base(game, screen, null, x, y, width, height)
+        public LevelObject(Game1 game, Screen screen, eventData ed, float x, float y, float width, float height) : base(game, screen, null, x, y, width, height)
         {
             parent = (worldScreen)screen;
-            eventData=ed;
+            eventData = ed;
             flagChanged += new EventHandler(this.flagEvent);
             if (eventData.type == 1)
             {
                 if (((eventData_1)eventData).mode == 1) enable = false;
             }
+            type2tmpX = (int)X;
+            type2tmpY = (int)Y;
         }
         public override void update(float delta)
         {
-           if(eventData.num!=0) if (parent.flags[eventData.num] && !flag) flag = true;
+            if (eventData.num != 0) if (parent.flags[eventData.num] && !flag) flag = true;
 
             if (_startFlagDelay)
             {
@@ -55,7 +65,7 @@ namespace Bounce
                     _startFlagDelay = false;
                 }
             }
-
+            if(flag)eventUpdate(delta);
             base.update(delta);
         }
         public override void Draw(SpriteBatch batch, float screenAlpha)
@@ -96,51 +106,129 @@ namespace Bounce
 
         }
 
-        public virtual void flagEvent(object sender,EventArgs e)
+        public virtual void flagEvent(object sender, EventArgs e)
         {
             if (eventData.type == 1)
             {
 
-                if (((eventData_1)eventData).mode == 0)
-                {
-                    enable = false;
-                }
-                else if (((eventData_1)eventData).mode == 1)
-                {
-                    enable = true;
-                }
-                if ((((eventData_1)eventData).isLoop)){
 
-                    addAnimator(1);
-                    animator[0].setDelay((((eventData_1)eventData).interval));
-                    animator[0].FinishAnimation += new EventHandler((sender2, e2) => {
-                        if (event1Loop_tmp == 1) event1Loop_tmp = 0;
-                        else event1Loop_tmp = 1;
-                        animator[0].start(GameObjectAnimator.fadeInOut, new float[] { event1Loop_tmp, 0 });
+                if ((((eventData_1)eventData).isLoop))
+                {
 
-                    });
+
                     if (((eventData_1)eventData).mode == 0)
                     {
-                        event1Loop_tmp = 1;
-                        animator[0].start(GameObjectAnimator.fadeInOut, new float[] { event1Loop_tmp, 0 });
+                        type1tmp = true;
                     }
                     if (((eventData_1)eventData).mode == 1)
-                        event1Loop_tmp = 0;
-                    animator[0].start(GameObjectAnimator.fadeInOut, new float[] { event1Loop_tmp, 0 });
+                    {
+                        type1tmp = false;
+                    }
+
+
 
                 }
-
+                else
+                {
+                    if (((eventData_1)eventData).mode == 0)
+                    {
+                        enable = false;
+                    }
+                    else if (((eventData_1)eventData).mode == 1)
+                    {
+                        enable = true;
+                    }
+                }
             }
             else if (eventData.type == 2)
             {
-
-                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, ((eventData_2)eventData).speed, -1 });
+                double distant = System.Math.Sqrt(System.Math.Pow((((eventData_2)eventData).X - X),2) + System.Math.Pow((((eventData_2)eventData).Y - Y), 2))/40;
+                //System.Windows.Forms.MessageBox.Show(distant.ToString());
+                animator[0].setDelay(((eventData_2)eventData).interval);
+               
+                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, 1/(((eventData_2)eventData).speed)*(float)distant, -1 });
+                type2tmp = true;
 
                 DebugConsole.write("イベント作動！！！！！！！");
 
 
             }
+            
+
         }
+
+        public virtual void eventUpdate(float deltaTime)
+        {
+            if (eventData.type == 1)
+            {
+                if ((((eventData_1)eventData).isLoop))
+                {
+
+                    if (type1tmp)
+                    {
+
+                        tmpTime += deltaTime / 1000;
+                        if(tmpTime>= ((eventData_1)eventData).interval)
+                        {
+                            enable = false;
+                            type1tmp = false;
+                            tmpTime = 0;
+                        }
+
+
+                    }else
+                    {
+                        tmpTime += deltaTime / 1000;
+                        if (tmpTime >= ((eventData_1)eventData).interval)
+                        {
+                            enable = true;
+                            type1tmp = true;
+                            tmpTime = 0;
+                        }
+                    }
+                }
+                
+                }else if (eventData.type == 2)
+            {
+                if ((((eventData_2)eventData).isLoop))
+                    {
+
+
+
+                    if (!animator[0].isAnimate && !animator[0].isAnimatedelay)
+                    {
+
+                        if (type2tmp)
+                        {
+                            double distant = System.Math.Sqrt(System.Math.Pow(X - type2tmpX, 2) + System.Math.Pow((Y - type2tmpY), 2)) / 40;
+                            animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, type2tmpX, type2tmpY, 1 / (((eventData_2)eventData).speed) * (float)distant, -1 });
+                            type2tmp = false;
+                            DebugConsole.write(type2tmpX.ToString());
+                        }
+                        else
+                        {
+                            double distant = System.Math.Sqrt(System.Math.Pow((((eventData_2)eventData).X - X), 2) + System.Math.Pow((((eventData_2)eventData).Y - Y), 2)) / 40;
+                            animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, 1 / (((eventData_2)eventData).speed) * (float)distant, -1 });
+                            type2tmp = true;
+                            DebugConsole.write(type2tmp.ToString());
+                        }
+
+
+
+
+
+                    }
+
+                }
+
+
+            }
+
+
+
+            }
+
+
 
     }
 }

@@ -24,7 +24,7 @@ namespace Bounce
         int frame = 0;
         public float[] tmp;//定義 x,y,w,h, アニメーターレイヤ x,y,w,h,alpha
         public bool isAnimate = false;
-        bool isAnimatedelay = false;
+        public bool isAnimatedelay = false;
         float vx = 0;
         float vy = -2;
         int c = 0;

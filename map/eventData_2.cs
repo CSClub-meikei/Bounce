@@ -16,6 +16,7 @@ namespace Bounce
 
         public bool isLoop;
         public float speed = 1;
+        public float interval;
 
     }
 }

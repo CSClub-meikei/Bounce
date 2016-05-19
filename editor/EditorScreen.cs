@@ -34,7 +34,7 @@ namespace Bounce.editor
         public bool showEventEdit = false;
 
         mapChip MoveEditChip;
-        bool Moveeditting = false;
+        public  bool Moveeditting = false;
         Point mp, op;
         public int selectedLayor = 0;
 

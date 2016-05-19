@@ -14,25 +14,30 @@ namespace Bounce.editor
     {
         Screen special, eventdataScreen;
         public mapChip chip;
-        NumUpDown eventTypeSelector,num;
-        TextObject numLabel;
-
+        NumUpDown eventTypeSelector,num,delay;
+        TextObject numLabel,deLabel;
+        public EditorScreen EditorScreen;
 
         GraphicalGameObject back;
         public eventEditScreen(Game1 game, EditorScreen screen, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             eventTypeSelector = new NumUpDown(game, this, Color.Black, 0, 0, 200, 50);
-            num = new NumUpDown(game, this, Color.Black, 0, 500, 200, 50);
-
+            num = new NumUpDown(game, this, Color.Black, 0, 530, 200, 50);
+            delay = new NumUpDown(game, this, Color.Black, 0, 470, 200, 50);
             eventTypeSelector.text.text = "なし";
             eventTypeSelector.up.Enter += new EventHandler(this.changeEventType);
             eventTypeSelector.down.Enter += new EventHandler(this.changeEventType);
-            num.up.Enter += new EventHandler(this.changeEventType);
-            num.down.Enter += new EventHandler(this.changeEventType);
+            num.up.Enter += new EventHandler((sender, e) => { chip.eventData.num = (int)num.value; });
+            num.down.Enter += new EventHandler((sender, e) => { chip.eventData.num = (int)num.value; });
+            delay.up.Enter += new EventHandler((sender, e) => { chip.eventData.delay = (int)delay.value; });
+            delay.down.Enter += new EventHandler((sender, e) => { chip.eventData.delay = (int)delay.value; });
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_dialog, -10, -40, 210, 720);
             
-            numLabel = new TextObject(game, this, Assets.graphics.ui.font, "イベント番号", Color.Black, 60, 480);
+            numLabel = new TextObject(game, this, Assets.graphics.ui.font, "イベント番号", Color.Black, 60, 510);
+            deLabel = new TextObject(game, this, Assets.graphics.ui.font, "遅延", Color.Black, 60, 450);
             setUIcell(1, 1);
+
+            EditorScreen = screen;
         }
         public void load(mapChip chip)
         {
@@ -42,6 +47,8 @@ namespace Bounce.editor
             eventTypeSelector.text.text = GetEventName((int)eventTypeSelector.value);
             num.value =chip.eventData.num;
             num.text.text = num.value.ToString();
+            delay.value = chip.eventData.delay;
+            delay.text.text = delay.value.ToString();
 
             this.chip = chip;
             switch (chip.type)
@@ -73,7 +80,7 @@ namespace Bounce.editor
                     break;
 
                 case 2:
-
+                    eventdataScreen = new eventEditScreen_2(game, this, 0, 150);
                     break;
 
                 case 3:
@@ -130,8 +137,9 @@ namespace Bounce.editor
             back.update(deltaTime);
             eventTypeSelector.update(deltaTime);
             num.update(deltaTime);
-           
+            delay.update(deltaTime);
             numLabel.update(deltaTime);
+            deLabel.update(deltaTime);
         }
         public override void Draw(SpriteBatch batch)
         {
@@ -142,12 +150,16 @@ namespace Bounce.editor
             eventTypeSelector.Draw(batch, screenAlpha);
             numLabel.Draw(batch, screenAlpha);
             num.Draw(batch, screenAlpha);
+            delay.Draw(batch, screenAlpha);
+            deLabel.Draw(batch, screenAlpha);
         }
         public void changeEventType(object sender,EventArgs e)
         {
             if (chip == null) return;
             eventTypeSelector.text.text = GetEventName((int)eventTypeSelector.value);
             chip.eventData.type = (int)eventTypeSelector.value;
+            int tmpnum = (int)num.value;
+            float tmpdelay = delay.value;
             switch (chip.eventData.type)
             {
                 case 0:
@@ -160,14 +172,17 @@ namespace Bounce.editor
 
                 case 2:
                     chip.eventData = new eventData_2();
+                    ((eventData_2)chip.eventData).X = (int)chip.X;
+                    ((eventData_2)chip.eventData).Y = (int)chip.Y;
                     break;
             }
             chip.eventData.type = (int)eventTypeSelector.value;
             eventdataScreen = null;
             special = null;
             eventTypeSelector.value = chip.eventData.type;
-            chip.eventData.num = (int) num.value;
-
+            chip.eventData.num = tmpnum;
+            chip.eventData.delay = tmpdelay;
+            delay.value = chip.eventData.delay;
 
             switch (chip.type)
             {
@@ -198,7 +213,7 @@ namespace Bounce.editor
                     break;
 
                 case 2:
-
+                    eventdataScreen = new eventEditScreen_2(game, this, 0, 150);
                     break;
 
                 case 3:
