@@ -18,21 +18,22 @@ namespace Bounce.editor
         TextObject numLabel,deLabel;
         public EditorScreen EditorScreen;
 
-        GraphicalGameObject back;
+        public GraphicalGameObject back;
         public eventEditScreen(Game1 game, EditorScreen screen, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             eventTypeSelector = new NumUpDown(game, this, Color.Black, 0, 0, 200, 50);
             num = new NumUpDown(game, this, Color.Black, 0, 530, 200, 50);
             delay = new NumUpDown(game, this, Color.Black, 0, 470, 200, 50);
+            delay.step = 0.1f;
             eventTypeSelector.text.text = "なし";
             eventTypeSelector.changed += new EventHandler(this.changeEventType);
             
             num.changed += new EventHandler((sender, e) => { chip.eventData.num = (int)num.value; });
-            eventTypeSelector.max = 3;
+            eventTypeSelector.max = 2;
 
 
 
-            delay.changed += new EventHandler((sender, e) => { chip.eventData.delay = (int)delay.value; });
+            delay.changed += new EventHandler((sender, e) => { chip.eventData.delay = delay.value; });
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_dialog, -10, -40, 210, 720);
             
             numLabel = new TextObject(game, this, Assets.graphics.ui.font, "イベント番号", Color.Black, 60, 510);
@@ -56,13 +57,22 @@ namespace Bounce.editor
             switch (chip.type)
             {
                 case 1:
-
+                    eventTypeSelector.min = 0;
+                    eventTypeSelector.max = 2;
                     break;
                 case 2:
-
+                    eventTypeSelector.min = 0;
+                    eventTypeSelector.max = 2;
                     break;
                 case 3:
-
+                    eventTypeSelector.min = 3;
+                    eventTypeSelector.max = 3;
+                    eventTypeSelector.value = 3;
+                    eventTypeSelector.text.text = "イベント作動";
+                    break;
+                case 4:
+                    eventTypeSelector.min = 0;
+                    eventTypeSelector.max = 2;
                     break;
 
             }
@@ -86,7 +96,7 @@ namespace Bounce.editor
                     break;
 
                 case 3:
-
+                    eventdataScreen = new eventEditScreen_3(game, this, 0, 150);
                     break;
             }
 
@@ -219,7 +229,7 @@ namespace Bounce.editor
                     break;
 
                 case 3:
-
+                    eventdataScreen = new eventEditScreen_3(game, this, 0, 150);
                     break;
             }
             DebugConsole.write("type:" + chip.eventData.type.ToString());

@@ -65,7 +65,7 @@ namespace Bounce.editor
             {
                 if(Oldwheel != Input.getWheel())
                 {
-                    value += (int)((Input.getWheel() - Oldwheel) / 120);
+                    value += (int)((Input.getWheel() - Oldwheel) / 120)*step;
                     if (value > max) value = min;
                     if (value < min) value = max;
                     text.text = value.ToString();

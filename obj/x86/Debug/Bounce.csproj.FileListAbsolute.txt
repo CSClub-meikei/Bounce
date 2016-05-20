@@ -261,3 +261,15 @@ F:\CS会\Bounce\obj\x86\Debug\Bounce.SettingForm.resources
 F:\CS会\Bounce\obj\x86\Debug\Bounce.csproj.GenerateResource.Cache
 G:\CS会\Bounce\obj\x86\Debug\Bounce.exe
 G:\CS会\Bounce\obj\x86\Debug\Bounce.pdb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\ready.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\readyBar.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\clear.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch1-p.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch2-p.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch3-p.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch4-p.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch5-p.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch5.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn5.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\soundEffects\switch.xnb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\mapBack.jpg

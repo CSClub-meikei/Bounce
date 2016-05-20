@@ -64,6 +64,8 @@ namespace Bounce.editor
         public void newMap(object sender, EventArgs e)
         {
             EditorScreen.init();
+            animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.2f });
+            animator.FinishAnimation += new EventHandler((sernder2, e2) => { if (close != null) close(this, EventArgs.Empty); });
         }
         public void openMap(object sender, EventArgs e)
         {
@@ -74,12 +76,16 @@ namespace Bounce.editor
                 EditorScreen.Load(dialog.FileName);
                 EditorScreen.filepath = dialog.FileName;
             }
+            animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.2f });
+            animator.FinishAnimation += new EventHandler((sernder2, e2) => { if (close != null) close(this, EventArgs.Empty); });
         }
         public void saveMap(object sender, EventArgs e)
         {
             if (EditorScreen.filepath == "")saveNewMap(sender, e);
             else EditorScreen.Save(EditorScreen.filepath);
 
+            animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.2f });
+            animator.FinishAnimation += new EventHandler((sernder2, e2) => { if (close != null) close(this, EventArgs.Empty); });
         }
         public void saveNewMap(object sender, EventArgs e)
         {

@@ -12,18 +12,45 @@ namespace Bounce
 {
     class Switch: LevelObject
     {
+        public bool _IsPush;
+
+        public bool IsPush
+        {
+            get { return _IsPush; }
+            set { if (!_IsPush && value) Assets.soundEffects.pushSwitch.Play(); _IsPush = value;  }
+        }
+        public float tmpTime;
+
         public Switch(Game1 game, Screen screen,eventData ed,int rotate, float x, float y, float width, float height) : base(game, screen, ed, x, y, width, height)
         {
             this.Texture = getChipTexture(mapChip.SWITCH, rotate);
-
+            this.rotate = rotate;
             if (Texture != null)
             {
 
                 origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
             }
         }
+        public void push(float deltaTime)
+        {
+            this.Texture = Assets.graphics.game.Switch_p[rotate];
+            tmpTime += deltaTime / 1000;
+            if (tmpTime >= 0.5f)
+            {
+                IsPush = false;
+                this.Texture = getChipTexture(mapChip.SWITCH, rotate);
+                tmpTime = 0;
+            }
+        }
+        public override void update(float delta)
+        {
+            base.update(delta);
 
-        
+
+            if (IsPush) push(delta);
+
+        }
+
 
     }
 }

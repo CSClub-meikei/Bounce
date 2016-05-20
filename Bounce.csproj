@@ -45,10 +45,15 @@
     <Compile Include="editor\eventEditScreen.cs" />
     <Compile Include="editor\eventEditScreen_1.cs" />
     <Compile Include="editor\eventEditScreen_2.cs" />
+    <Compile Include="editor\eventEditScreen_3.cs" />
     <Compile Include="editor\FileMenu.cs" />
     <Compile Include="editor\mapSettingScreen.cs" />
     <Compile Include="editor\menuBar.cs" />
+    <Compile Include="game\clearScreen.cs" />
     <Compile Include="game\goal.cs" />
+    <Compile Include="game\readyScreen.cs" />
+    <Compile Include="gameObject\tileObject.cs" />
+    <Compile Include="map\eventData_3.cs" />
     <Compile Include="uiControl\checkBox.cs" />
     <Compile Include="uiControl\NumUpDown.cs" />
     <Compile Include="screens\BackScreen.cs" />
@@ -268,6 +273,9 @@
     <Content Include="Content\graphics\game\changePoint.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\clear.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\frame.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -277,16 +285,43 @@
     <Content Include="Content\graphics\game\FrameH.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\mapBack.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\ready.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\readyBar.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\switch1-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\switch1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\switch2-p.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\switch2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\switch3-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\switch3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\switch4-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\switch4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\switch5-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\switch5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\thorn1.png">
@@ -299,6 +334,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\thorn4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\thorn5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\arrow+.png">

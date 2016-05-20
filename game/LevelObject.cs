@@ -15,10 +15,14 @@ namespace Bounce
 
         public bool _flag;
         public bool _startFlagDelay;
+        public bool endFlagDelay;
+        public bool flagtmp;
         public float FlagDelayTime;
         public eventData eventData;
         public event EventHandler flagChanged;
-        
+
+        public int rotate;
+
         public float tmpTime=0f;
         public bool type1tmp;
         public bool type2tmp;
@@ -36,8 +40,16 @@ namespace Bounce
             set
             {
                 _flag = value;
-                if (eventData.delay == 0) flagChanged?.Invoke(this, EventArgs.Empty);
-                else _startFlagDelay = true;
+                if (eventData.delay == 0)
+                {
+                    endFlagDelay = true;
+                     flagChanged?.Invoke(this, EventArgs.Empty);
+                }
+                else
+                {
+                    endFlagDelay = false;
+                     _startFlagDelay = true;
+                }
             }
         }
         public LevelObject(Game1 game, Screen screen, eventData ed, float x, float y, float width, float height) : base(game, screen, null, x, y, width, height)
@@ -54,18 +66,19 @@ namespace Bounce
         }
         public override void update(float delta)
         {
-            if (eventData.num != 0) if (parent.flags[eventData.num] && !flag) flag = true;
+            if (parent.flags[eventData.num] && !flag) flag = true;
 
             if (_startFlagDelay)
             {
                 FlagDelayTime += delta / 1000;
                 if (FlagDelayTime >= eventData.delay)
                 {
+                    endFlagDelay = true;
                     flagChanged?.Invoke(this, EventArgs.Empty);
                     _startFlagDelay = false;
                 }
             }
-            if(flag)eventUpdate(delta);
+            if(flag&&endFlagDelay)eventUpdate(delta);
             base.update(delta);
         }
         public override void Draw(SpriteBatch batch, float screenAlpha)

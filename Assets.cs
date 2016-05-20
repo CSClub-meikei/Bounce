@@ -85,9 +85,16 @@ namespace Bounce
                 public static Texture2D ball;
                 public static Texture2D changePoint;
                 public static Texture2D[] Switch;
+                public static Texture2D[] Switch_p;
                 public static Texture2D[] thorn;
                 public static Texture2D[] ball_animation;
                 public static Texture2D goal;
+
+                public static Texture2D ready;
+                public static Texture2D readyBar;
+                public static Texture2D clear;
+
+                public static Texture2D mapBack;
             }
         }
         public static class bgm
@@ -99,6 +106,7 @@ namespace Bounce
             public static SoundEffect d;
             public static SoundEffect s;
             public static SoundEffect glass;
+            public static SoundEffect pushSwitch;
         }
         public static void Initialize(Game1 game)
         {
@@ -185,11 +193,19 @@ namespace Bounce
             graphics.game.frameH = Content.Load<Texture2D>("frameH");
             graphics.game.ball = Content.Load<Texture2D>("ball");
             graphics.game.changePoint = Content.Load<Texture2D>("changePoint");
-            graphics.game.Switch = new Texture2D[4];
-            graphics.game.thorn = new Texture2D[4];
+            graphics.game.Switch = new Texture2D[5];
+            graphics.game.Switch_p = new Texture2D[5];
+            graphics.game.thorn = new Texture2D[5];
             graphics.game.goal= Content.Load<Texture2D>("goal");
-            for (i = 0; i <= 3; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
-            for (i=0;i<=3;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
+
+            graphics.game.ready= Content.Load<Texture2D>("ready");
+            graphics.game.readyBar = Content.Load<Texture2D>("readyBar");
+            graphics.game.clear = Content.Load<Texture2D>("clear");
+            graphics.game.mapBack = Content.Load<Texture2D>("mapBack");
+
+            for (i = 0; i <= 4; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
+            for (i = 0; i <= 4; i++) graphics.game.Switch_p[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString() + "-p");
+            for (i=0;i<=4;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
 
 
 
@@ -205,6 +221,7 @@ namespace Bounce
             soundEffects.d = Content.Load<SoundEffect>("decision21");
             soundEffects.s = Content.Load<SoundEffect>("cursor6");
             soundEffects.glass = Content.Load<SoundEffect>("glass-break2");
+            soundEffects.pushSwitch = Content.Load<SoundEffect>("switch");
         }
         public static void LoadBGM(ContentManager Content)
         {

@@ -49,6 +49,7 @@ namespace Bounce
         public bool AllowResize = true;
         public bool ShowMoveLocation = true;
         public bool AllowDelete=true;
+        public bool EditChipMode = false;
 
         public event EventHandler onClick;
         public event EventHandler onDoubleClick;
@@ -107,6 +108,7 @@ namespace Bounce
 
         public override void update(float delta)
         {
+            if (parent.Moveeditting && !EditChipMode) goto n;
             if (Input.OnMouseDown(Input.LeftButton) && !Input.IsHover(new Rectangle((int)actX - 10, (int)actY - 10, (int)Width + 20, (int)Height + 20)) && isSelected && !Input.IsHover(new Rectangle(parent.eventEditScreen.X, parent.eventEditScreen.Y, 200, 720)))
 
             {
@@ -137,7 +139,7 @@ namespace Bounce
                 doubleClicktime += delta/1000;
             }
             
-            if (Input.IsHover(new Rectangle((int)actX, (int)actY, (int)Width, (int)Height)) && Input.OnMouseDown(Input.LeftButton) && !isSelected)
+            if (Input.IsHover(new Rectangle((int)actX, (int)actY, (int)Width, (int)Height)) && Input.OnMouseDown(Input.LeftButton) && !isSelected && !Input.IsHover(new Rectangle((int)parent.eventEditScreen.X, (int)parent.eventEditScreen.Y, (int)parent.eventEditScreen.back.Width, (int)parent.eventEditScreen.back.Height)))
             {
                 clickedX = (int)(Input.getPosition().X - parent.X - actX);
                 clickedY = (int)(Input.getPosition().Y - parent.Y - actY);
@@ -149,8 +151,13 @@ namespace Bounce
                 clickedY = (int)(Input.getPosition().Y - parent.Y - actY);
                 EditingMode = MOVING;
             }
+            if (EditChipMode)
+            {
+               // clickedX -= parent.X;
+              //  clickedY -= parent.Y;
+            }
 
-                if (_isSelect)
+            if (_isSelect)
             {
                 switch (EditingMode)
                 {
@@ -167,7 +174,7 @@ namespace Bounce
                 }
             }
 
-          
+           n:
             foreach(GameObjectAnimator a in animator)
             {
                 if (a.type == GameObjectAnimator.GLOW)
@@ -176,7 +183,7 @@ namespace Bounce
                     a.tmp[1] = (float)Y;
                 }
             }
-
+            
             base.update(delta);
         }
         public void updateDefult(float deltaTime)
@@ -252,7 +259,11 @@ namespace Bounce
             {
                 X = (int)((Input.getPosition().X - clickedX - parent.X * 2) / 40) * 40;
                 Y = (int)((Input.getPosition().Y - clickedY - parent.Y * 2) / 40) * 40;
-                
+                if (EditChipMode)
+                {
+                    X = (int)((Input.getPosition().X - clickedX - parent.X ) / 40) * 40;
+                    Y = (int)((Input.getPosition().Y - clickedY - parent.Y) / 40) * 40;
+                }
             }
             if (Input.OnMouseUp(Input.LeftButton))
             {
@@ -353,7 +364,7 @@ namespace Bounce
         public void Rotate(object sender,EventArgs e)
         {
             rotate++;
-            if (rotate == 4) rotate = 0;
+            if (rotate == 5) rotate = 0;
             
             Texture = getChipTexture(type);
 

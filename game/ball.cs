@@ -147,26 +147,59 @@ namespace Bounce
                     }
                     else if(o is thorn)
                     {
-                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X+10, (int)o.Y+10, (int)o.Width-20, (int)o.Height-20), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         { die(); return; }
                     }
                     else if(o is Switch)
                     {
-                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        Rectangle box = new Rectangle(0, 0, 0, 0);
+                        switch (o.rotate)
+                        {
+                            case 0:
+                                box = new Rectangle((int)o.X, (int)o.Y + 31, (int)o.Width, 9);
+                                break;
+                            case 1:
+                                box = new Rectangle((int)o.X, (int)o.Y, 9, (int)o.Height);
+                                break;
+                            case 2:
+                                box = new Rectangle((int)o.X, (int)o.Y, (int)o.Width, 9);
+                                break;
+                            case 3:
+                                box = new Rectangle((int)o.X + 31, (int)o.Y, 9, (int)o.Height);
+                                break;
+                            case 4:
+                                box = new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height);
+                                break;
+                        }
+                        if (overlapTester.overlapRectangles(box, new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
                             parent.flags[o.eventData.num] = true;
+                            ((Switch)o).IsPush = true;
                             DebugConsole.write("イベント: " + o.eventData.num.ToString());
                         }
                     }
                     else if (o is shapeChangePoint)
                     {
+                      
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
                             if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING) parent.Status = worldScreen.CHANGING;
                             else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
                         }
                            
-                    }
+                    }else if(o is goal)
+                    {
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X+20, (int)o.Y+20, (int)o.Width-40, (int)o.Height-40), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        {
+                            parent.clear();
+                            X = o.X;
+                            Y = o.Y;
+                            
+                            
+                        }
+
+
+                        }
                 }
 
             if (flag1 != 0 && flag21 != 0 && flag1 == flag21) { die(); return; }
@@ -207,7 +240,7 @@ namespace Bounce
                 frame++;
                 AnimationControll = 0;
             }
-            if (frame == 45)
+            if (frame == 44)
             {
                 died();breaking = false;
             }
@@ -221,8 +254,12 @@ namespace Bounce
                 return;
             }
             game.screens.Clear();
-            game.screens.Add(new worldScreen(game,"test.xml"));
+           
             game.screens.Add(new GameScreen(game));
+        }
+        public void clearAnimation(float deltaTime)
+        {
+
         }
     }
 }

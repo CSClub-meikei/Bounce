@@ -69,10 +69,13 @@ namespace Bounce
                     res = Assets.graphics.game.block;
                     break;
                 case mapChip.GOAL:
-                    res = Assets.graphics.game.block;
+                    res = Assets.graphics.game.goal;
                     break;
             }
+
+
             return res;
+
         }
     }
 }

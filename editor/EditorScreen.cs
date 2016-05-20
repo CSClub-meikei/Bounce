@@ -38,13 +38,16 @@ namespace Bounce.editor
         Point mp, op;
         public int selectedLayor = 0;
 
+        tileObject back;
+
         public worldScreen TestPlayScreen;
 
         public EditorScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             MenuBar = new menuBar(game, this);
 
-
+            back = new tileObject(game, this, Assets.graphics.game.mapBack, -10000, -10000, 1000, 1000, 20, 20);
+            back.alpha = 0.4f;
             //Load("test.xml");
 
             init();
@@ -76,6 +79,7 @@ namespace Bounce.editor
                 MoveEditChip = new mapChip(game, this, selectedChips[0].type, 0, ((eventData_2)selectedChips[0].eventData).X, ((eventData_2)selectedChips[0].eventData).Y, (int)selectedChips[0].Width, (int)selectedChips[0].Height);
                 MoveEditChip.isSelected = true;
                 MoveEditChip.AllowResize = false;
+                MoveEditChip.EditChipMode = true;
                 MoveEditChip.onUnSelect += new EventHandler(this.endMoveEdit);
                 MoveEditChip.alpha = 0.5f;
                 MoveEditChip.addAnimator(2);
@@ -117,7 +121,7 @@ namespace Bounce.editor
             }
             ChipToolbar.update(deltaTime);
              eventEditScreen.update(deltaTime);
-           
+            back.update(deltaTime);
             if (MoveEditChip != null) { MoveEditChip.update(deltaTime); }
 
             if (Input.OnMouseDown(Input.MiddleButton))
@@ -130,8 +134,11 @@ namespace Bounce.editor
                 X = op.X - (mp.X - Input.getPosition().X);
                 Y = op.Y - (mp.Y - Input.getPosition().Y);
             }
-
-            if (Input.onKeyDown(Keys.F))
+            if (Input.onKeyDown(Keys.P))
+            {
+                startTestPlay();
+            }
+                if (Input.onKeyDown(Keys.F))
             {
                 showEventEdit = !showEventEdit;
                 if (showEventEdit)
@@ -148,8 +155,9 @@ namespace Bounce.editor
 
             if (Input.onKeyDown(Keys.Z) && Input.IsKeyDown(Keys.LeftControl)) undo();
             if (Input.onKeyDown(Keys.Y) && Input.IsKeyDown(Keys.LeftControl)) redo();
-            if (Moveeditting) return;
             base.update(deltaTime);
+           // if (Moveeditting) return;
+            
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.update(deltaTime);
             foreach (mapChip c in RemoveChips) foreach (List<mapChip> layor in map.Layor) if (layor.IndexOf(c) != -1) layor.Remove(c);
             startChip.update(deltaTime);
@@ -160,6 +168,7 @@ namespace Bounce.editor
         }
         public override void Draw(SpriteBatch batch)
         {
+            back.Draw(batch, screenAlpha);
             if (testPlaying) TestPlayScreen.Draw(batch);
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.Draw(batch, screenAlpha);
             ChipToolbar.Draw(batch);
@@ -172,6 +181,7 @@ namespace Bounce.editor
         }
         public void onSelect(object sender, EventArgs e)
         {
+            if (Moveeditting) return;
             if (Input.IsKeyDown(Keys.LeftShift))
             {
                 selectedChips.Add((mapChip)sender);
@@ -283,9 +293,10 @@ namespace Bounce.editor
         public void startTestPlay()
         {
 
-            Save("tmp.bmd");
-            TestPlayScreen = new worldScreen(game, "tmp.bmd");
-            TestPlayScreen.testPlay = true;
+            if (filepath == "") filepath = "tmp.bmd";
+                Save(filepath);
+            TestPlayScreen = new worldScreen(game, map,true);
+            
             TestPlayScreen.stop += new EventHandler(this.stopTestPlay);
            
 

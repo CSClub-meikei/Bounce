@@ -17,7 +17,7 @@ namespace Bounce
         public mapData map;
 
        public TextObject time;
-        GraphicalGameObject b;
+        tileObject back;
         public ball ball;
         public frame frame;
         public List<bool> flags = new List<bool>();
@@ -26,34 +26,36 @@ namespace Bounce
 
         
 
+        public const int READY=0;
         public const int RUNNING = 1;
-        public const int PAUSE = 0;
+        public const int PAUSE = 3;
         public const int CHANGING = 2;
-        public int Status = RUNNING;
+        public const int CLEARED = 4;
+
+        public int Status = READY;
         public int frameShape = 1;
 
         public bool testPlay = false;
         public event EventHandler stop;
-        public worldScreen(Game1 game,string file, int sx = 0, int sy = 0) : base(game, sx, sy)
+        public event EventHandler onClear;
+        public worldScreen(Game1 game,string file,bool IsTest, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
-
+            testPlay = IsTest;
             load(file);
+            init();
             
-            // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 200, 360, 40));
-            // blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 240, 40,640));
-            //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 240, 40, 400));
-            //  blocks.Add(new block(game, this, Assets.graphics.game.block, 800, 600, 800, 40));
-            //  thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 520, 840, 600, 40));
-            //  blocks.Add(new block(game, this, Assets.graphics.game.block, 480, 880, 1200, 40));
-            //    thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 1050, 760, 600, 40));
-            //   blocks.Add(new block(game, this, Assets.graphics.game.block, 1050, 800, 600, 80));
-            // thorns.Add(new thorn(game, this, Assets.graphics.game.thorn, 500, 460, 120, 40));
+        }
+        public worldScreen(Game1 game, mapData data, bool IsTest, int sx = 0, int sy = 0) : base(game, sx, sy)
+        {
+            testPlay = IsTest;
+            map = data;
 
-
-            //Layor = new List<List<LevelObject>>();
-            //Layor.Add(new List<LevelObject>());
-
-
+            GenerateMapFromData();
+            init();
+           
+        }
+        public void init()
+        {
             ball = new ball(game, this, Assets.graphics.game.ball, map.start.X, map.start.Y, 40, 40);
             frame = new frame(game, this, Assets.graphics.game.frameW, map.start.X, map.start.Y, 200, 200);
             X = (int)-frame.X + 640;
@@ -63,11 +65,16 @@ namespace Bounce
             time = new TextObject(game, this, Assets.graphics.ui.font, "time: 0", Color.White, 0, 0);
             int i = 0;
             for (i = 0; i <= 100; i++) flags.Add(false);
+            back = new tileObject(game, this, Assets.graphics.game.mapBack, -10000, -10000, 1000, 1000, 20, 20);
+            back.alpha = 0.5f;
             flags[0] = true;
+           
+            
+            if (testPlay) Status = RUNNING;
         }
         public override void update(float deltaTime)
         {
-            if (Status != PAUSE)
+            if (Status != PAUSE && Status !=READY && Status!= CLEARED )
             {
                
                 
@@ -82,13 +89,12 @@ namespace Bounce
 
                 ball.update(deltaTime);
             }
-            if (Status == RUNNING)
+
+            if (Status == READY)
             {
-
-                
-
-            
+              
             }
+            
             if (Status == CHANGING)
             {
                 if (Input.onKeyDown(Keys.Right)) { frameShape++; frame.LoadFrame(frameShape); }
@@ -100,6 +106,9 @@ namespace Bounce
                 // game.screens.Remove(this);
                 stopTest();
             }
+            back.update(deltaTime);
+            back.X = back.X * 0.5;
+            back.Y = back.Y * 0.5;
         }
         public void stopTest()
         {
@@ -108,11 +117,18 @@ namespace Bounce
         }
         public override void Draw(SpriteBatch batch)
         {
+            back.Draw(batch, screenAlpha);
            if(Layor!=null) foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
            
             ball.Draw(batch, screenAlpha);
             frame.Draw(batch, screenAlpha);
             time.Draw(batch, screenAlpha);
+
+            if (Status == READY)
+            {
+              
+            }
+
             base.Draw(batch);
         }
         public void load(string fileName)
@@ -128,27 +144,7 @@ namespace Bounce
                 map = (mapData)serializer.ReadObject(xr);
                 //ファイルを閉じる
                 xr.Close();
-                Layor = new List<List<LevelObject>>();
-                Layor.Add(new List<LevelObject>());
-                foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor)
-                    {
-                        switch (chip.type)
-                        {
-                            case mapChip.BLOCK:
-                                this.Layor[0].Add(new block(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
-                                break;
-                            case mapChip.THORN:
-                                this.Layor[0].Add(new thorn(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
-                                break;
-                            case mapChip.SWITCH:
-                                this.Layor[0].Add(new Switch(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
-                                break;
-                            case mapChip.SHPOINT:
-                                this.Layor[0].Add(new shapeChangePoint(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
-                                break;
-                        }
-                        
-                    }
+                
 
             }
             else
@@ -156,6 +152,42 @@ namespace Bounce
                 map = new mapData();
 
             }
+            GenerateMapFromData();
+           
+
+        }
+        public void GenerateMapFromData()
+        {
+            Layor = new List<List<LevelObject>>();
+            Layor.Add(new List<LevelObject>());
+            foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor)
+                {
+                    switch (chip.type)
+                    {
+                        case mapChip.BLOCK:
+                            this.Layor[0].Add(new block(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
+                        case mapChip.THORN:
+                            this.Layor[0].Add(new thorn(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
+                        case mapChip.SWITCH:
+                            this.Layor[0].Add(new Switch(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
+                        case mapChip.SHPOINT:
+                            this.Layor[0].Add(new shapeChangePoint(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
+                        case mapChip.GOAL:
+                            this.Layor[0].Add(new goal(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
+                    }
+
+                }
+        }
+        public void clear()
+        {
+            Status = CLEARED;
+            if (testPlay) stopTest();
+            if (onClear != null) onClear(this, EventArgs.Empty);
         }
         public void load_old(String fileName)
         {

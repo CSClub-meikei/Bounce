@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>D:/Documents/GitHub/Bounce/Content/soundEffects/switch.mp3</SourceFile>
+  <SourceTime>2016-05-20T22:44:24.5112455+09:00</SourceTime>
+  <DestFile>D:/Documents/GitHub/Bounce/Content/bin/Windows/soundEffects/switch.xnb</DestFile>
+  <DestTime>2016-05-20T22:47:28.0750145+09:00</DestTime>
+  <Importer>Mp3Importer</Importer>
+  <ImporterTime>2016-03-30T15:36:08+09:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2016-03-30T15:36:08+09:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

@@ -4,9 +4,10 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>F:/CS会/Bounce/Content/soundEffects/cursor6.mp3</File>
-    <File>F:/CS会/Bounce/Content/soundEffects/decision21.mp3</File>
-    <File>F:/CS会/Bounce/Content/font</File>
-    <File>F:/CS会/Bounce/Content/soundEffects/glass-break2.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/cursor6.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/decision21.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/font</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/glass-break2.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/switch.mp3</File>
   </SourceFiles>
 </SourceFileCollection>

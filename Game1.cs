@@ -96,7 +96,7 @@ namespace Bounce
             if (Input.onKeyDown(Keys.G))
             {
                 screens.Clear();
-                screens.Add(new worldScreen(this, "test.xml"));
+               
                 screens.Add(new GameScreen(this));
             }
             if (Input.onKeyDown(Keys.E))
@@ -129,7 +129,8 @@ namespace Bounce
 
                 //throw;
             }
-             
+                
+            
            
 
 
