@@ -15,6 +15,8 @@ namespace Bounce.editor
         GraphicalGameObject back;
         public SimpleButton up, down;
         public TextObject text;
+        public event EventHandler changed;
+
         int Oldwheel;
 
         public float value=0;
@@ -30,8 +32,22 @@ namespace Bounce.editor
             down = new SimpleButton(game, parent, Assets.graphics.ui.arrowL, (int)X, (int)Y, height, height);
             text = new TextObject(game, parent, Assets.graphics.ui.font, "0", color, (int)X+height + 15, (int)Y+15);
 
-            up.Enter += new EventHandler((sender, e) => { value += step;if (value > max) value = min; if (value < min) value = max; text.text = value.ToString(); });
-            down.Enter += new EventHandler((sender, e) => { value -= step; if (value > max) value = min; if (value < min) value = max; text.text = value.ToString(); });
+            up.Enter += new EventHandler((sender, e) => {
+                value += step;
+                if (value > max) value = min;
+                if (value < min) value = max;
+                text.text = value.ToString();
+                if (changed != null) changed(this, EventArgs.Empty);
+            });
+            down.Enter += new EventHandler((sender, e) => {
+                value -= step;
+                if (value > max) value = min;
+                if (value < min) value = max;
+                text.text = value.ToString();
+                if (changed != null) changed(this, EventArgs.Empty);
+            });
+            Oldwheel = Input.getWheel();
+            GotFocus += new EventHandler(this.onHover);
         }
         public override void update(float delta)
         {
@@ -47,11 +63,17 @@ namespace Bounce.editor
             text.alpha = alpha;
             if (Input.IsHover(new Rectangle((int)actX, (int)actY, (int)Width, (int)Height)))
             {
+                if(Oldwheel != Input.getWheel())
+                {
+                    value += (int)((Input.getWheel() - Oldwheel) / 120);
+                    if (value > max) value = min;
+                    if (value < min) value = max;
+                    text.text = value.ToString();
+                    Oldwheel = Input.getWheel();
+                    if (changed != null) changed(this, EventArgs.Empty);
 
-                value += (int)((Input.getWheel() - Oldwheel) / 120);
-
-
-                Oldwheel = Input.getWheel();
+                }
+                
 
             }
         }
@@ -63,6 +85,10 @@ namespace Bounce.editor
             down.Draw(batch, screenAlpha);
             text.Draw(batch, screenAlpha);
 
+        }
+        public void onHover(object sender,EventArgs e)
+        {
+            Oldwheel = Input.getWheel();
         }
     }
 }

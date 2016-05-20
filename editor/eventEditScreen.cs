@@ -25,12 +25,14 @@ namespace Bounce.editor
             num = new NumUpDown(game, this, Color.Black, 0, 530, 200, 50);
             delay = new NumUpDown(game, this, Color.Black, 0, 470, 200, 50);
             eventTypeSelector.text.text = "なし";
-            eventTypeSelector.up.Enter += new EventHandler(this.changeEventType);
-            eventTypeSelector.down.Enter += new EventHandler(this.changeEventType);
-            num.up.Enter += new EventHandler((sender, e) => { chip.eventData.num = (int)num.value; });
-            num.down.Enter += new EventHandler((sender, e) => { chip.eventData.num = (int)num.value; });
-            delay.up.Enter += new EventHandler((sender, e) => { chip.eventData.delay = (int)delay.value; });
-            delay.down.Enter += new EventHandler((sender, e) => { chip.eventData.delay = (int)delay.value; });
+            eventTypeSelector.changed += new EventHandler(this.changeEventType);
+            
+            num.changed += new EventHandler((sender, e) => { chip.eventData.num = (int)num.value; });
+            eventTypeSelector.max = 3;
+
+
+
+            delay.changed += new EventHandler((sender, e) => { chip.eventData.delay = (int)delay.value; });
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_dialog, -10, -40, 210, 720);
             
             numLabel = new TextObject(game, this, Assets.graphics.ui.font, "イベント番号", Color.Black, 60, 510);

@@ -22,7 +22,7 @@ namespace Bounce.editor
             mode = new NumUpDown(game, this, Color.Black, 0,40, 200, 50);
             mode.max = 1;
             mode.text.text = "消滅";
-            mode.up.Enter += new EventHandler((sender, e) =>
+            mode.changed += new EventHandler((sender, e) =>
               {
                   if (mode.value == 0)
                   {
@@ -33,17 +33,7 @@ namespace Bounce.editor
                       mode.text.text = "出現";
                   }
               });
-            mode.down.Enter += new EventHandler((sender, e) =>
-            {
-                if (mode.value == 0)
-                {
-                    mode.text.text = "消滅";
-                }
-                else
-                {
-                    mode.text.text = "出現";
-                }
-            });
+           
             isLoop = new checkBox(game, this, 20, 90, 40, 40);
             chLabel = new TextObject(game,this, Assets.graphics.ui.font, "繰り返す", Color.Black, 80, 100);
             modeLabel = new TextObject(game, this, Assets.graphics.ui.font, "作動モード", Color.Black, 60, 20);
