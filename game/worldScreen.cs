@@ -63,6 +63,7 @@ namespace Bounce
             time = new TextObject(game, this, Assets.graphics.ui.font, "time: 0", Color.White, 0, 0);
             int i = 0;
             for (i = 0; i <= 100; i++) flags.Add(false);
+            flags[0] = true;
         }
         public override void update(float deltaTime)
         {
