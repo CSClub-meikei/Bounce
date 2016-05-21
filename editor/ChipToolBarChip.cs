@@ -63,7 +63,7 @@ namespace Bounce
                     res = Assets.graphics.game.changePoint;
                     break;
                 case mapChip.WARPPOINT:
-                    res = Assets.graphics.game.block;
+                    res = Assets.graphics.game.warpPoint[0];
                     break;
                 case mapChip.GUMPOINT:
                     res = Assets.graphics.game.block;

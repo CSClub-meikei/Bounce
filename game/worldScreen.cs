@@ -176,6 +176,9 @@ namespace Bounce
                         case mapChip.SHPOINT:
                             this.Layor[0].Add(new shapeChangePoint(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
                             break;
+                        case mapChip.WARPPOINT:
+                            this.Layor[0].Add(new warpPoint(game, this, chip.eventData,chip.specialData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
                         case mapChip.GOAL:
                             this.Layor[0].Add(new goal(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
                             break;

@@ -50,6 +50,7 @@ namespace Bounce
         public bool ShowMoveLocation = true;
         public bool AllowDelete=true;
         public bool EditChipMode = false;
+        public bool nazo = false;
 
         public event EventHandler onClick;
         public event EventHandler onDoubleClick;
@@ -259,7 +260,7 @@ namespace Bounce
             {
                 X = (int)((Input.getPosition().X - clickedX - parent.X * 2) / 40) * 40;
                 Y = (int)((Input.getPosition().Y - clickedY - parent.Y * 2) / 40) * 40;
-                if (EditChipMode)
+                if (EditChipMode && !nazo)
                 {
                     X = (int)((Input.getPosition().X - clickedX - parent.X ) / 40) * 40;
                     Y = (int)((Input.getPosition().Y - clickedY - parent.Y) / 40) * 40;
@@ -268,6 +269,7 @@ namespace Bounce
             if (Input.OnMouseUp(Input.LeftButton))
             {
                 EditingMode = DEFULT;
+                nazo = true;
                // parent.RefreshMap();
             }
 
@@ -387,7 +389,7 @@ namespace Bounce
                     res = Assets.graphics.game.changePoint;
                     break;
                 case WARPPOINT:
-                    res = Assets.graphics.game.block;
+                    res = Assets.graphics.game.warpPoint[rotate];
                     break;
                 case GUMPOINT:
                     res = Assets.graphics.game.block;

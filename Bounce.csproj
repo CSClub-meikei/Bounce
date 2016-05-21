@@ -49,10 +49,12 @@
     <Compile Include="editor\FileMenu.cs" />
     <Compile Include="editor\mapSettingScreen.cs" />
     <Compile Include="editor\menuBar.cs" />
+    <Compile Include="editor\specialScreen_warp.cs" />
     <Compile Include="game\clearScreen.cs" />
     <Compile Include="game\goal.cs" />
     <Compile Include="game\readyScreen.cs" />
     <Compile Include="gameObject\tileObject.cs" />
+    <Compile Include="game\warpPoint.cs" />
     <Compile Include="map\eventData_3.cs" />
     <Compile Include="uiControl\checkBox.cs" />
     <Compile Include="uiControl\NumUpDown.cs" />
@@ -337,6 +339,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\thorn5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\warpPoint1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\warpPoint2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\warpPoint3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\warpPoint4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\warpPoint5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\arrow+.png">

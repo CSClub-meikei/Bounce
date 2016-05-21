@@ -77,6 +77,7 @@ namespace Bounce.editor
 
 
                 MoveEditChip = new mapChip(game, this, selectedChips[0].type, 0, ((eventData_2)selectedChips[0].eventData).X, ((eventData_2)selectedChips[0].eventData).Y, (int)selectedChips[0].Width, (int)selectedChips[0].Height);
+               
                 MoveEditChip.isSelected = true;
                 MoveEditChip.AllowResize = false;
                 MoveEditChip.EditChipMode = true;
@@ -149,6 +150,11 @@ namespace Bounce.editor
                 {
                     eventEditScreen.animator.start(ScreenAnimator.SLIDE, new float[] { 1, -200, 0, -1, -1, 1, 1 });
                 }
+            }
+
+            if (Input.onKeyDown(Keys.D0))
+            {
+                AddChip(0, 1);
             }
 
             //if (Input.onKeyDown(Keys.S)) Save("test.xml");

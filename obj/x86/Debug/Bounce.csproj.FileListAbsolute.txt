@@ -273,3 +273,8 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\switch5.p
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\thorn5.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\soundEffects\switch.xnb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\mapBack.jpg
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\warpPoint1.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\warpPoint2.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\warpPoint3.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\warpPoint4.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Debug\Content\graphics\game\warpPoint5.png

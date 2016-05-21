@@ -19,6 +19,7 @@ namespace Bounce
         public bool flagtmp;
         public float FlagDelayTime;
         public eventData eventData;
+        public float specialData;
         public event EventHandler flagChanged;
 
         public int rotate;
@@ -104,7 +105,7 @@ namespace Bounce
                     res = Assets.graphics.game.changePoint;
                     break;
                 case mapChip.WARPPOINT:
-                    res = Assets.graphics.game.block;
+                    res = Assets.graphics.game.warpPoint[rotate];
                     break;
                 case mapChip.GUMPOINT:
                     res = Assets.graphics.game.block;

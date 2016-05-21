@@ -22,8 +22,8 @@ namespace Bounce.editor
         public eventEditScreen(Game1 game, EditorScreen screen, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             eventTypeSelector = new NumUpDown(game, this, Color.Black, 0, 0, 200, 50);
-            num = new NumUpDown(game, this, Color.Black, 0, 530, 200, 50);
-            delay = new NumUpDown(game, this, Color.Black, 0, 470, 200, 50);
+            num = new NumUpDown(game, this, Color.Black, 0, 500, 200, 50);
+            delay = new NumUpDown(game, this, Color.Black, 0, 440, 200, 50);
             delay.step = 0.1f;
             eventTypeSelector.text.text = "なし";
             eventTypeSelector.changed += new EventHandler(this.changeEventType);
@@ -36,8 +36,8 @@ namespace Bounce.editor
             delay.changed += new EventHandler((sender, e) => { chip.eventData.delay = delay.value; });
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_dialog, -10, -40, 210, 720);
             
-            numLabel = new TextObject(game, this, Assets.graphics.ui.font, "イベント番号", Color.Black, 60, 510);
-            deLabel = new TextObject(game, this, Assets.graphics.ui.font, "遅延", Color.Black, 60, 450);
+            numLabel = new TextObject(game, this, Assets.graphics.ui.font, "イベント番号", Color.Black, 60, 480);
+            deLabel = new TextObject(game, this, Assets.graphics.ui.font, "遅延", Color.Black, 60, 420);
             setUIcell(1, 1);
 
             EditorScreen = screen;
@@ -74,7 +74,9 @@ namespace Bounce.editor
                     eventTypeSelector.min = 0;
                     eventTypeSelector.max = 2;
                     break;
-
+                case 5:
+                    special = new specialScreen_warp(game, this, 0, 600);
+                    break;
             }
 
             switch (chip.eventData.type)

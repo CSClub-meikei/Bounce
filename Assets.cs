@@ -88,6 +88,7 @@ namespace Bounce
                 public static Texture2D[] Switch_p;
                 public static Texture2D[] thorn;
                 public static Texture2D[] ball_animation;
+                public static Texture2D[] warpPoint;
                 public static Texture2D goal;
 
                 public static Texture2D ready;
@@ -196,6 +197,7 @@ namespace Bounce
             graphics.game.Switch = new Texture2D[5];
             graphics.game.Switch_p = new Texture2D[5];
             graphics.game.thorn = new Texture2D[5];
+            graphics.game.warpPoint = new Texture2D[5];
             graphics.game.goal= Content.Load<Texture2D>("goal");
 
             graphics.game.ready= Content.Load<Texture2D>("ready");
@@ -206,7 +208,7 @@ namespace Bounce
             for (i = 0; i <= 4; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
             for (i = 0; i <= 4; i++) graphics.game.Switch_p[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString() + "-p");
             for (i=0;i<=4;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
-
+            for (i = 0; i <= 4; i++) graphics.game.warpPoint[i] = Content.Load<Texture2D>("warpPoint" + (i + 1).ToString());
 
 
 
