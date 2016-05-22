@@ -12,7 +12,7 @@ namespace Bounce
         GraphicalGameObject title;
         public clearScreen(Game1 game, GameScreen screen, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
-            title = new GraphicalGameObject(game, this, Assets.graphics.game.clear, 320, 260, 640, 200);
+            title = new GraphicalGameObject(game, this, Assets.graphics.game.clear, 320, 100, 640, 200);
             title.addAnimator(2);
             title.animator[0].setLimit(0.5f);
             title.animator[1].setLimit(0.5f);

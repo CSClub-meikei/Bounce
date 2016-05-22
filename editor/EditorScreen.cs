@@ -34,6 +34,7 @@ namespace Bounce.editor
         public bool showEventEdit = false;
 
         mapChip MoveEditChip;
+        mapChip copyChip;
         public  bool Moveeditting = false;
         Point mp, op;
         public int selectedLayor = 0;
@@ -152,10 +153,7 @@ namespace Bounce.editor
                 }
             }
 
-            if (Input.onKeyDown(Keys.D0))
-            {
-                AddChip(0, 1);
-            }
+            keyUpdate(deltaTime);
 
             //if (Input.onKeyDown(Keys.S)) Save("test.xml");
 
@@ -245,6 +243,7 @@ namespace Bounce.editor
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor)
                 {
                     chip.onClick += new EventHandler(this.onSelect);
+                    chip.AllowDelete = true;
                  //   chip.onUnSelect += new EventHandler(this.RefreshMap);
                 }
             startChip = new mapChip(game, this, mapChip.START, 0, map.start.X, map.start.Y, 40, 40);
@@ -261,6 +260,134 @@ namespace Bounce.editor
             startChip.AllowDelete = false;
             startChip.onClick += new EventHandler(this.onSelect);
         }
+
+        public void keyUpdate(float deltaTime)
+        {
+           
+            if (Input.onKeyDown(Keys.D1))
+            {
+                AddChip(0, 1);
+            }
+            if (Input.onKeyDown(Keys.D2))
+            {
+                AddChip(0, 2);
+            }
+            if (Input.onKeyDown(Keys.D3))
+            {
+                AddChip(0, 3);
+            }
+            if (Input.onKeyDown(Keys.D4))
+            {
+                AddChip(0, 4);
+            }
+            if (Input.onKeyDown(Keys.D5))
+            {
+                AddChip(0, 5);
+            }
+            if (Input.onKeyDown(Keys.D6))
+            {
+                AddChip(0, 6);
+            }
+            if (Input.onKeyDown(Keys.D7))
+            {
+                AddChip(0, 7);
+            }
+            if (Input.onKeyDown(Keys.C) && Input.IsKeyDown(Keys.LeftControl))
+            {
+                mapChip s = selectedChips[0];
+                copyChip = new mapChip(game, this, s.type, s.rotate,(int) s.X,(int) s.Y,(int) s.Width, (int)s.Height);
+                copyChip.onClick += new EventHandler(this.onSelect);
+                copyChip.specialData = s.specialData;
+
+
+                if(s.eventData is eventData_1)
+                {
+                    copyChip.eventData = new eventData_1();
+                    ((eventData_1)copyChip.eventData).mode = ((eventData_1)s.eventData).mode;
+                    ((eventData_1)copyChip.eventData).isLoop = ((eventData_1)s.eventData).isLoop;
+                    ((eventData_1)copyChip.eventData).interval = ((eventData_1)s.eventData).interval;
+                }else if(s.eventData is eventData_2)
+                {
+                    copyChip.eventData = new eventData_2();
+                    ((eventData_2)copyChip.eventData).X = ((eventData_2)s.eventData).X;
+                    ((eventData_2)copyChip.eventData).Y = ((eventData_2)s.eventData).Y;
+                    ((eventData_2)copyChip.eventData).isLoop = ((eventData_2)s.eventData).isLoop;
+                    ((eventData_2)copyChip.eventData).speed = ((eventData_2)s.eventData).speed;
+                    ((eventData_2)copyChip.eventData).interval = ((eventData_2)s.eventData).interval;
+                }else if(s.eventData is eventData_3)
+                {
+                    copyChip.eventData = new eventData_3();
+                    ((eventData_3)copyChip.eventData).mode = ((eventData_3)s.eventData).mode;
+                }
+
+                copyChip.eventData.type = s.eventData.type;
+                copyChip.eventData.num = s.eventData.num;
+                copyChip.eventData.delay = s.eventData.delay;
+
+
+                
+
+            }
+            if (Input.onKeyDown(Keys.V) && Input.IsKeyDown(Keys.LeftControl))
+            {
+                if (copyChip == null) return;
+
+                    mapChip res = CopyChip(copyChip);
+
+                if (res.eventData is eventData_2)
+                {
+                    ((eventData_2)res.eventData).X = (int)(((eventData_2)res.eventData).X + 40*(int)((Input.getPosition().X - X - res.X)/40));
+                    ((eventData_2)res.eventData).Y = (int)(((eventData_2)res.eventData).Y + 40 * (int)((Input.getPosition().Y - Y - res.Y) / 40));
+                }
+                res.X = (int)(Input.getPosition().X - X);
+                res.Y = (int)(Input.getPosition().Y - Y);
+            
+                 
+
+                 map.Layor[0].Add(res);
+            }
+            if (Input.onKeyDown(Keys.S) && Input.IsKeyDown(Keys.LeftControl))
+            {
+                Save(filepath);
+                System.Windows.Forms.MessageBox.Show("保存しました");
+            }
+        }
+        public mapChip CopyChip(mapChip s)
+        {
+            mapChip res=new mapChip(game, this, s.type, s.rotate, (int)s.X, (int)s.Y, (int)s.Width, (int)s.Height);
+            res = new mapChip(game, this, s.type, s.rotate, (int)s.X, (int)s.Y, (int)s.Width, (int)s.Height);
+            res.onClick += new EventHandler(this.onSelect);
+            res.specialData = s.specialData;
+
+
+            if (s.eventData is eventData_1)
+            {
+                res.eventData = new eventData_1();
+                ((eventData_1)res.eventData).mode = ((eventData_1)s.eventData).mode;
+                ((eventData_1)res.eventData).isLoop = ((eventData_1)s.eventData).isLoop;
+                ((eventData_1)res.eventData).interval = ((eventData_1)s.eventData).interval;
+            }
+            else if (s.eventData is eventData_2)
+            {
+                res.eventData = new eventData_2();
+                ((eventData_2)res.eventData).X = ((eventData_2)s.eventData).X;
+                ((eventData_2)res.eventData).Y = ((eventData_2)s.eventData).Y;
+                ((eventData_2)res.eventData).isLoop = ((eventData_2)s.eventData).isLoop;
+                ((eventData_2)res.eventData).speed = ((eventData_2)s.eventData).speed;
+                ((eventData_2)res.eventData).interval = ((eventData_2)s.eventData).interval;
+            }
+            else if (s.eventData is eventData_3)
+            {
+                res.eventData = new eventData_3();
+                ((eventData_3)copyChip.eventData).mode = ((eventData_3)s.eventData).mode;
+            }
+
+            res.eventData.type = s.eventData.type;
+            res.eventData.num = s.eventData.num;
+            res.eventData.delay = s.eventData.delay;
+
+            return res;
+        }
         public void RefreshMap()
         {
             int i = 0;
@@ -272,7 +399,7 @@ namespace Bounce.editor
             // for (i = unre; i <= recentMap.Count; i++) recentMap.RemoveAt(i-1);
             
 
-           // recentMap.Add(map.Clone(game,this));
+          // recentMap.Add(map.Clone(game,this));
             DebugConsole.write(unre.ToString());
 
         }
