@@ -118,9 +118,11 @@ namespace Bounce
         public override void Draw(SpriteBatch batch)
         {
             back.Draw(batch, screenAlpha);
-           if(Layor!=null) foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
-           
-            ball.Draw(batch, screenAlpha);
+
+            if(ball.warping) ball.Draw(batch, screenAlpha);
+            if (Layor!=null) foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.Draw(batch,screenAlpha);
+
+            if (!ball.warping) ball.Draw(batch, screenAlpha);
             frame.Draw(batch, screenAlpha);
             time.Draw(batch, screenAlpha);
 

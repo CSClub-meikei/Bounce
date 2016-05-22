@@ -109,7 +109,7 @@ namespace Bounce
                                 dis = X - o.X;
                                 break;
                             case 3:
-                                box = new Rectangle((int)o.X + 40, (int)o.Y, (int)o.Width+40, (int)o.Height);
+                                box = new Rectangle((int)o.X + 35, (int)o.Y, (int)o.Width+40, (int)o.Height);
                                 box2 = new Rectangle((int)o.X+70, (int)o.Y, (int)o.Width, (int)o.Height);
                                 dis = Y - o.Y;
                                 break;

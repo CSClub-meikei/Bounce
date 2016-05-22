@@ -75,6 +75,8 @@ namespace Bounce.editor
                     eventTypeSelector.max = 2;
                     break;
                 case 5:
+                    eventTypeSelector.min = 0;
+                    eventTypeSelector.max = 2;
                     special = new specialScreen_warp(game, this, 0, 600);
                     break;
             }
