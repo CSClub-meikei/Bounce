@@ -334,7 +334,12 @@ namespace Bounce
                 if (vx > 0) vx -= option[5];
                 if (vx < 0) vx += option[5];
                 c2++;
-                if (c == c2) this.stop();
+                if (c == c2)
+                {
+                   // o.X = option[1];
+                   // o.Y = option[2];
+                    this.stop();
+                }
                 if (option[4] != -1) o.animator[(int)option[4]].tmp[0] = (float)o.X;
 
             }
@@ -345,7 +350,12 @@ namespace Bounce
                 if (vy > 0) vy -= option[5];
                 if (vy < 0) vy += option[5];
                 c2++;
-                if (c == c2) this.stop();
+                if (c == c2)
+                {
+                  //  o.X = option[1];
+                  //  o.Y = option[2];
+                    this.stop();
+                }
                 if (option[4] != -1) o.animator[(int)option[4]].tmp[1] = (float)o.Y;
               //  Console.WriteLine("XXXXX:" + o.Y.ToString() + "VX" + vy.ToString());
             }

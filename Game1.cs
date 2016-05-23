@@ -83,7 +83,7 @@ namespace Bounce
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = counter.getDeltaTime(gameTime);
-
+           // Window.Title = (1 / counter.getDeltaTime(gameTime) ).ToString();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -98,6 +98,12 @@ namespace Bounce
                 screens.Clear();
                
                 screens.Add(new GameScreen(this));
+            }
+            if (Input.onKeyDown(Keys.T))
+            {
+                screens.Clear();
+
+                screens.Add(new storyScreen(this));
             }
             if (Input.onKeyDown(Keys.E))
             {
@@ -131,7 +137,7 @@ namespace Bounce
             }
                 
             
-           
+            
 
 
             debugScreen.update(deltaTime);

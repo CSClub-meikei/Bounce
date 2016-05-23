@@ -74,8 +74,10 @@ namespace Bounce
                 public static Texture2D startChip;
                 public static Texture2D button_testplay;
 
+                public static Texture2D back_storyComment;
 
                 public static SpriteFont font;
+                public static SpriteFont defultFont;
             }
             public static class game
             {
@@ -182,7 +184,14 @@ namespace Bounce
             graphics.ui.startChip = Content.Load<Texture2D>("startChip");
             graphics.ui.button_testplay = Content.Load<Texture2D>("button-testPlay");
 
+
+            graphics.ui.back_storyComment = Content.Load<Texture2D>("back_storyComment");
+
+
             graphics.ui.font = Content.Load<SpriteFont>("font");
+            graphics.ui.defultFont = Content.Load<SpriteFont>("defult");
+
+
         }
         public static void LoadGame(ContentManager Content)
         {

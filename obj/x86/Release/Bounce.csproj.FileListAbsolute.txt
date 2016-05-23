@@ -146,3 +146,6 @@ D:\Documents\GitHub\Bounce\obj\x86\Release\Bounce.SettingForm.resources
 D:\Documents\GitHub\Bounce\obj\x86\Release\Bounce.csproj.GenerateResource.Cache
 D:\Documents\GitHub\Bounce\obj\x86\Release\Bounce.exe
 D:\Documents\GitHub\Bounce\obj\x86\Release\Bounce.pdb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\defult.xnb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\defult.xnb
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\back_storyComment.png

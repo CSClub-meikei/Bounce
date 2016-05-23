@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Bounce.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="appSettings.cs" />
@@ -56,6 +56,15 @@
     <Compile Include="gameObject\tileObject.cs" />
     <Compile Include="game\warpPoint.cs" />
     <Compile Include="map\eventData_3.cs" />
+    <Compile Include="story\Character.cs" />
+    <Compile Include="story\SerifTextObject.cs" />
+    <Compile Include="story\SerifTextObjectOld.cs" />
+    <Compile Include="story\storyContent.cs" />
+    <Compile Include="story\storyData.cs" />
+    <Compile Include="story\storyData_1.cs" />
+    <Compile Include="story\storyData_2.cs" />
+    <Compile Include="story\storyData_3.cs" />
+    <Compile Include="story\storyScreen.cs" />
     <Compile Include="uiControl\checkBox.cs" />
     <Compile Include="uiControl\NumUpDown.cs" />
     <Compile Include="screens\BackScreen.cs" />
@@ -128,6 +137,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Bounce.ico" />
     <Content Include="Content\bgm\Blue_Ever.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -386,6 +396,9 @@
     <Content Include="Content\graphics\ui\back-submenu.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\back_storyComment.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\button-file-d.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -476,6 +489,9 @@
     <Folder Include="bgm\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\graphics\ui\defult.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\graphics\ui\font.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
