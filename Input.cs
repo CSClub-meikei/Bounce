@@ -97,6 +97,11 @@ namespace Bounce
             
             return GlobalToLocal(Mouse.GetState().Position);
         }
+        public static void setPotition(Point point)
+        {
+            Point p = LocalToGlobal(point);
+            Mouse.SetPosition(p.X,p.Y);
+        }
         public static int getWheel()
         {
             return Mouse.GetState().ScrollWheelValue;
@@ -169,6 +174,15 @@ namespace Bounce
             var scaleY = 720/(float)game.graphics.PreferredBackBufferHeight;
 
             return new Point((int)(point.X * scaleX), (int)(point.Y * scaleY));
+
+
+        }
+        private static Point LocalToGlobal(Point point)
+        {
+            var scaleX = 1280 / (float)game.graphics.PreferredBackBufferWidth;
+            var scaleY = 720 / (float)game.graphics.PreferredBackBufferHeight;
+
+            return new Point((int)(point.X / scaleX), (int)(point.Y / scaleY));
 
 
         }

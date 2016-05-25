@@ -110,6 +110,11 @@ namespace Bounce
                 screens.Clear();
                 screens.Add(new EditorScreen(this));
             }
+            if (Input.onKeyDown(Keys.W))
+            {
+                screens.Clear();
+                screens.Add(new worldMapScreen(this));
+            }
 
             if (Input.IsKeyDown(Keys.D) && Input.IsKeyDown(Keys.LeftShift))
             {

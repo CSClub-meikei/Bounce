@@ -121,6 +121,8 @@
     <Compile Include="gameObject\uiObject.cs" />
     <Compile Include="screens\UItestScreen.cs" />
     <Compile Include="game\worldScreen.cs" />
+    <Compile Include="worldMap\mapIcon.cs" />
+    <Compile Include="worldMap\worldMapScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Box2DX">
@@ -139,6 +141,15 @@
   <ItemGroup>
     <Content Include="Bounce.ico" />
     <Content Include="Content\bgm\Blue_Ever.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\Character\man0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\Character\man1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\Character\man2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\animation\ball\0.png">
@@ -478,6 +489,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\wideButtonBack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\worldmap\labo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\worldmap\map.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

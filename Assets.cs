@@ -99,6 +99,17 @@ namespace Bounce
 
                 public static Texture2D mapBack;
             }
+            public static class Character
+            {
+                public static Texture2D[] man;
+
+            }
+            public static class worldMap
+            {
+                public static Texture2D labo;
+                public static Texture2D map;
+            }
+
         }
         public static class bgm
         {
@@ -133,10 +144,13 @@ namespace Bounce
         {
             
             Content.RootDirectory = "Content/graphics";
-            report(0, "グラフィックを読み込んでいます... 1/2 (UI)");
+            report(0, "グラフィックを読み込んでいます... 1/3 (UI)");
             LoadUI(Content);
-            report(30, "グラフィックを読み込んでいます... 2/2 (GAME)");
+            report(30, "グラフィックを読み込んでいます... 2/3 (GAME)");
             LoadGame(Content);
+            report(50, "グラフィックを読み込んでいます... 3/3 (Character)");
+            LoadCharacter(Content);
+            LoadworldMap(Content);
         }
         public static void LoadUI(ContentManager Content)
         {
@@ -225,6 +239,22 @@ namespace Bounce
             graphics.game.ball_animation = new Texture2D[45];
            
             for(i=0;i<=44;i++)graphics.game.ball_animation[i] = Content.Load<Texture2D>(i.ToString());
+        }
+        public static void LoadCharacter(ContentManager Content)
+        {
+            Content.RootDirectory = "Content/graphics/Character";
+            graphics.Character.man = new Texture2D[3];
+
+            int i = 0;
+            for (i = 0; i <= 2; i++) graphics.Character.man[i] = Content.Load<Texture2D>("man" + (i).ToString());
+
+        }
+        public static void LoadworldMap(ContentManager Content)
+        {
+            Content.RootDirectory = "Content/graphics/worldmap";
+
+            graphics.worldMap.labo= Content.Load<Texture2D>("labo");
+            graphics.worldMap.map = Content.Load<Texture2D>("map");
         }
         public static void LoadSoundEffects(ContentManager Content)
         {

@@ -12,15 +12,64 @@ namespace Bounce.story
 {
     class Character:GraphicalGameObject
     {
-        public int face;
-
-        public bool active;
-
-
-
-        public Character(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
+        int _face;
+        Texture2D[] faces;
+        public int face
         {
-            
+            get { return _face; }
+            set {
+                _face = value;
+                Texture = faces[face];
+            }
+        }
+        bool _active;
+
+        bool isShow;
+
+        public bool active
+        {
+            get { return _active; }
+            set {
+                if (_active != value)
+                {
+                   // System.Windows.Forms.MessageBox.Show(_active.ToString());
+                    _active = value;
+                    if (active)
+                    {
+                        animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.5f });
+                    }
+                    else
+                    {
+                        animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.5f, 0.5f });
+                    }
+                }
+                _active = value;
+               
+            }
+        }
+
+
+
+        public Character(Game1 game, Screen screen, Texture2D[] Texture, float x, float y, float width, float height) : base(game, screen, Texture[0], x, y, width, height)
+        {
+            faces = Texture;
+            addAnimator(2);
+        }
+        public void show(Point point)
+        {
+            if (isShow) return;
+            animator[0] = new GameObjectAnimator(this, game);
+            animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, point.X, point.Y, 1f, -1,1,1 });
+            animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.5f });
+            isShow = true;
+        }
+        public void hide(Point point)
+        {
+            if (!isShow) return;
+            animator[0] = new GameObjectAnimator(this,game);
+            animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, point.X, point.Y, 1f, -1, 1,1 });
+            animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.5f });
+            isShow = false;
         }
         public override void update(float delta)
         {

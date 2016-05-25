@@ -149,3 +149,8 @@ D:\Documents\GitHub\Bounce\obj\x86\Release\Bounce.pdb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\defult.xnb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\defult.xnb
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\back_storyComment.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\Character\man0.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\Character\man1.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\Character\man2.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\worldmap\labo.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\worldmap\map.png

@@ -149,6 +149,9 @@ namespace Bounce.story
             {
                 line++;
                 index = 0;
+            }else
+            {
+
             }
             
         }
