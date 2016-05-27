@@ -24,13 +24,16 @@ namespace Bounce
         
         public List<List<LevelObject>> Layor;
 
-        
+        public Point savePoint;
+
+        public savedScreen savedScreen;
 
         public const int READY=0;
         public const int RUNNING = 1;
         public const int PAUSE = 3;
         public const int CHANGING = 2;
         public const int CLEARED = 4;
+        public const int DIED = 5;
 
         public int Status = READY;
         public int frameShape = 1;
@@ -38,15 +41,17 @@ namespace Bounce
         public bool testPlay = false;
         public event EventHandler stop;
         public event EventHandler onClear;
-        public worldScreen(Game1 game,string file,bool IsTest, int sx = 0, int sy = 0) : base(game, sx, sy)
+        public worldScreen(Game1 game,string file,bool IsTest,Point save, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
+            savePoint = save;
             testPlay = IsTest;
             load(file);
             init();
             
         }
-        public worldScreen(Game1 game, mapData data, bool IsTest, int sx = 0, int sy = 0) : base(game, sx, sy)
+        public worldScreen(Game1 game, mapData data, bool IsTest, Point save, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
+            savePoint = save;
             testPlay = IsTest;
             map = data;
 
@@ -56,8 +61,17 @@ namespace Bounce
         }
         public void init()
         {
-            ball = new ball(game, this, Assets.graphics.game.ball, map.start.X, map.start.Y, 40, 40);
-            frame = new frame(game, this, Assets.graphics.game.frameW, map.start.X, map.start.Y, 200, 200);
+            if(savePoint == Point.Zero)
+            {
+                ball = new ball(game, this, Assets.graphics.game.ball, map.start.X, map.start.Y, 40, 40);
+                frame = new frame(game, this, Assets.graphics.game.frameW, map.start.X, map.start.Y, 200, 200);
+            }
+            else
+            {
+                ball = new ball(game, this, Assets.graphics.game.ball, savePoint.X, savePoint.Y, 40, 40);
+                frame = new frame(game, this, Assets.graphics.game.frameW, savePoint.X, savePoint.Y, 200, 200);
+            }
+           
             X = (int)-frame.X + 640;
             Y = (int)-frame.Y + 360;
             //  ball=new GraphicalGameObject(game,this,Assets.graphics.game.ball,)
@@ -67,14 +81,19 @@ namespace Bounce
             for (i = 0; i <= 100; i++) flags.Add(false);
             back = new tileObject(game, this, Assets.graphics.game.mapBack, -10000, -10000, 1000, 1000, 20, 20);
             back.alpha = 0.5f;
-            flags[0] = true;
-           
-            
-            if (testPlay) Status = RUNNING;
+
+
+
+
+            if (testPlay)
+            {
+                Status = RUNNING;
+                flags[0] = true;
+            }
         }
         public override void update(float deltaTime)
         {
-            if (Status != PAUSE && Status !=READY && Status!= CLEARED )
+            if (Status != PAUSE &&  Status!= CLEARED && Status != READY)
             {
                
                 
@@ -92,7 +111,17 @@ namespace Bounce
 
             if (Status == READY)
             {
-              
+               
+                time.update(deltaTime);
+                frame.update(deltaTime);
+                X = (int)-frame.X + 640;
+                Y = (int)-frame.Y + 360;
+
+
+
+                foreach (List<LevelObject> l in Layor) foreach (LevelObject o in l) o.update(deltaTime);
+
+                ball.update(deltaTime);
             }
             
             if (Status == CHANGING)
@@ -106,6 +135,7 @@ namespace Bounce
                 // game.screens.Remove(this);
                 stopTest();
             }
+            if (savedScreen != null) savedScreen.update(deltaTime);
             back.update(deltaTime);
             back.X = back.X * 0.5;
             back.Y = back.Y * 0.5;
@@ -130,7 +160,7 @@ namespace Bounce
             {
               
             }
-
+            if (savedScreen != null) savedScreen.Draw(batch);
             base.Draw(batch);
         }
         public void load(string fileName)
@@ -183,6 +213,14 @@ namespace Bounce
                             break;
                         case mapChip.GOAL:
                             this.Layor[0].Add(new goal(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            break;
+                        case mapChip.ACCEL:
+                            this.Layor[0].Add(new accel(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+
+                            break;
+                        case mapChip.SAVEPOINT:
+                            this.Layor[0].Add(new savePoint(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+
                             break;
                     }
 

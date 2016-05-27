@@ -17,17 +17,22 @@ namespace Bounce
         public worldScreen world;
         public readyScreen readyScreen;
         public clearScreen clearScreen;
+
+        public string filePath;
+
+        public Point savePoint;
+
         public GameScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             System.Windows.Forms.OpenFileDialog dialog = new System.Windows.Forms.OpenFileDialog();
             dialog.Filter = "Bounceマップデータ .bmd|*.bmd";
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-               
+                filePath = dialog.FileName;
             }
 
             time = new TextObject(game, this, Assets.graphics.ui.font, "time: 0", Color.White,0,0);
-            world = new worldScreen(game, dialog.FileName, false);
+            world = new worldScreen(game, dialog.FileName, false,Point.Zero);
             world.onClear += new EventHandler(this.clear);
             readyScreen = new readyScreen(game, this);
             setUIcell(1, 1);
@@ -36,6 +41,13 @@ namespace Bounce
         {
             readyScreen.update(deltaTime);
             if(world.Status==worldScreen.CLEARED)clearScreen.update(deltaTime);
+            if (world.Status == worldScreen.DIED)
+            {
+                savePoint = world.savePoint;
+                world = new worldScreen(game, filePath, false, savePoint);
+                world.onClear += new EventHandler(this.clear);
+                readyScreen = new readyScreen(game, this);
+            } 
             world.update(deltaTime);
             time.update(deltaTime);
 

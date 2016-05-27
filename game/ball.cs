@@ -13,7 +13,7 @@ namespace Bounce
     class ball:GraphicalGameObject
     {
        new worldScreen parent;
-        const float Speed = 0.3f;
+        float Speed = 0.3f;
         public bool breaking = false;
         const float AnimationSpeed = 0.3f;
         int frame = 0;
@@ -45,31 +45,34 @@ namespace Bounce
                 {
                     case 1:
                         velocityX = -Speed;
-                        DebugConsole.write(",1");
-                        // X = b.X - Width;
+                        //DebugConsole.write(",1");
+                        X = b.X-Width;
                         // System.Windows.Forms.MessageBox.Show("1");
                         flag1 = 2;
                         break;
                     case 2:
                         velocityX = Speed;
+                        X = b.X + parent.frame.HABA;
                         // X = b.X+b.Width;
                         // System.Windows.Forms.MessageBox.Show("2");
-                        DebugConsole.write(",2");
+                        //DebugConsole.write(",2");
                         flag1 = 1;
                         break;
                     case 3:
                         velocityY = -Speed;
+                        Y = b.Y- Height;
                         // Y = b.Y - Height;
-                        DebugConsole.write(",3");
+                       // DebugConsole.write(",3");
                         // System.Windows.Forms.MessageBox.Show("3");
 
                         flag1 = 4;
                         break;
                     case 4:
                         velocityY = Speed;
+                        Y = b.Y + parent.frame.HABA;
                         //  Y = b.Y + b.Height;
                         //  System.Windows.Forms.MessageBox.Show("4");]
-                        DebugConsole.write(",4");
+                       // DebugConsole.write(",4");
                         flag1 = 3;
                         break;
                 }
@@ -120,7 +123,7 @@ namespace Bounce
                         
                         if (overlapTester.overlapRectangles(box2, new Rectangle((int)X, (int)Y, (int)Width, (int)Height)) && !((warpPoint)o).isArrive)
                         {
-                            DebugConsole.write("box2");
+                           // DebugConsole.write("box2");
                             warping = true;
                            // System.Windows.Forms.MessageBox.Show(o.rotate.ToString());
                             foreach (List<LevelObject> l2 in parent.Layor) foreach (LevelObject o2 in l2)
@@ -175,7 +178,7 @@ namespace Bounce
 
 
                         }else if(overlapTester.overlapRectangles(box, new Rectangle((int)X, (int)Y, (int)Width, (int)Height))){
-                            DebugConsole.write("box1");
+                           // DebugConsole.write("box1");
                             warping = true;
                             break;
                             
@@ -196,7 +199,7 @@ namespace Bounce
                         {
                             case 1:
                                 velocityX = -Speed;
-                                DebugConsole.write(",1");
+                               // DebugConsole.write(",1");
                                 // X = b.X - Width;
                                 // System.Windows.Forms.MessageBox.Show("1");
                                 if (flag21 == 0)
@@ -212,7 +215,7 @@ namespace Bounce
                                 velocityX = Speed;
                                 // X = b.X+b.Width;
                                 // System.Windows.Forms.MessageBox.Show("2");
-                                DebugConsole.write(",2");
+                              //  DebugConsole.write(",2");
                                 if (flag21 == 0)
                                 {
                                     flag21 = 2;
@@ -225,7 +228,7 @@ namespace Bounce
                             case 3:
                                 velocityY = -Speed;
                                 // Y = b.Y - Height;
-                                DebugConsole.write(",3");
+                              //  DebugConsole.write(",3");
                                 // System.Windows.Forms.MessageBox.Show("3");
 
                                 if (flag21 == 0)
@@ -241,7 +244,7 @@ namespace Bounce
                                 velocityY = Speed;
                                 //  Y = b.Y + b.Height;
                                 //  System.Windows.Forms.MessageBox.Show("4");]
-                                DebugConsole.write(",4");
+                             //   DebugConsole.write(",4");
                                 if (flag21 == 0)
                                 {
                                     flag21 = 4;
@@ -284,7 +287,7 @@ namespace Bounce
                         {
                             parent.flags[o.eventData.num] = true;
                             ((Switch)o).IsPush = true;
-                            DebugConsole.write("イベント: " + o.eventData.num.ToString());
+                            //DebugConsole.write("イベント: " + o.eventData.num.ToString());
                         }
                     }
                     else if (o is shapeChangePoint && !warping)
@@ -296,7 +299,68 @@ namespace Bounce
                             else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
                         }
                     }
-                    
+                    else if (o is accel && !warping)
+                    {
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        {
+                            if (o.rotate == 0)
+                            {
+                                Speed = 0.5f;
+                                if (velocityX > 0)
+                                {
+                                    velocityX = 0.5f;
+                                }else
+                                {
+                                    velocityX = -0.5f;
+                                }
+                                if (velocityY > 0)
+                                {
+                                    velocityY = 0.5f;
+                                }else
+                                {
+                                    velocityY = -0.5f;
+                                }
+                            }
+                            else
+                            {
+                                Speed = 0.1f;
+                                if (velocityX > 0)
+                                {
+                                    velocityX = 0.1f;
+                                }
+                                else
+                                {
+                                    velocityX = -0.1f;
+                                }
+                                if (velocityY > 0)
+                                {
+                                    velocityY = 0.1f;
+                                }
+                                else
+                                {
+                                    velocityY = -0.1f;
+                                }
+                            }
+                           
+                        }else
+                        {
+                            Speed = 0.3f;
+                        }
+
+                    }
+                    else if (o is savePoint && !warping)
+                    {
+                        if (overlapTester.overlapRectangles(new Rectangle((int)o.X + 10, (int)o.Y + 10, (int)o.Width - 20, (int)o.Height - 20), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                        {
+                            if (!((savePoint)o).saved)
+                            {
+                                ((savePoint)o).saved = true;
+                                parent.savePoint = new Point((int)o.X, (int)o.Y);
+                                parent.savedScreen = new savedScreen(game, parent);
+                            }
+                           
+                        }
+                    }
                     else if(o is goal && !warping)
                     {
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X+20, (int)o.Y+20, (int)o.Width-40, (int)o.Height-40), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
@@ -364,9 +428,9 @@ namespace Bounce
                 parent.stopTest();
                 return;
             }
-            game.screens.Clear();
-           
-            game.screens.Add(new GameScreen(game));
+            // game.screens.Clear();
+            parent.Status = worldScreen.DIED;
+           // game.screens.Add(new GameScreen(game));
         }
         public void clearAnimation(float deltaTime)
         {

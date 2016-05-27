@@ -25,13 +25,15 @@ namespace Bounce
         public const int WARPPOINT = 5;
         public const int GUMPOINT = 6;
         public const int GOAL = 7;
-        public const int START = 8;
+        public const int START = 10;
+        public const int ACCEL = 8;
+        public const int SAVEPOINT = 9;
 
         public const int DEFULT = 0;
         public const int MOVING = 1;
         public const int RESIZEING = 2;
 
-        [DataMember]const int size = 40;
+        int size = 40;
         [DataMember]public int type=0;
         [DataMember]public int rotate = 0;
         public int DrawMode = 1;
@@ -51,6 +53,9 @@ namespace Bounce
         public bool AllowDelete=true;
         public bool EditChipMode = false;
         public bool nazo = false;
+        public Texture2D red;
+        public Texture2D orange;
+        public bool eventHilight;
 
         public event EventHandler onClick;
         public event EventHandler onDoubleClick;
@@ -78,8 +83,15 @@ namespace Bounce
             this.rotate = rotate;
             eventData = new eventData();
             onDoubleClick += new EventHandler(this.Rotate);
-
-
+            if (type == ACCEL)
+            {
+                size = 120;
+                Width = 120;
+                Height = 120;
+            }
+            red = Assets.getColorTexture(game, Color.Red);
+            orange = Assets.getColorTexture(game, Color.Orange);
+            addAnimator(2);
         }
         public void reLoad(Game1 game, Screen screen)
         {
@@ -105,6 +117,13 @@ namespace Bounce
             DrawMode = 1;
             alpha = 1;
 
+            if (type == ACCEL)
+            {
+                size = 120;
+            }
+            red = Assets.getColorTexture(game, Color.Red);
+            orange = Assets.getColorTexture(game, Color.Orange);
+            addAnimator(2);
         }
 
         public override void update(float delta)
@@ -205,7 +224,7 @@ namespace Bounce
             }
             else if (Input.IsHover(new Rectangle((int)(actX+10), (int)(actY+Height-10), (int)Width-20, (int)20)) && Input.OnMouseDown(Input.LeftButton))
             {
-                DebugConsole.write("2版");
+               // DebugConsole.write("2版");
                 EditingMode = RESIZEING;
                 ResizeMode = 2;
                 clickedX = Input.getPosition().X;
@@ -217,7 +236,7 @@ namespace Bounce
             }
             else if (Input.IsHover(new Rectangle((int)(actX -10), (int)(actY + 10), (int)20, (int)Height-20)) && Input.OnMouseDown(Input.LeftButton))
             {
-                DebugConsole.write("3版");
+               // DebugConsole.write("3版");
                 EditingMode = RESIZEING;
                 ResizeMode = 3;
                 clickedX = Input.getPosition().X;
@@ -229,7 +248,7 @@ namespace Bounce
             }
             else if (Input.IsHover(new Rectangle((int)(actX+10), (int)(actY -10), (int)Width-20, (int)20)) && Input.OnMouseDown(Input.LeftButton))
             {
-                DebugConsole.write("4版");
+              //  DebugConsole.write("4版");
                 EditingMode = RESIZEING;
                 ResizeMode = 4;
                 clickedX = Input.getPosition().X;
@@ -240,7 +259,7 @@ namespace Bounce
                 FirstY = (int)Y;
             }else if (Input.IsHover(new Rectangle((int)(actX + Width-10), (int)(actY + Height-10), (int)20, (int)20)) && Input.OnMouseDown(Input.LeftButton))
             {
-                DebugConsole.write("5版");
+               // DebugConsole.write("5版");
                 EditingMode = RESIZEING;
                 ResizeMode = 5;
                 clickedX = Input.getPosition().X;
@@ -249,6 +268,12 @@ namespace Bounce
                 FirstHeight = (int)Height;
                 FirstX = (int)X;
                 FirstY = (int)Y;
+            }
+
+            if (Input.OnMouseDown(Input.RightButton))
+            {
+                parent.InsertChips.Add(this);
+                
             }
 
         }
@@ -284,29 +309,29 @@ namespace Bounce
                 switch (ResizeMode)
                 {
                     case 1:
-                        Width = FirstWidth + (int)((Input.getPosition().X - clickedX) / 40) * 40;
+                        Width = FirstWidth + (int)((Input.getPosition().X - clickedX) / size) * size;
 
                         break;
                     case 2:
-                        Height = FirstHeight + (int)((Input.getPosition().Y - clickedY) / 40) * 40;
+                        Height = FirstHeight + (int)((Input.getPosition().Y - clickedY) / size) * size;
 
                         break;
                     case 3:
-                        Width = FirstWidth - (int)((Input.getPosition().X - clickedX) / 40) * 40;
-                        X = FirstX + (int)((Input.getPosition().X - clickedX) / 40) * 40;
+                        Width = FirstWidth - (int)((Input.getPosition().X - clickedX) / size) * size;
+                        X = FirstX + (int)((Input.getPosition().X - clickedX) / size) * size;
                         break;
                     case 4:
-                        Height = FirstHeight - (int)((Input.getPosition().Y - clickedY) / 40) * 40;
-                        Y = FirstY + (int)((Input.getPosition().Y - clickedY) / 40) * 40;
+                        Height = FirstHeight - (int)((Input.getPosition().Y - clickedY) / size) * size;
+                        Y = FirstY + (int)((Input.getPosition().Y - clickedY) / size) * size;
                         break;
                     case 5:
-                        Width = FirstWidth + (int)((Input.getPosition().X - clickedX) / 40) * 40;
-                        Height = FirstHeight + (int)((Input.getPosition().Y - clickedY) / 40) * 40;
+                        Width = FirstWidth + (int)((Input.getPosition().X - clickedX) / size) * size;
+                        Height = FirstHeight + (int)((Input.getPosition().Y - clickedY) / size) * size;
                         break;
                 }
 
-                if (Width < 40) { Width = 40; X = FirstX; }
-                if (Height < 40) { Height = 40; Y = FirstY; }
+                if (Width < size) { Width = size; X = FirstX; }
+                if (Height < size) { Height = size; Y = FirstY; }
 
             }else if (Input.OnMouseUp(Input.LeftButton))
             {
@@ -327,6 +352,7 @@ namespace Bounce
                 batch.Begin(transformMatrix: game.GetScaleMatrix());
                 int i = 0;
                 int j = 0;
+                if (size == 0) size = 40;
                 for (i = 0; i < Width / size; i++)
                 {
                     for (j = 0; j < Height / size; j++)
@@ -362,12 +388,66 @@ namespace Bounce
                 a.Draw(batch, screenAlpha);
             }
             batch.End();
+
+            if (parent.showEventIcon)
+            {
+                batch.Begin(transformMatrix: game.GetScaleMatrix());
+                float al = 0.6f;
+                if (isSelected || eventHilight) al = 1;
+                switch (eventData.type)
+                {
+                    case 1:
+                        batch.Draw(orange, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al);
+                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al);
+
+                        batch.Draw(orange, new Rectangle((int)actX + 20, (int)actY - 20, 20, 20), Color.White * al);
+                        if (((eventData_1)eventData).mode == 0)
+                        {
+                            batch.DrawString(Assets.graphics.ui.font, "消", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al);
+                        }
+                        else
+                        {
+                            batch.DrawString(Assets.graphics.ui.font, "出", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al);
+                        }
+                        if (((eventData_1)eventData).isLoop)
+                        {
+                            batch.Draw(orange, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
+                            batch.Draw(Assets.graphics.ui.repeat, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
+                        }
+
+
+                        break;
+                    case 2:
+                        batch.Draw(orange, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al);
+                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al);
+                        batch.Draw(orange, new Rectangle((int)actX + 20, (int)actY - 20, 20, 20), Color.White * al);
+                        batch.DrawString(Assets.graphics.ui.font, "移", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al);
+                        if (((eventData_2)eventData).isLoop)
+                        {
+                            batch.Draw(orange, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
+                            batch.Draw(Assets.graphics.ui.repeat, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
+                        }
+
+                        break;
+                    case 3:
+                        batch.Draw(red, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al);
+                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al);
+
+                        break;
+                }
+                batch.End();
+            }
+           
+
+
+
         }
         public void Rotate(object sender,EventArgs e)
         {
             rotate++;
             if (rotate == 5) rotate = 0;
-            
+            if (type == ACCEL && rotate == 2) rotate = 0;
+
             Texture = getChipTexture(type);
 
         }
@@ -399,6 +479,20 @@ namespace Bounce
                     break;
                 case START:
                     res = Assets.graphics.ui.startChip;
+                    break;
+                case ACCEL:
+                    if (rotate == 0)
+                    {
+                        res = Assets.graphics.game.accel[0];
+                    }
+                    else
+                    {
+                        res = Assets.graphics.game.brake[0];
+                    }
+                    break;
+                case SAVEPOINT:
+                    res = Assets.graphics.game.savePoint[0];
+
                     break;
             }
 

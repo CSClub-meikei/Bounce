@@ -65,9 +65,14 @@ namespace Bounce.editor
                     eventTypeSelector.max = 2;
                     break;
                 case 3:
+                    int tmp = chip.eventData.num;
+
+                    chip.eventData = new eventData_3();
+                    chip.eventData.num= tmp;
                     eventTypeSelector.min = 3;
                     eventTypeSelector.max = 3;
                     eventTypeSelector.value = 3;
+                    chip.eventData.type=3;
                     eventTypeSelector.text.text = "イベント作動";
                     break;
                 case 4:
@@ -190,6 +195,9 @@ namespace Bounce.editor
                     chip.eventData = new eventData_2();
                     ((eventData_2)chip.eventData).X = (int)chip.X;
                     ((eventData_2)chip.eventData).Y = (int)chip.Y;
+                    break;
+                case 3:
+                    chip.eventData = new eventData_3();
                     break;
             }
             chip.eventData.type = (int)eventTypeSelector.value;

@@ -76,8 +76,12 @@ namespace Bounce
 
                 public static Texture2D back_storyComment;
 
+                public static Texture2D toast;
+                public static Texture2D repeat;
+
                 public static SpriteFont font;
                 public static SpriteFont defultFont;
+
             }
             public static class game
             {
@@ -91,6 +95,8 @@ namespace Bounce
                 public static Texture2D[] thorn;
                 public static Texture2D[] ball_animation;
                 public static Texture2D[] warpPoint;
+                public static Texture2D[] accel;
+                public static Texture2D[] brake;
                 public static Texture2D goal;
 
                 public static Texture2D ready;
@@ -98,6 +104,8 @@ namespace Bounce
                 public static Texture2D clear;
 
                 public static Texture2D mapBack;
+                public static Texture2D[] savePoint;
+                public static Texture2D saved;
             }
             public static class Character
             {
@@ -108,6 +116,7 @@ namespace Bounce
             {
                 public static Texture2D labo;
                 public static Texture2D map;
+                public static Texture2D laboIcon;
             }
 
         }
@@ -200,7 +209,8 @@ namespace Bounce
 
 
             graphics.ui.back_storyComment = Content.Load<Texture2D>("back_storyComment");
-
+            graphics.ui.toast = Content.Load<Texture2D>("toast");
+            graphics.ui.repeat= Content.Load<Texture2D>("repeat");
 
             graphics.ui.font = Content.Load<SpriteFont>("font");
             graphics.ui.defultFont = Content.Load<SpriteFont>("defult");
@@ -227,18 +237,33 @@ namespace Bounce
             graphics.game.readyBar = Content.Load<Texture2D>("readyBar");
             graphics.game.clear = Content.Load<Texture2D>("clear");
             graphics.game.mapBack = Content.Load<Texture2D>("mapBack");
+            graphics.game.saved = Content.Load<Texture2D>("saved");
+
+            graphics.game.savePoint = new Texture2D[2];
 
             for (i = 0; i <= 4; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
             for (i = 0; i <= 4; i++) graphics.game.Switch_p[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString() + "-p");
             for (i=0;i<=4;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
             for (i = 0; i <= 4; i++) graphics.game.warpPoint[i] = Content.Load<Texture2D>("warpPoint" + (i + 1).ToString());
+            for (i = 0; i <= 1; i++) graphics.game.savePoint[i] = Content.Load<Texture2D>("savePoint_" + (i).ToString());
 
 
+            Content.RootDirectory = "Content/graphics/game/animation/accel";
+            graphics.game.accel = new Texture2D[44];
+
+            for (i = 0; i <= 43; i++) graphics.game.accel[i] = Content.Load<Texture2D>("accel_" + i.ToString());
+
+            Content.RootDirectory = "Content/graphics/game/animation/brake";
+            graphics.game.brake = new Texture2D[44];
+
+            for (i = 0; i <= 43; i++) graphics.game.brake[i] = Content.Load<Texture2D>("brake_" + i.ToString());
 
             Content.RootDirectory = "Content/graphics/game/animation/ball";
             graphics.game.ball_animation = new Texture2D[45];
            
             for(i=0;i<=44;i++)graphics.game.ball_animation[i] = Content.Load<Texture2D>(i.ToString());
+
+           
         }
         public static void LoadCharacter(ContentManager Content)
         {
@@ -255,6 +280,7 @@ namespace Bounce
 
             graphics.worldMap.labo= Content.Load<Texture2D>("labo");
             graphics.worldMap.map = Content.Load<Texture2D>("map");
+            graphics.worldMap.laboIcon = Content.Load<Texture2D>("laboIcon");
         }
         public static void LoadSoundEffects(ContentManager Content)
         {

@@ -113,6 +113,12 @@ namespace Bounce
                 case mapChip.GOAL:
                     res = Assets.graphics.game.goal;
                     break;
+                case mapChip.ACCEL:
+                    res = Assets.graphics.game.accel[0];
+                    break;
+                case mapChip.SAVEPOINT:
+                    res = Assets.graphics.game.savePoint[0];
+                    break;
             }
 
 
@@ -163,7 +169,7 @@ namespace Bounce
                 animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, 1/(((eventData_2)eventData).speed)*(float)distant, -1 });
                 type2tmp = true;
 
-                DebugConsole.write("イベント作動！！！！！！！");
+               // DebugConsole.write("イベント作動！！！！！！！");
 
 
             }
@@ -217,14 +223,14 @@ namespace Bounce
                             double distant = System.Math.Sqrt(System.Math.Pow(X - type2tmpX, 2) + System.Math.Pow((Y - type2tmpY), 2)) / 40;
                             animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, type2tmpX, type2tmpY, 1 / (((eventData_2)eventData).speed) * (float)distant, -1 });
                             type2tmp = false;
-                            DebugConsole.write(type2tmpX.ToString());
+                           // DebugConsole.write(type2tmpX.ToString());
                         }
                         else
                         {
                             double distant = System.Math.Sqrt(System.Math.Pow((((eventData_2)eventData).X - X), 2) + System.Math.Pow((((eventData_2)eventData).Y - Y), 2)) / 40;
                             animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, 1 / (((eventData_2)eventData).speed) * (float)distant, -1 });
                             type2tmp = true;
-                            DebugConsole.write(type2tmp.ToString());
+                         //   DebugConsole.write(type2tmp.ToString());
                         }
 
 

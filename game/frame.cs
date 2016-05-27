@@ -13,8 +13,9 @@ namespace Bounce
     class frame:GraphicalGameObject
     {
         new worldScreen parent;
-        public const int HABA = 8;
+        public   int HABA = 8;
         public float fw, fh;
+        
         public List<singleFrame> frames = new List<singleFrame>();
         public frame(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen,Texture, x, y, width, height)
         {

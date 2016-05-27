@@ -26,7 +26,7 @@ namespace Bounce
                   title.animator[0].setLimit(0.3f);
                  title.animator[0].start(GameObjectAnimator.ZOOMINOUT, new float[] { 0.2f, 1, 0, 0, 1,0, 1 });
                   title.animator[2].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.2f });
-                  animator.FinishAnimation += new EventHandler((sender3, e3) => { screen.world.Status = worldScreen.RUNNING; });
+                  animator.FinishAnimation += new EventHandler((sender3, e3) => { screen.world.Status = worldScreen.RUNNING; screen.world.flags[0] = true; });
                   animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });
               });
 

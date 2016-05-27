@@ -171,6 +171,12 @@ namespace Bounce
             debugScreen.Draw(spriteBatch);
             base.Draw(gameTime);
         }
+
+        public void ShowToast(string msg,float time)
+        {
+            screens.Add(new toast(this, msg, time));
+
+        }
         public Matrix GetScaleMatrix()
         {
             var scaleX = (float)graphics.PreferredBackBufferWidth / 1280;

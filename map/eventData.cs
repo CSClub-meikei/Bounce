@@ -11,6 +11,7 @@ namespace Bounce
     [KnownType(typeof(eventData))]
     [KnownType(typeof(eventData_1))]
     [KnownType(typeof(eventData_2))]
+    [KnownType(typeof(eventData_3))]
     public class eventData
     {
         public int type;

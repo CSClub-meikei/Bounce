@@ -13,10 +13,10 @@ namespace Bounce
 
         public ChipToolbar(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
-            setUIcell(7, 1);
+            setUIcell(9, 1);
             int i = 0;
 
-            for (i = 0; i <= 6;i++)
+            for (i = 0; i <=8 ;i++)
                 Controls[i, 0] = new ChipToolBarChip(game, this, i + 1, 395 + i * 70, 0, 60, 60);
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_ChipToolbar, 360, 0, 600, 100);
 

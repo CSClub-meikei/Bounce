@@ -71,6 +71,14 @@ namespace Bounce
                 case mapChip.GOAL:
                     res = Assets.graphics.game.goal;
                     break;
+                case mapChip.ACCEL:
+
+                    res = Assets.graphics.game.accel[0];
+                    break;
+                case mapChip.SAVEPOINT:
+                    res = Assets.graphics.game.savePoint[0];
+
+                    break;
             }
 
 

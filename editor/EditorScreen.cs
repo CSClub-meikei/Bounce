@@ -25,6 +25,8 @@ namespace Bounce.editor
 
         public List<mapChip> selectedChips = new List<mapChip>();
         public List<mapChip> RemoveChips = new List<mapChip>();
+        public List<mapChip> InsertChips = new List<mapChip>();
+
         ChipToolbar ChipToolbar;
         public eventEditScreen eventEditScreen;
         public menuBar MenuBar;
@@ -38,7 +40,7 @@ namespace Bounce.editor
         public  bool Moveeditting = false;
         Point mp, op;
         public int selectedLayor = 0;
-
+        public bool showEventIcon=true;
         tileObject back;
 
         public worldScreen TestPlayScreen;
@@ -68,8 +70,17 @@ namespace Bounce.editor
 
             mapChip newChip = new mapChip(game, this, type, 0, (int)(Input.getPosition().X - X), (int)(Input.getPosition().Y - Y), 40, 40);
             newChip.onClick += new EventHandler(this.onSelect);
-            map.Layor[layor].Add(newChip);
 
+            if (type == mapChip.ACCEL)
+            {
+                map.Layor[layor].Insert(0,newChip);
+            }
+            else
+            {
+                map.Layor[layor].Add(newChip);
+            }
+          
+            
         }
         public void startMoveEdit(object sender, EventArgs e)
         {
@@ -164,7 +175,9 @@ namespace Bounce.editor
             
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.update(deltaTime);
             foreach (mapChip c in RemoveChips) foreach (List<mapChip> layor in map.Layor) if (layor.IndexOf(c) != -1) layor.Remove(c);
-            startChip.update(deltaTime);
+            foreach (mapChip c in InsertChips) foreach (List<mapChip> layor in map.Layor) if (layor.IndexOf(c) != -1) { layor.Remove(c);layor.Insert(0, c); }
+            InsertChips.Clear();
+                startChip.update(deltaTime);
             map.start = new Point((int)startChip.X, (int)startChip.Y);
             // if (selectedChips.Count == 0) eventEditScreen.screenAlpha = 0;
             // else eventEditScreen.screenAlpha = 1;
@@ -197,9 +210,33 @@ namespace Bounce.editor
             }
             //eventEditScreen.Load(selectedChips[0]);
             // eventEditScreen.screenAlpha = 1;
-            foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor) chip.isSelected = false;
+            foreach (List<mapChip> layor in map.Layor) {
+                foreach (mapChip chip in layor)
+                {
+                    chip.isSelected = false;
+                    if (selectedChips[0].eventData.num == chip.eventData.num && selectedChips[0].eventData.num!=0)
+                    {
+                        
+                        chip.animator[0].GLOWHL = Assets.graphics.ui.HL;
+                        chip.animator[0].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.6f, 0F, 0.4F, 0.0F, 1F });
+                        chip.animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 0 });
+                        chip.eventHilight = true;
+                    }else
+                    {
+                        chip.animator[0].stop();
+                        chip.animator[1].stop();
+                        chip.eventHilight = false;
+                    }
+                  
+                }
+            }
 
-            foreach (mapChip chip in selectedChips) chip.isSelected = true;
+            foreach (mapChip chip in selectedChips)
+            {
+                chip.isSelected = true;
+                chip.animator[0].stop();
+                chip.animator[1].stop();
+            }
             
         }
         public void Save(string fileName)
@@ -349,7 +386,12 @@ namespace Bounce.editor
             if (Input.onKeyDown(Keys.S) && Input.IsKeyDown(Keys.LeftControl))
             {
                 Save(filepath);
-                System.Windows.Forms.MessageBox.Show("保存しました");
+                game.ShowToast("保存しました", 2);
+                //System.Windows.Forms.MessageBox.Show("保存しました");
+            }
+            if (Input.onKeyDown(Keys.N))
+            {
+                showEventIcon = !showEventIcon;
             }
         }
         public mapChip CopyChip(mapChip s)
@@ -400,7 +442,7 @@ namespace Bounce.editor
             
 
           // recentMap.Add(map.Clone(game,this));
-            DebugConsole.write(unre.ToString());
+           // DebugConsole.write(unre.ToString());
 
         }
         public void undo()
@@ -411,7 +453,7 @@ namespace Bounce.editor
                 map = recentMap[unre-1].Clone(game,this);
               
             }
-            DebugConsole.write(unre.ToString());
+          //  DebugConsole.write(unre.ToString());
         }
         public void redo()
         {
@@ -421,14 +463,14 @@ namespace Bounce.editor
                 map = recentMap[unre-1].Clone(game, this);
 
             }
-            DebugConsole.write(unre.ToString());
+           // DebugConsole.write(unre.ToString());
         }
         public void startTestPlay()
         {
 
             if (filepath == "") filepath = "tmp.bmd";
                 Save(filepath);
-            TestPlayScreen = new worldScreen(game, map,true);
+            TestPlayScreen = new worldScreen(game, map,true,Point.Zero);
             
             TestPlayScreen.stop += new EventHandler(this.stopTestPlay);
            

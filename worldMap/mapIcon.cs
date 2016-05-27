@@ -16,7 +16,7 @@ namespace Bounce
         new worldMapScreen parent;
 
         bool isHover;
-
+        public Point dif;
         public mapIcon(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
         {
             parent = (worldMapScreen)screen;
@@ -41,8 +41,9 @@ namespace Bounce
             isHover = true;
             if (parent.isAnimate) return;
             parent.isAnimate = true;
-            parent.animator[0].start(ScreenAnimator.SLIDE, new float[] { 1, (float)-X + 615, (float)-Y + 335, 0, -1, 1, 1 });
-            parent.animator[1].start(ScreenAnimator.SLIDE, new float[] { 2, (float)-X + 615, (float)-Y + 335, 0, -1, 1, 1 });
+           
+            parent.animator[0].start(ScreenAnimator.SLIDE, new float[] { 1, (float)-X + 615+dif.X, (float)-Y + 335+dif.Y, 0, -1, 0.5f, 0.5f });
+            parent.animator[1].start(ScreenAnimator.SLIDE, new float[] { 2, (float)-X + 615+dif.X, (float)-Y + 335+dif.Y, 0, -1, 0.5f, 0.5f });
         }
         public void leave(object sender, EventArgs e)
         {
