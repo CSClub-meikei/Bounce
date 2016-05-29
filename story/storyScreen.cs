@@ -54,7 +54,7 @@ namespace Bounce
             story.storyData.Add(new storyData_1(0, "テストメッセージ。\n", 0.02f));
             story.storyData.Add(new storyData_1(0, "テストメッセージ。\n", 0.02f));
             story.storyData.Add(new storyData_1(0, "テストメッセージ。\n", 0.02f));
-
+            story.storyData.Add(new storyData_3(2));
             nextLoad(null, null);
            // text.finish += new EventHandler(this.nextLoad);
             text.play = true;
@@ -116,6 +116,11 @@ namespace Bounce
                     text.clear();
                     id++;
                     nextLoad(null, null);
+                }
+                else if (((storyData_3)story.storyData[id]).command == 2)
+                {
+                    game.screens.Clear();
+                    game.screens.Add(new worldMapScreen(game));
                 }
             }
            

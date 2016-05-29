@@ -86,6 +86,21 @@ namespace Bounce
 
                     break;
                 case 5:
+
+                    setSize(fw, fh);
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), (int)Width, HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)((X - (Width / 2)) + Width - HABA), (int)(Y - (Height / 2)), HABA, (int)Height/2-30));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)((X - (Width / 2)) + Width - HABA), (int)(Y +30), HABA, (int)Height / 2 - 30));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)((Y - (Height / 2)) + Height - HABA), (int)Width, HABA));
+                    frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), HABA, (int)Height));
+                    animator[0].start(GameObjectAnimator.SLIDE, new float[] { 1, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
+                    animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, (float)(parent.ball.X + parent.ball.Width / 2), (float)(parent.ball.Y + parent.ball.Height / 2), 0, 0, 2f, 2f });
+
+
+
+                    break;
+                    
+                case 6:
                     setSize(fw*0.6, fh*0.6);
                     frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameW, X, Y, (int)(X - (Width / 2)), (int)(Y - (Height / 2)), (int)Width, HABA));
                     frames.Add(new singleFrame(game, parent, Assets.graphics.game.frameH, X, Y, (int)((X - (Width / 2)) + Width - HABA), (int)(Y - (Height / 2)), HABA, (int)Height));

@@ -16,7 +16,7 @@ namespace Bounce
         new public List<ScreenAnimator> animator = new List<ScreenAnimator>();
 
         GraphicalGameObject map;
-
+        levelinfoScreen levelinfoScreen;
         mapIcon labo,w1,w2,w3,w4,w5,w6,w7,w8;
         public bool isAnimate;
 
@@ -38,6 +38,21 @@ namespace Bounce
             w7 = new mapIcon(game, this, Assets.graphics.game.block, 1500, 2000, 50, 50);
             w8 = new mapIcon(game, this, Assets.graphics.game.block, 1550, 1340, 50, 50);
 
+
+            labo.num = "Tutorial";
+            labo.title = "チュートリアル";
+            labo.level = "レベル : 1  ☆";
+            labo.disctiprion = "冒険に行く前に練習してみよう。";
+            labo.path = "level/Tutorial.bmd";
+
+            w1.num = "world1";
+            w1.title = "はじまりの草原";
+            w1.level = "レベル : 1  ☆";
+            w1.disctiprion = "さあ、冒険の始まりだ。\nそこまで難しくはないから\n焦らず行こう！";
+            w1.path = "level/w1.bmd";
+
+
+            animator.Add(new ScreenAnimator(this, game));
             animator.Add(new ScreenAnimator(this, game));
             animator.Add(new ScreenAnimator(this, game));
 
@@ -60,12 +75,20 @@ namespace Bounce
         }
         public override void update(float deltaTime)
         {
+           
             if(!animator[0].isAnimate && !animator[1].isAnimate)
             {
                 if (Input.onKeyDown(Keys.Up)) selectedItem = new Point(selectedItem.X, selectedItem.Y - 1);
                 if (Input.onKeyDown(Keys.Down)) selectedItem = new Point(selectedItem.X, selectedItem.Y + 1);
                 if (Input.onKeyDown(Keys.Right)) selectedItem = new Point(selectedItem.X + 1, selectedItem.Y);
                 if (Input.onKeyDown(Keys.Left)) selectedItem = new Point(selectedItem.X - 1, selectedItem.Y);
+                if (Input.onKeyDown(Keys.Space))
+                {
+                    levelinfoScreen = new levelinfoScreen(game, this);
+                    levelinfoScreen.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 0.5f });
+
+                }
+
             }
             
 
@@ -83,16 +106,17 @@ namespace Bounce
 
                 //throw;
             }
-           
+            if(levelinfoScreen!=null)levelinfoScreen.update(deltaTime);
             map.update(deltaTime);
            // labo.update(deltaTime);
           //  w1.update(deltaTime);
         }
         public override void Draw(SpriteBatch batch)
         {
-           
-            map.Draw(batch, screenAlpha);
             base.Draw(batch);
+            map.Draw(batch, screenAlpha);
+            foreach (uiObject o in Controls) if (o != null) o.Draw(batch,screenAlpha);
+            if (levelinfoScreen != null) levelinfoScreen.Draw(batch);
             //  labo.Draw(batch, screenAlpha);
             // w1.Draw(batch, screenAlpha);
         }

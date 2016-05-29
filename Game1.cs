@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Bounce.editor;
+using Bounce.socket;
 namespace Bounce
 {
     /// <summary>
@@ -50,6 +51,10 @@ namespace Bounce
             Assets.Initialize(this);
             counter = new FPSCounter();
             base.Initialize();
+            
+            
+
+
         }
 
         /// <summary>
@@ -63,6 +68,28 @@ namespace Bounce
             debugScreen = new debugScreen(this);
             debugScreen.screenAlpha = 0;
             screens.Add(new AssetsLoadScreen(this));
+
+            string[] cmds = System.Environment.GetCommandLineArgs();
+            
+            if (cmds.Length <2)
+            {
+
+                Client.connect();
+                Client.tcp.startReceive();
+                LoginForm f = new LoginForm();
+                f.ShowDialog();
+            }else
+            {
+                if (cmds[1] != "disableNetWork")
+                {
+                    Client.connect();
+                    Client.tcp.startReceive();
+                    LoginForm f = new LoginForm();
+                    f.ShowDialog();
+                }
+
+            }
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -83,10 +110,12 @@ namespace Bounce
         protected override void Update(GameTime gameTime)
         {
             float deltaTime = counter.getDeltaTime(gameTime);
-           // Window.Title = (1 / counter.getDeltaTime(gameTime) ).ToString();
+            // Window.Title = (1 / counter.getDeltaTime(gameTime) ).ToString();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            {
+               if(Client.tcp!=null) Client.tcp.disConnect();
+                Exit(); }
             if (Input.onKeyDown(Keys.Q))
             {
                 SettingForm f = new SettingForm(this);
@@ -103,7 +132,7 @@ namespace Bounce
             {
                 screens.Clear();
 
-                screens.Add(new storyScreen(this));
+                screens.Add(new BackScreen(this)); screens.Add(new UItestScreen(this));
             }
             if (Input.onKeyDown(Keys.E))
             {
@@ -115,7 +144,10 @@ namespace Bounce
                 screens.Clear();
                 screens.Add(new worldMapScreen(this));
             }
-
+            if (Input.onKeyDown(Keys.C))
+            {
+                screens.Add(new adviceScreen(this,1,0,"メッセージのテストです\nここにアドバイス等が表示されます"));
+            }
             if (Input.IsKeyDown(Keys.D) && Input.IsKeyDown(Keys.LeftShift))
             {
                // debugScreen.AutoScroll = !debugScreen.AutoScroll;

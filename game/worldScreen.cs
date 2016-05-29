@@ -16,7 +16,7 @@ namespace Bounce
     {
         public mapData map;
 
-       public TextObject time;
+       // public TextObject time;
         tileObject back;
         public ball ball;
         public frame frame;
@@ -54,7 +54,7 @@ namespace Bounce
             savePoint = save;
             testPlay = IsTest;
             map = data;
-
+            Assets.LoadGame(game.Content,map.texSet);
             GenerateMapFromData();
             init();
            
@@ -76,11 +76,11 @@ namespace Bounce
             Y = (int)-frame.Y + 360;
             //  ball=new GraphicalGameObject(game,this,Assets.graphics.game.ball,)
             setUIcell(1, 1);
-            time = new TextObject(game, this, Assets.graphics.ui.font, "time: 0", Color.White, 0, 0);
+           // time = new TextObject(game, this, Assets.graphics.ui.font, "time: 0", Color.White, 0, 0);
             int i = 0;
             for (i = 0; i <= 100; i++) flags.Add(false);
             back = new tileObject(game, this, Assets.graphics.game.mapBack, -10000, -10000, 1000, 1000, 20, 20);
-            back.alpha = 0.5f;
+            back.alpha = 1;
 
 
 
@@ -98,7 +98,7 @@ namespace Bounce
                
                 
                 frame.update(deltaTime);
-                time.update(deltaTime);
+               // time.update(deltaTime);
                 X = (int)-frame.X + 640;
                 Y = (int)-frame.Y + 360;
 
@@ -112,7 +112,7 @@ namespace Bounce
             if (Status == READY)
             {
                
-                time.update(deltaTime);
+               // time.update(deltaTime);
                 frame.update(deltaTime);
                 X = (int)-frame.X + 640;
                 Y = (int)-frame.Y + 360;
@@ -154,7 +154,7 @@ namespace Bounce
 
             if (!ball.warping) ball.Draw(batch, screenAlpha);
             frame.Draw(batch, screenAlpha);
-            time.Draw(batch, screenAlpha);
+           // time.Draw(batch, screenAlpha);
 
             if (Status == READY)
             {
@@ -184,6 +184,7 @@ namespace Bounce
                 map = new mapData();
 
             }
+            Assets.LoadGame(game.Content, map.texSet);
             GenerateMapFromData();
            
 
@@ -203,7 +204,7 @@ namespace Bounce
                             this.Layor[0].Add(new thorn(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
                             break;
                         case mapChip.SWITCH:
-                            this.Layor[0].Add(new Switch(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
+                            this.Layor[0].Add(new Switch(game, this, chip.eventData, chip.specialData,chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));
                             break;
                         case mapChip.SHPOINT:
                             this.Layor[0].Add(new shapeChangePoint(game, this, chip.eventData, chip.rotate, (float)chip.X, (float)chip.Y, (float)chip.Width, (float)chip.Height));

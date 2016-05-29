@@ -67,13 +67,15 @@ namespace Bounce.editor
                 case 3:
                     int tmp = chip.eventData.num;
 
-                    chip.eventData = new eventData_3();
-                    chip.eventData.num= tmp;
+                    //chip.eventData = new eventData_3();
+                    //chip.eventData.num= tmp;
                     eventTypeSelector.min = 3;
-                    eventTypeSelector.max = 3;
-                    eventTypeSelector.value = 3;
-                    chip.eventData.type=3;
-                    eventTypeSelector.text.text = "イベント作動";
+                    eventTypeSelector.max = 4;
+                    //eventTypeSelector.value = 3;
+                  
+
+                    eventTypeSelector.text.text = GetEventName((int)eventTypeSelector.value);
+                    special = new specialScreen_switch(game, this, 0, 600);
                     break;
                 case 4:
                     eventTypeSelector.min = 0;
@@ -107,6 +109,10 @@ namespace Bounce.editor
                 case 3:
                     eventdataScreen = new eventEditScreen_3(game, this, 0, 150);
                     break;
+
+                case 4:
+                    eventdataScreen = new eventEditScreen_4(game, this, 0, 150);
+                    break;
             }
 
         }
@@ -136,6 +142,9 @@ namespace Bounce.editor
                 case 3:
                     res = "イベント作動";
 
+                    break;
+                case 4:
+                    res = "メッセージ表示";
                     break;
             }
             return res;
@@ -199,6 +208,9 @@ namespace Bounce.editor
                 case 3:
                     chip.eventData = new eventData_3();
                     break;
+                case 4:
+                    chip.eventData = new eventData_4();
+                    break;
             }
             chip.eventData.type = (int)eventTypeSelector.value;
             eventdataScreen = null;
@@ -242,6 +254,10 @@ namespace Bounce.editor
 
                 case 3:
                     eventdataScreen = new eventEditScreen_3(game, this, 0, 150);
+                    break;
+
+                case 4:
+                    eventdataScreen = new eventEditScreen_4(game, this, 0, 150);
                     break;
             }
             DebugConsole.write("type:" + chip.eventData.type.ToString());

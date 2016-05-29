@@ -27,7 +27,7 @@ namespace Bounce
             base.update(delta);
             if (Input.onHover(new Rectangle((int)actX, (int)actY, (int)Width, (int)Height)) && GotFocus != null) { GotFocus(this, EventArgs.Empty); foreach (uiObject u in parent.Controls) if (u != null) { u.Selected = false; Selected = true; } }
             if (Input.onLeave(new Rectangle((int)actX, (int)actY, (int)Width, (int)Height)) && LostFocus != null) LostFocus(this, EventArgs.Empty);
-            if (_selected)foreach (Keys k in acceptKeys) if (Input.onKeyUp(k)) Enter(this, EventArgs.Empty);
+            if (_selected)foreach (Keys k in acceptKeys) if (Input.onKeyUp(k)) if(Enter!=null)Enter(this, EventArgs.Empty);
             if(Input.IsHover(new Rectangle((int)actX, (int)actY, (int)Width, (int)Height)) && Input.OnMouseUp(Input.LeftButton)) if(Enter!=null)Enter(this, EventArgs.Empty);
             
 

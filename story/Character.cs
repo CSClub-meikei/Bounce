@@ -79,5 +79,8 @@ namespace Bounce.story
         {
             base.Draw(batch, screenAlpha);
         }
+
+    
+
     }
 }

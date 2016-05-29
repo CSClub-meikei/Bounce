@@ -72,7 +72,7 @@ namespace Bounce
             game.screens[0].animator.FinishAnimation += new EventHandler((ss, ee) => {
                 game.screens.Clear();
                 //game.screens.Add(new worldScreen(game, "test.xml",false));
-                game.screens.Add(new GameScreen(game));
+                game.screens.Add(new storyScreen(game));
             });
            game.screens[0].animator.setDelay(1f);
             game.screens[0].animator.start(GameObjectAnimator.fadeInOut, new float[] { 1,1 });

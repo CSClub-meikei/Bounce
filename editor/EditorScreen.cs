@@ -276,7 +276,14 @@ namespace Bounce.editor
                 map = new mapData();
 
             }
+            Assets.LoadGame(game.Content, map.texSet);
+
             map.Load(game, this);
+            ChipToolbar = new ChipToolbar(game);
+            foreach (ChipToolBarChip c in ChipToolbar.Controls) c.Drag += new EventHandler((sender, e) => { AddChip(selectedLayor, c.ChipNum); });
+            back = new tileObject(game, this, Assets.graphics.game.mapBack, -10000, -10000, 1000, 1000, 20, 20);
+
+
             foreach (List<mapChip> layor in map.Layor) foreach (mapChip chip in layor)
                 {
                     chip.onClick += new EventHandler(this.onSelect);
@@ -432,7 +439,7 @@ namespace Bounce.editor
         }
         public void RefreshMap()
         {
-            int i = 0;
+           // int i = 0;
            
 
             unre++;

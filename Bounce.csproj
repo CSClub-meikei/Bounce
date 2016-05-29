@@ -46,9 +46,17 @@
     <Compile Include="editor\eventEditScreen_1.cs" />
     <Compile Include="editor\eventEditScreen_2.cs" />
     <Compile Include="editor\eventEditScreen_3.cs" />
+    <Compile Include="editor\eventEditScreen_4.cs" />
     <Compile Include="editor\FileMenu.cs" />
+    <Compile Include="editor\inputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="editor\inputBox.Designer.cs">
+      <DependentUpon>inputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="editor\mapSettingScreen.cs" />
     <Compile Include="editor\menuBar.cs" />
+    <Compile Include="editor\specialScreen_switch.cs" />
     <Compile Include="editor\specialScreen_warp.cs" />
     <Compile Include="game\accel.cs" />
     <Compile Include="game\clearScreen.cs" />
@@ -59,6 +67,13 @@
     <Compile Include="game\savePoint.cs" />
     <Compile Include="game\warpPoint.cs" />
     <Compile Include="map\eventData_3.cs" />
+    <Compile Include="map\eventData_4.cs" />
+    <Compile Include="screens\adviceScreen.cs" />
+    <Compile Include="screens\inputScreen.cs" />
+    <Compile Include="socket\Client.cs" />
+    <Compile Include="socket\const.cs" />
+    <Compile Include="socket\packetData.cs" />
+    <Compile Include="socket\tcpConnector.cs" />
     <Compile Include="story\Character.cs" />
     <Compile Include="story\SerifTextObject.cs" />
     <Compile Include="story\SerifTextObjectOld.cs" />
@@ -125,6 +140,14 @@
     <Compile Include="gameObject\uiObject.cs" />
     <Compile Include="screens\UItestScreen.cs" />
     <Compile Include="game\worldScreen.cs" />
+    <Compile Include="LoginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginForm.Designer.cs">
+      <DependentUpon>LoginForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="userData.cs" />
+    <Compile Include="worldMap\levelinfoScreen.cs" />
     <Compile Include="worldMap\mapIcon.cs" />
     <Compile Include="worldMap\worldMapScreen.cs" />
   </ItemGroup>
@@ -154,6 +177,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\Character\man2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\ad_forest01_a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\ad_tower01_a.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\ad_tower02_a.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\animation\accel\accel_0.png">
@@ -555,10 +587,13 @@
     <Content Include="Content\graphics\game\animation\brake\brake_9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\back_beach.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\ball.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\block.png">
+    <Content Include="Content\graphics\game\defult\block.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\game\changePoint.png">
@@ -576,6 +611,9 @@
     <Content Include="Content\graphics\game\FrameH.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\game\grassland.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\game\mapBack.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -588,70 +626,145 @@
     <Content Include="Content\graphics\game\saved.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\savePoint_0.png">
+    <Content Include="Content\graphics\game\defult\savePoint_0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\savePoint_1.png">
+    <Content Include="Content\graphics\game\defult\savePoint_1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch1-p.png">
+    <Content Include="Content\graphics\game\defult\switch1-p.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch1.png">
+    <Content Include="Content\graphics\game\defult\switch1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch2-p.png">
+    <Content Include="Content\graphics\game\defult\switch2-p.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch2.png">
+    <Content Include="Content\graphics\game\defult\switch2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch3-p.png">
+    <Content Include="Content\graphics\game\defult\switch3-p.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch3.png">
+    <Content Include="Content\graphics\game\defult\switch3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch4-p.png">
+    <Content Include="Content\graphics\game\defult\switch4-p.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch4.png">
+    <Content Include="Content\graphics\game\defult\switch4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch5-p.png">
+    <Content Include="Content\graphics\game\defult\switch5-p.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\switch5.png">
+    <Content Include="Content\graphics\game\defult\switch5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\thorn1.png">
+    <Content Include="Content\graphics\game\defult\thorn1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\thorn2.png">
+    <Content Include="Content\graphics\game\defult\thorn2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\thorn3.png">
+    <Content Include="Content\graphics\game\defult\thorn3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\thorn4.png">
+    <Content Include="Content\graphics\game\defult\thorn4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\thorn5.png">
+    <Content Include="Content\graphics\game\defult\thorn5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\warpPoint1.png">
+    <Content Include="Content\graphics\game\defult\warpPoint1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\warpPoint2.png">
+    <Content Include="Content\graphics\game\defult\warpPoint2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\warpPoint3.png">
+    <Content Include="Content\graphics\game\defult\warpPoint3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\warpPoint4.png">
+    <Content Include="Content\graphics\game\defult\warpPoint4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\warpPoint5.png">
+    <Content Include="Content\graphics\game\defult\warpPoint5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\defult\warp_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\defult\warp_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\defult\warp_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\defult\warp_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\defult\warp_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_block.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_goal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_savePoint_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_savePoint_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch1-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch2-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch3-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch4-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch5-p.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_switch5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_thorn1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_thorn2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_thorn3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_thorn4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\tex1\t1_thorn5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\game\cloud.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\arrow+.png">
@@ -720,7 +833,10 @@
     <Content Include="Content\graphics\ui\cursor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\graphics\game\goal.png">
+    <Content Include="Content\graphics\game\defult\goal.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\editMsgButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\HL.png">
@@ -780,6 +896,9 @@
     <Content Include="Content\graphics\worldmap\laboIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\worldmap\levelinfo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\worldmap\map.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -809,8 +928,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="editor\inputBox.resx">
+      <DependentUpon>inputBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

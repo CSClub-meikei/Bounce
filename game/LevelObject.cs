@@ -162,18 +162,36 @@ namespace Bounce
             }
             else if (eventData.type == 2)
             {
-                double distant = System.Math.Sqrt(System.Math.Pow((((eventData_2)eventData).X - X),2) + System.Math.Pow((((eventData_2)eventData).Y - Y), 2))/40;
+                double distant = System.Math.Sqrt(System.Math.Pow((((eventData_2)eventData).X - X), 2) + System.Math.Pow((((eventData_2)eventData).Y - Y), 2)) / 40;
                 //System.Windows.Forms.MessageBox.Show(distant.ToString());
                 animator[0].setDelay(((eventData_2)eventData).interval);
-               
-                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, 1/(((eventData_2)eventData).speed)*(float)distant, -1 });
+
+                animator[0].start(GameObjectAnimator.SLIDE, new float[] { 0, ((eventData_2)eventData).X, ((eventData_2)eventData).Y, 1 / (((eventData_2)eventData).speed) * (float)distant, -1 });
                 type2tmp = true;
 
-               // DebugConsole.write("イベント作動！！！！！！！");
+                // DebugConsole.write("イベント作動！！！！！！！");
 
 
             }
-            
+            else if (eventData.type == 4)
+            {
+                parent.animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.2f, 0.5f });
+
+
+                eventData_4 ed = (eventData_4)eventData;
+                adviceScreen ns = new adviceScreen(game, ed.character, ed.face, ed.msg);
+                ns.screenAlpha = 0;
+                ns.animator.setDelay(0.5f);
+                ns.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 0.2f,0.8f });
+                ns.closed += new EventHandler((sender2, e2) => {
+                    parent.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 0.1f });
+                    parent.Status = worldScreen.RUNNING;
+                });
+                parent.Status = worldScreen.PAUSE;
+                game.screens.Add(ns);
+            }
+
+
 
         }
 

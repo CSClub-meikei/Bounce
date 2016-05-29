@@ -74,6 +74,8 @@ namespace Bounce
                 public static Texture2D startChip;
                 public static Texture2D button_testplay;
 
+                public static Texture2D button_editMsg;
+
                 public static Texture2D back_storyComment;
 
                 public static Texture2D toast;
@@ -117,6 +119,7 @@ namespace Bounce
                 public static Texture2D labo;
                 public static Texture2D map;
                 public static Texture2D laboIcon;
+                public static Texture2D levelinfo;
             }
 
         }
@@ -156,7 +159,7 @@ namespace Bounce
             report(0, "グラフィックを読み込んでいます... 1/3 (UI)");
             LoadUI(Content);
             report(30, "グラフィックを読み込んでいます... 2/3 (GAME)");
-            LoadGame(Content);
+            LoadGame(Content,0);
             report(50, "グラフィックを読み込んでいます... 3/3 (Character)");
             LoadCharacter(Content);
             LoadworldMap(Content);
@@ -201,6 +204,8 @@ namespace Bounce
             graphics.ui.button_mapSetting_d = Content.Load<Texture2D>("button-mapSetting-d");
             graphics.ui.button_mapSetting_h = Content.Load<Texture2D>("button-mapSetting-h");
 
+            graphics.ui.button_editMsg = Content.Load<Texture2D>("editMsgButton");
+
             graphics.ui.back_textbox = Content.Load<Texture2D>("back-textbox");
             graphics.ui.back_dialog = Content.Load<Texture2D>("back-dialog");
 
@@ -217,35 +222,87 @@ namespace Bounce
 
 
         }
-        public static void LoadGame(ContentManager Content)
+        public static void LoadGame(ContentManager Content,int set)
         {
             int i = 0;
 
-            Content.RootDirectory = "Content/graphics/game";
-            graphics.game.block= Content.Load<Texture2D>("block");
-            graphics.game.frameW= Content.Load<Texture2D>("frameW");
-            graphics.game.frameH = Content.Load<Texture2D>("frameH");
-            graphics.game.ball = Content.Load<Texture2D>("ball");
-            graphics.game.changePoint = Content.Load<Texture2D>("changePoint");
             graphics.game.Switch = new Texture2D[5];
             graphics.game.Switch_p = new Texture2D[5];
             graphics.game.thorn = new Texture2D[5];
             graphics.game.warpPoint = new Texture2D[5];
-            graphics.game.goal= Content.Load<Texture2D>("goal");
 
-            graphics.game.ready= Content.Load<Texture2D>("ready");
+            Content.RootDirectory = "Content/graphics/game";
+
+            
+            graphics.game.frameW = Content.Load<Texture2D>("frameW");
+            graphics.game.frameH = Content.Load<Texture2D>("frameH");
+            graphics.game.ball = Content.Load<Texture2D>("ball");
+            graphics.game.ready = Content.Load<Texture2D>("ready");
             graphics.game.readyBar = Content.Load<Texture2D>("readyBar");
             graphics.game.clear = Content.Load<Texture2D>("clear");
-            graphics.game.mapBack = Content.Load<Texture2D>("mapBack");
             graphics.game.saved = Content.Load<Texture2D>("saved");
+            graphics.game.changePoint = Content.Load<Texture2D>("changePoint");
+            Content.RootDirectory = "Content/graphics/game/defult";
+            for (i = 0; i <= 4; i++) graphics.game.warpPoint[i] = Content.Load<Texture2D>("warp_" + (i + 1).ToString());
+            Content.RootDirectory = "Content/graphics/game";
+            if (set == 0 || set ==2)
+            {
+                if (set == 0)
+                {
+                    graphics.game.mapBack = Content.Load<Texture2D>("cloud");
+                }
+                else if (set == 2)
+                {
+                    graphics.game.mapBack = Content.Load<Texture2D>("mapBack");
+                }
+               
+                Content.RootDirectory = "Content/graphics/game/defult";
 
-            graphics.game.savePoint = new Texture2D[2];
 
-            for (i = 0; i <= 4; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
-            for (i = 0; i <= 4; i++) graphics.game.Switch_p[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString() + "-p");
-            for (i=0;i<=4;i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn"+(i+1).ToString());
-            for (i = 0; i <= 4; i++) graphics.game.warpPoint[i] = Content.Load<Texture2D>("warpPoint" + (i + 1).ToString());
-            for (i = 0; i <= 1; i++) graphics.game.savePoint[i] = Content.Load<Texture2D>("savePoint_" + (i).ToString());
+                graphics.game.block = Content.Load<Texture2D>("block");
+
+
+                graphics.game.goal = Content.Load<Texture2D>("goal");
+
+
+
+
+
+                graphics.game.savePoint = new Texture2D[2];
+
+                for (i = 0; i <= 4; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString());
+                for (i = 0; i <= 4; i++) graphics.game.Switch_p[i] = Content.Load<Texture2D>("switch" + (i + 1).ToString() + "-p");
+                for (i = 0; i <= 4; i++) graphics.game.thorn[i] = Content.Load<Texture2D>("thorn" + (i + 1).ToString());
+
+                for (i = 0; i <= 1; i++) graphics.game.savePoint[i] = Content.Load<Texture2D>("savePoint_" + (i).ToString());
+
+            }
+            if (set == 1)
+            {
+                
+                graphics.game.mapBack = Content.Load<Texture2D>("ad_forest01_a");
+                Content.RootDirectory = "Content/graphics/game/tex1";
+
+
+                graphics.game.block = Content.Load<Texture2D>("t1_block");
+
+
+                graphics.game.goal = Content.Load<Texture2D>("t1_goal");
+
+
+
+
+
+                graphics.game.savePoint = new Texture2D[2];
+
+                for (i = 0; i <= 4; i++) graphics.game.Switch[i] = Content.Load<Texture2D>("t1_switch" + (i + 1).ToString());
+                for (i = 0; i <= 4; i++) graphics.game.Switch_p[i] = Content.Load<Texture2D>("t1_switch" + (i + 1).ToString() + "-p");
+                for (i = 0; i <= 4; i++) graphics.game.thorn[i] = Content.Load<Texture2D>("t1_thorn" + (i + 1).ToString());
+
+                for (i = 0; i <= 1; i++) graphics.game.savePoint[i] = Content.Load<Texture2D>("t1_savePoint_" + (i).ToString());
+
+
+            }
 
 
             Content.RootDirectory = "Content/graphics/game/animation/accel";
@@ -281,6 +338,7 @@ namespace Bounce
             graphics.worldMap.labo= Content.Load<Texture2D>("labo");
             graphics.worldMap.map = Content.Load<Texture2D>("map");
             graphics.worldMap.laboIcon = Content.Load<Texture2D>("laboIcon");
+            graphics.worldMap.levelinfo = Content.Load<Texture2D>("levelinfo");
         }
         public static void LoadSoundEffects(ContentManager Content)
         {

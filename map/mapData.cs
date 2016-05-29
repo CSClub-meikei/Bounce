@@ -9,9 +9,14 @@ namespace Bounce
     [Serializable()]
     public class mapData
     {
+
+        public int texSet = 0;
         public string title;
         public int level;
         public string creator;
+
+        
+
         public Point start=new Point(640,360);
 
         public List<List<mapChip>> Layor;

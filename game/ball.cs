@@ -37,48 +37,49 @@ namespace Bounce
                 return;
             }
             int flag1 = 0;
-            int flag2 = 0;
-
-            foreach (GraphicalGameObject b in parent.frame.frames)
+            //int flag2 = 0;
+            if (parent.Status == worldScreen.RUNNING)
             {
-                switch (overlapTester.overlapRectanglesEX(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                foreach (GraphicalGameObject b in parent.frame.frames)
                 {
-                    case 1:
-                        velocityX = -Speed;
-                        //DebugConsole.write(",1");
-                        X = b.X-Width;
-                        // System.Windows.Forms.MessageBox.Show("1");
-                        flag1 = 2;
-                        break;
-                    case 2:
-                        velocityX = Speed;
-                        X = b.X + parent.frame.HABA;
-                        // X = b.X+b.Width;
-                        // System.Windows.Forms.MessageBox.Show("2");
-                        //DebugConsole.write(",2");
-                        flag1 = 1;
-                        break;
-                    case 3:
-                        velocityY = -Speed;
-                        Y = b.Y- Height;
-                        // Y = b.Y - Height;
-                       // DebugConsole.write(",3");
-                        // System.Windows.Forms.MessageBox.Show("3");
+                    switch (overlapTester.overlapRectanglesEX(new Rectangle((int)b.X, (int)b.Y, (int)b.Width, (int)b.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                    {
+                        case 1:
+                            velocityX = -Speed;
+                            //DebugConsole.write(",1");
+                            X = b.X - Width;
+                            // System.Windows.Forms.MessageBox.Show("1");
+                            flag1 = 2;
+                            break;
+                        case 2:
+                            velocityX = Speed;
+                            X = b.X + parent.frame.HABA;
+                            // X = b.X+b.Width;
+                            // System.Windows.Forms.MessageBox.Show("2");
+                            //DebugConsole.write(",2");
+                            flag1 = 1;
+                            break;
+                        case 3:
+                            velocityY = -Speed;
+                            Y = b.Y - Height;
+                            // Y = b.Y - Height;
+                            // DebugConsole.write(",3");
+                            // System.Windows.Forms.MessageBox.Show("3");
 
-                        flag1 = 4;
-                        break;
-                    case 4:
-                        velocityY = Speed;
-                        Y = b.Y + parent.frame.HABA;
-                        //  Y = b.Y + b.Height;
-                        //  System.Windows.Forms.MessageBox.Show("4");]
-                       // DebugConsole.write(",4");
-                        flag1 = 3;
-                        break;
+                            flag1 = 4;
+                            break;
+                        case 4:
+                            velocityY = Speed;
+                            Y = b.Y + parent.frame.HABA;
+                            //  Y = b.Y + b.Height;
+                            //  System.Windows.Forms.MessageBox.Show("4");]
+                            // DebugConsole.write(",4");
+                            flag1 = 3;
+                            break;
+                    }
                 }
+
             }
-
-
             int flag21 = 0;
             int flag22 = 0;
 
@@ -90,111 +91,211 @@ namespace Bounce
                     if (o is warpPoint)
                     {
 
-                        Rectangle box = new Rectangle(0, 0, 0, 0);
-                        Rectangle box2 = new Rectangle(0, 0, 0, 0);
-                        double dis = 0;
-
-                        switch (o.rotate)
+                       if (((warpPoint)o).disableWarp)//ワープが無効なときにブロックと同じ振る舞いをする
                         {
-                            case 0:
-                                box = new Rectangle((int)o.X, (int)o.Y + 35, (int)o.Width, (int)o.Height+40);
-                                box2 = new Rectangle((int)o.X, (int)o.Y + 70, (int)o.Width, (int)o.Height);
-                                dis = X - o.X;
-                                break;
-                            case 1:
-                                box = new Rectangle((int)o.X - 35, (int)o.Y, (int)o.Width+40, (int)o.Height);
-                                box2 = new Rectangle((int)o.X-70, (int)o.Y, (int)o.Width, (int)o.Height);
-                                dis = Y - o.Y;
-                                break;
-                            case 2:
-                                box = new Rectangle((int)o.X, (int)o.Y -35 , (int)o.Width, (int)o.Height+40);
-                                box2 = new Rectangle((int)o.X, (int)o.Y - 70, (int)o.Width, (int)o.Height);
-                                dis = X - o.X;
-                                break;
-                            case 3:
-                                box = new Rectangle((int)o.X + 35, (int)o.Y, (int)o.Width+35, (int)o.Height);
-                                box2 = new Rectangle((int)o.X+70, (int)o.Y, (int)o.Width, (int)o.Height);
-                                dis = Y - o.Y;
-                                break;
-                            case 4:
-                                box = new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height);
-                                break;
-                        }
-                        
-                        if (overlapTester.overlapRectangles(box2, new Rectangle((int)X, (int)Y, (int)Width, (int)Height)) && !((warpPoint)o).isArrive)
-                        {
-                           // DebugConsole.write("box2");
-                            warping = true;
-                           // System.Windows.Forms.MessageBox.Show(o.rotate.ToString());
-                            foreach (List<LevelObject> l2 in parent.Layor) foreach (LevelObject o2 in l2)
-                                {
-                                    if (o2 is warpPoint && o.specialData == o2.specialData )
+                            switch (overlapTester.overlapRectanglesEX(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                            {
+                                case 1:
+                                    velocityX = -Speed;
+                                    // DebugConsole.write(",1");
+                                    // X = b.X - Width;
+                                    // System.Windows.Forms.MessageBox.Show("1");
+                                    if (flag21 == 0)
                                     {
-
-                                        if(o.X != o2.X || o.Y != o2.Y)
-                                        {
-                                            ((warpPoint)o2).isArrive = true;
-                                            switch (o2.rotate)
-                                            {
-                                                case 0:
-                                                    X = o2.X + dis;
-                                                    Y = o2.Y + 35;
-                                                    velocityY = -Speed;
-
-                                                    break;
-                                                case 1:
-                                                    X = o2.X - 35;
-                                                    Y = o2.Y + dis;
-                                                    velocityX = Speed;
-                                                    break;
-                                                case 2:
-
-                                                    X = o2.X + dis;
-                                                    Y = o2.Y - 35;
-                                                    velocityY = Speed;
-                                                    break;
-                                                case 3:
-
-                                                    X = o2.X + 35;
-                                                    Y = o2.Y + dis;
-                                                    velocityX = -Speed;
-                                                    break;
-                                                case 4:
-
-                                                    X = o2.X;
-                                                    Y = o2.Y;
-
-                                                    break;
-                                            }
-
-                                            break;
-                                           
-                                        }
-                                       
+                                        flag21 = 1;
                                     }
+                                    else
+                                    {
+                                        flag22 = 2;
+                                    }
+
+                                    break;
+                                case 2:
+                                    velocityX = Speed;
+                                    // X = b.X+b.Width;
+                                    // System.Windows.Forms.MessageBox.Show("2");
+                                    //  DebugConsole.write(",2");
+                                    if (flag21 == 0)
+                                    {
+                                        flag21 = 2;
+                                    }
+                                    else
+                                    {
+                                        flag22 = 1;
+                                    }
+                                    break;
+                                case 3:
+                                    velocityY = -Speed;
+                                    // Y = b.Y - Height;
+                                    //  DebugConsole.write(",3");
+                                    // System.Windows.Forms.MessageBox.Show("3");
+
+                                    if (flag21 == 0)
+                                    {
+                                        flag21 = 3;
+                                    }
+                                    else
+                                    {
+                                        flag22 = 4;
+                                    }
+                                    break;
+                                case 4:
+                                    velocityY = Speed;
+                                    //  Y = b.Y + b.Height;
+                                    //  System.Windows.Forms.MessageBox.Show("4");]
+                                    //   DebugConsole.write(",4");
+                                    if (flag21 == 0)
+                                    {
+                                        flag21 = 4;
+                                    }
+                                    else
+                                    {
+                                        flag22 = 3;
+                                    }
+                                    break;
+
+                            }
+                            continue;
+                        }
+
+
+                            if (((warpPoint)o).isArrive)
+                        {
+                         if(!overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                            {
+                                ((warpPoint)o).isArrive = false;
+                                warping = false;
+                            }
+                            
+                            continue;
+                        }
+
+                            if (!((warpPoint)o).Warping)
+                        {
+
+
+
+                            switch (overlapTester.overlapRectanglesEX(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                            {
+                                case 1:
+                                    if (o.rotate == 3) ((warpPoint)o).Warping = true;
+                                    else velocityX = -Speed;
+                                    break;
+                                case 2:
+                                    if (o.rotate == 1) ((warpPoint)o).Warping = true;
+                                    else velocityX = Speed;
+                                    break;
+
+                                case 3:
+                                    if (o.rotate == 0) ((warpPoint)o).Warping = true;
+                                    else velocityY = -Speed;
+                                    break;
+
+                                case 4:
+                                    if (o.rotate == 2) ((warpPoint)o).Warping = true;
+                                    else velocityY = Speed;
+                                    break;
+
+                            }
+
+                        }else
+                        {
+                            warping = true;
+                            Rectangle warpBox = new Rectangle(0, 0, 0, 0);
+
+                            switch (o.rotate)
+                            {
+                                case 0:
+
+                                    warpBox = new Rectangle((int)o.X, (int)o.Y+35, (int)o.Width, (int)o.Height);
+
+                                    break;
+                                case 1:
+
+                                    warpBox = new Rectangle((int)o.X-35, (int)o.Y, (int)o.Width, (int)o.Height);
+
+                                    break;
+                                case 2:
+
+                                    warpBox = new Rectangle((int)o.X, (int)o.Y - 35, (int)o.Width, (int)o.Height);
+
+                                    break;
+                                case 3:
+
+                                    warpBox = new Rectangle((int)o.X+35, (int)o.Y, (int)o.Width, (int)o.Height);
+
+                                    break;
+
+
+                            }
+
+                            if(overlapTester.overlapRectangles(warpBox, new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
+                            {
+                                warpPoint next = (warpPoint)o;
+                                foreach (List<LevelObject> l2 in parent.Layor) foreach (LevelObject o2 in l2)
+                                    {
+                                        if(o2 is warpPoint)
+                                        {
+                                            if (o2.specialData == o.specialData && o!=o2) next = (warpPoint)o2;
+                                        }
+                                    }
+
+                                double dis=0;
+                                switch (o.rotate)
+                                {
+                                    case 0:
+                                        dis = X - o.X;
+                                        break;
+                                    case 1:
+                                        dis = Y - o.Y;
+                                        break;
+                                    case 2:
+                                        dis = X - o.X;
+                                        break;
+                                    case 3:
+                                        dis = Y - o.Y;
+                                        break;
+
+                                }
+                             ((warpPoint)o).Warping = false;
+                                    next.isArrive = true;
+                                switch (next.rotate)
+                                {
+                                    case 0:
+                                        X = next.X+dis;
+                                        Y = next.Y;
+                                        velocityY = -Speed;
+                                        break;
+                                    case 1:
+                                        X = next.X;
+                                        Y = next.Y+dis;
+                                        velocityX = Speed;
+                                        break;
+                                    case 2:
+                                        X = next.X+dis;
+                                        Y = next.Y;
+                                        velocityY = Speed;
+                                        break;
+                                    case 3:
+                                        X = next.X;
+                                        Y = next.Y+dis;
+                                        velocityX = -Speed;
+                                        break;
 
                                 }
 
-
-
-                        }else if(overlapTester.overlapRectangles(box, new Rectangle((int)X, (int)Y, (int)Width, (int)Height))){
-                           // DebugConsole.write("box1");
-                            warping = true;
-                            break;
+                               
+                                
+                                DebugConsole.write("warped");
+                            }
                             
-                        }
-                    
 
-                        else
-                        {
-                            warping = false;
-                            ((warpPoint)o).isArrive = false;
                         }
-
 
                     }
-                    else if (o is block && !warping)
+                    else if (o is block)
                     {
+                        
                         switch (overlapTester.overlapRectanglesEX(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
                             case 1:
@@ -257,12 +358,12 @@ namespace Bounce
 
                         }
                     }
-                    else if(o is thorn && !warping)
+                    else if(o is thorn)
                     {
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X+10, (int)o.Y+10, (int)o.Width-20, (int)o.Height-20), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         { die(); return; }
                     }
-                    else if(o is Switch && !warping)
+                    else if(o is Switch)
                     {
                         Rectangle box = new Rectangle(0, 0, 0, 0);
                         switch (o.rotate)
@@ -290,7 +391,7 @@ namespace Bounce
                             //DebugConsole.write("イベント: " + o.eventData.num.ToString());
                         }
                     }
-                    else if (o is shapeChangePoint && !warping)
+                    else if (o is shapeChangePoint)
                     {
                       
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
@@ -299,7 +400,7 @@ namespace Bounce
                             else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
                         }
                     }
-                    else if (o is accel && !warping)
+                    else if (o is accel)
                     {
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
@@ -348,7 +449,7 @@ namespace Bounce
                         }
 
                     }
-                    else if (o is savePoint && !warping)
+                    else if (o is savePoint)
                     {
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X + 10, (int)o.Y + 10, (int)o.Width - 20, (int)o.Height - 20), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
@@ -361,7 +462,7 @@ namespace Bounce
                            
                         }
                     }
-                    else if(o is goal && !warping)
+                    else if(o is goal)
                     {
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X+20, (int)o.Y+20, (int)o.Width-40, (int)o.Height-40), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
@@ -376,7 +477,7 @@ namespace Bounce
                         }
                 }
 
-                n:
+                
             if (flag1 != 0 && flag21 != 0 && flag1 == flag21) { die(); return; }
             if (flag21 == flag22 && flag21!=0 && flag22!=0) { die();return; }
             //Console.WriteLine("vx:" + velocityX.ToString());

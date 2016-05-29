@@ -88,6 +88,10 @@ namespace Bounce
                 size = 120;
                 Width = 120;
                 Height = 120;
+            }else if (type == SWITCH)
+            {
+                eventData = new eventData_3();
+                eventData.type = 3;
             }
             red = Assets.getColorTexture(game, Color.Red);
             orange = Assets.getColorTexture(game, Color.Orange);
@@ -397,41 +401,41 @@ namespace Bounce
                 switch (eventData.type)
                 {
                     case 1:
-                        batch.Draw(orange, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al);
-                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al);
+                        batch.Draw(orange, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al*parent.screenAlpha);
+                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al * parent.screenAlpha);
 
-                        batch.Draw(orange, new Rectangle((int)actX + 20, (int)actY - 20, 20, 20), Color.White * al);
+                        batch.Draw(orange, new Rectangle((int)actX + 20, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
                         if (((eventData_1)eventData).mode == 0)
                         {
-                            batch.DrawString(Assets.graphics.ui.font, "消", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al);
+                            batch.DrawString(Assets.graphics.ui.font, "消", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al * parent.screenAlpha);
                         }
                         else
                         {
-                            batch.DrawString(Assets.graphics.ui.font, "出", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al);
+                            batch.DrawString(Assets.graphics.ui.font, "出", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al * parent.screenAlpha);
                         }
                         if (((eventData_1)eventData).isLoop)
                         {
-                            batch.Draw(orange, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
-                            batch.Draw(Assets.graphics.ui.repeat, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
+                            batch.Draw(orange, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
+                            batch.Draw(Assets.graphics.ui.repeat, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
                         }
 
 
                         break;
                     case 2:
-                        batch.Draw(orange, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al);
-                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al);
-                        batch.Draw(orange, new Rectangle((int)actX + 20, (int)actY - 20, 20, 20), Color.White * al);
-                        batch.DrawString(Assets.graphics.ui.font, "移", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al);
+                        batch.Draw(orange, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
+                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al * parent.screenAlpha);
+                        batch.Draw(orange, new Rectangle((int)actX + 20, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
+                        batch.DrawString(Assets.graphics.ui.font, "移", new Vector2((int)actX + 20, (int)actY - 20), Color.White * al * parent.screenAlpha);
                         if (((eventData_2)eventData).isLoop)
                         {
-                            batch.Draw(orange, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
-                            batch.Draw(Assets.graphics.ui.repeat, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al);
+                            batch.Draw(orange, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
+                            batch.Draw(Assets.graphics.ui.repeat, new Rectangle((int)actX + 40, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
                         }
 
                         break;
                     case 3:
-                        batch.Draw(red, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al);
-                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al);
+                        batch.Draw(red, new Rectangle((int)actX, (int)actY - 20, 20, 20), Color.White * al * parent.screenAlpha);
+                        batch.DrawString(Assets.graphics.ui.font, eventData.num.ToString(), new Vector2((int)actX, (int)actY - 20), Color.White * al * parent.screenAlpha);
 
                         break;
                 }

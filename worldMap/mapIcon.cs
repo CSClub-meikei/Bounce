@@ -17,6 +17,9 @@ namespace Bounce
 
         bool isHover;
         public Point dif;
+
+        public string num, title, level, disctiprion,path;
+        
         public mapIcon(Game1 game, Screen screen, Texture2D Texture, float x, float y, float width, float height) : base(game, screen, Texture, x, y, width, height)
         {
             parent = (worldMapScreen)screen;
