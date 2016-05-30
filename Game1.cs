@@ -71,23 +71,16 @@ namespace Bounce
 
             string[] cmds = System.Environment.GetCommandLineArgs();
             
-            if (cmds.Length <2)
+            if (cmds.Length >=2)
             {
-
-                Client.connect();
-                Client.tcp.startReceive();
-                LoginForm f = new LoginForm();
-                f.ShowDialog();
-            }else
-            {
-                if (cmds[1] != "disableNetWork")
+                if (cmds[1] == "enableNetWork")
                 {
+
                     Client.connect();
                     Client.tcp.startReceive();
                     LoginForm f = new LoginForm();
                     f.ShowDialog();
                 }
-
             }
 
             // TODO: use this.Content to load your game content here

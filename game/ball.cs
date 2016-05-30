@@ -53,7 +53,7 @@ namespace Bounce
                             break;
                         case 2:
                             velocityX = Speed;
-                            X = b.X + parent.frame.HABA;
+                            X = b.X + b.Width;
                             // X = b.X+b.Width;
                             // System.Windows.Forms.MessageBox.Show("2");
                             //DebugConsole.write(",2");
@@ -70,7 +70,7 @@ namespace Bounce
                             break;
                         case 4:
                             velocityY = Speed;
-                            Y = b.Y + parent.frame.HABA;
+                            Y = b.Y + b.Height;
                             //  Y = b.Y + b.Height;
                             //  System.Windows.Forms.MessageBox.Show("4");]
                             // DebugConsole.write(",4");

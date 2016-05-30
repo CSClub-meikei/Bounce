@@ -35,6 +35,7 @@ namespace Bounce
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     this.filePath = dialog.FileName;
+                    animating = false;
                 }
 
             }

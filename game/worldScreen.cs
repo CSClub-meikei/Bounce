@@ -137,8 +137,8 @@ namespace Bounce
             }
             if (savedScreen != null) savedScreen.update(deltaTime);
             back.update(deltaTime);
-            back.X = back.X * 0.5;
-            back.Y = back.Y * 0.5;
+            back.X = back.X * 0.5-10000;
+            back.Y = back.Y * 0.5-10000;
         }
         public void stopTest()
         {
