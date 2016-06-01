@@ -9,6 +9,6 @@ namespace Bounce
     public static class userData
     {
         public static string userName;
-
+        public static int userid;
     }
 }

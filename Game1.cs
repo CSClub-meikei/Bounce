@@ -18,8 +18,9 @@ namespace Bounce
     {
         public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
-        
+
+        public SettingData settingData;
+
         FPSCounter counter;
 
         public List<Screen> screens;
@@ -76,10 +77,12 @@ namespace Bounce
                 if (cmds[1] == "enableNetWork")
                 {
 
-                    Client.connect();
+                    Client.connect(this);
                     Client.tcp.startReceive();
-                    LoginForm f = new LoginForm();
-                    f.ShowDialog();
+                   // LoginForm f = new LoginForm();
+                   // f.ShowDialog();
+
+                  
                 }
             }
 
@@ -139,7 +142,7 @@ namespace Bounce
             }
             if (Input.onKeyDown(Keys.C))
             {
-                screens.Add(new adviceScreen(this,1,0,"メッセージのテストです\nここにアドバイス等が表示されます"));
+               // screens.Add(new adviceScreen(this,1,0,"メッセージのテストです\nここにアドバイス等が表示されます"));
             }
             if (Input.IsKeyDown(Keys.D) && Input.IsKeyDown(Keys.LeftShift))
             {

@@ -1,1 +1,1 @@
-Bounce disableNetWork
+Bounce enableNetWork

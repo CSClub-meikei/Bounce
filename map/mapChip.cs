@@ -56,6 +56,7 @@ namespace Bounce
         public Texture2D red;
         public Texture2D orange;
         public bool eventHilight;
+        Texture2D water;
 
         public event EventHandler onClick;
         public event EventHandler onDoubleClick;
@@ -88,7 +89,9 @@ namespace Bounce
                 size = 120;
                 Width = 120;
                 Height = 120;
-            }else if (type == SWITCH)
+                water = Assets.getColorTexture(game, new Color(0, 145, 227));
+            }
+            else if (type == SWITCH)
             {
                 eventData = new eventData_3();
                 eventData.type = 3;
@@ -124,6 +127,8 @@ namespace Bounce
             if (type == ACCEL)
             {
                 size = 120;
+               
+                water = Assets.getColorTexture(game, new Color(0, 145, 227));
             }
             red = Assets.getColorTexture(game, Color.Red);
             orange = Assets.getColorTexture(game, Color.Orange);
@@ -361,8 +366,21 @@ namespace Bounce
                 {
                     for (j = 0; j < Height / size; j++)
                     {
-                        batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha);
-                        if(eventData.type==2 && ShowMoveLocation) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(((eventData_2)eventData).X + parent.X + i * size), (int)(((eventData_2)eventData).Y + parent.Y + j * size), (int)size, (int)size), color: Color.White * 0.5f * screenAlpha);
+                        if(type==ACCEL && rotate == 2 && j!=0)//water用
+                        {
+                            batch.Draw(water, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha*0.7f);
+                            if (eventData.type == 2 && ShowMoveLocation) batch.Draw(water, destinationRectangle: new Rectangle((int)(((eventData_2)eventData).X + parent.X + i * size), (int)(((eventData_2)eventData).Y + parent.Y + j * size), (int)size, (int)size), color: Color.White * 0.5f * screenAlpha);
+                        }else if(type == ACCEL && rotate == 2)
+                        {
+                            batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha*0.7f);
+                            if (eventData.type == 2 && ShowMoveLocation) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(((eventData_2)eventData).X + parent.X + i * size), (int)(((eventData_2)eventData).Y + parent.Y + j * size), (int)size, (int)size), color: Color.White * 0.5f * screenAlpha);
+                        }
+                        else
+                        {
+                            batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha);
+                            if (eventData.type == 2 && ShowMoveLocation) batch.Draw(Texture, destinationRectangle: new Rectangle((int)(((eventData_2)eventData).X + parent.X + i * size), (int)(((eventData_2)eventData).Y + parent.Y + j * size), (int)size, (int)size), color: Color.White * 0.5f * screenAlpha);
+                        }
+                        
                     }
 
                 }
@@ -450,7 +468,7 @@ namespace Bounce
         {
             rotate++;
             if (rotate == 5) rotate = 0;
-            if (type == ACCEL && rotate == 2) rotate = 0;
+            if (type == ACCEL && rotate == 3) rotate = 0;
 
             Texture = getChipTexture(type);
 
@@ -489,9 +507,12 @@ namespace Bounce
                     {
                         res = Assets.graphics.game.accel[0];
                     }
-                    else
+                    else if(rotate==1)
                     {
                         res = Assets.graphics.game.brake[0];
+                    }else if (rotate == 2)
+                    {
+                        res = Assets.graphics.game.water[0];
                     }
                     break;
                 case SAVEPOINT:

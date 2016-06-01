@@ -51,7 +51,18 @@ namespace Bounce
         {
             animator.FinishAnimation += new EventHandler((ss, ee) =>
             {
-                Screen ns = new SplashScreen(game);
+            string[] cmds = System.Environment.GetCommandLineArgs();
+                Screen ns;
+                ns = new SplashScreen(game);
+                if (cmds.Length >= 2)
+                {
+                    if (cmds[1] == "enableNetWork")
+                    {
+                        ns = new waitScreen(game);
+                    }
+                }
+
+                   
                // ns.animator.setDelay(2f);
                 ns.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 1 });
                 game.screens.Add(ns);

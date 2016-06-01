@@ -15,6 +15,10 @@ namespace Bounce
         protected SpriteFont font;
         public String text;
         public Color color;
+
+        public  bool centerX,centerY;
+        public bool lockPlace;
+
         public TextObject(Game1 game, Screen screen,SpriteFont font, String text,Color color, float x, float y) :base(game,screen,null,x,y,0,0)
         {
             animator = new List<GameObjectAnimator>();
@@ -24,6 +28,17 @@ namespace Bounce
             this.text = text;
             this.color = color;
         }
+        public TextObject(Game1 game, Screen screen, SpriteFont font, String text, Color color, Rectangle rect) : base(game, screen, null, rect.X, rect.Y, 0, 0)
+        {
+            animator = new List<GameObjectAnimator>();
+            this.setLocation(rect.X, rect.Y);
+            this.setSize(rect.Width, rect.Height);
+            this.font = font;
+            this.text = text;
+            this.color = color;
+            if (Width != 0)centerX = true;
+            if (Height != 0) centerY = true;
+        }
         public override void update(float delta)
         {
 
@@ -32,8 +47,29 @@ namespace Bounce
         public override void Draw(SpriteBatch batch, float screenAlpha)
         {
             batch.Begin(transformMatrix: game.GetScaleMatrix());
-            batch.DrawString(font, text, new Vector2((float)actX,(float)actY), color*screenAlpha*alpha);
+            if (centerX)
+            {
+                Vector2 textsize = font.MeasureString(text);
+                if (!lockPlace) actX = (Width / 2 - textsize.X / 2)+parent.X+X;
+                else actX = (Width / 2 - textsize.X / 2) + X;
+            }
+            if (centerY)
+            {
+                Vector2 textsize = font.MeasureString(text);
+                if (!lockPlace) actY = (Height / 2 - textsize.Y / 2) + parent.Y+Y;
+                else actY = (Height / 2 - textsize.Y / 2) + Y;
+            }
+            
+            
+           
+                if(!lockPlace || centerX || centerY) batch.DrawString(font, text, new Vector2((float)actX, (float)actY), color * screenAlpha * alpha);
+                else batch.DrawString(font, text, new Vector2((float)X, (float)Y), color * screenAlpha * alpha);
+
+            
+          
             batch.End();
+
+            
         }
     }
 }

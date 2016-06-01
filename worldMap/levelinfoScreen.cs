@@ -20,13 +20,15 @@ namespace Bounce
         public levelinfoScreen(Game1 game,worldMapScreen screen ,int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             back = new GraphicalGameObject(game, this, Assets.graphics.worldMap.levelinfo, 0, 0, 1280, 720);
-            num = new TextObject(game, this, Assets.graphics.ui.font,((mapIcon)screen.Controls[screen.selectedItem.X, screen.selectedItem.Y]).num,Color.White,450,83);
-            title = new TextObject(game, this, Assets.graphics.ui.defultFont, ((mapIcon)screen.Controls[screen.selectedItem.X, screen.selectedItem.Y]).title, Color.White, 430, 180);
-            level = new TextObject(game, this, Assets.graphics.ui.defultFont, ((mapIcon)screen.Controls[screen.selectedItem.X, screen.selectedItem.Y]).level, Color.White, 450, 280);
-            dis = new TextObject(game, this, Assets.graphics.ui.defultFont, ((mapIcon)screen.Controls[screen.selectedItem.X, screen.selectedItem.Y]).disctiprion, Color.White, 450, 400);
+            num = new TextObject(game, this, Assets.graphics.ui.font,screen.icons[screen.selectedIconIndex].num,Color.White,new Rectangle(0,83,1280,0));
+            title = new TextObject(game, this, Assets.graphics.ui.defultFont, screen.icons[screen.selectedIconIndex].title, Color.White, new Rectangle(0, 180, 1280, 0));
+            level = new TextObject(game, this, Assets.graphics.ui.defultFont, screen.icons[screen.selectedIconIndex].level, Color.White, new Rectangle(0, 280, 1280, 0));
+            dis = new TextObject(game, this, Assets.graphics.ui.defultFont, screen.icons[screen.selectedIconIndex].disctiprion, Color.White, new Rectangle(0, 400, 1280, 0));
+            
             setUIcell(1, 1);
             Controls[0, 0] = (new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_play, 370, 600, 540, 120));
             Controls[0, 0].Enter += play;
+            
             this.screen = screen;
         }
         public override void update(float deltaTime)
@@ -58,6 +60,9 @@ namespace Bounce
 
             animator.setDelay(1);
             animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 1 });
+
+            screen.enable = true;
+
             screen.animator[2].setDelay(2);
             screen.animator[2].FinishAnimation += new EventHandler((sender2, e2) =>
               {
@@ -66,7 +71,7 @@ namespace Bounce
             screen.animator[2].start(ScreenAnimator.fadeInOut, new float[] { 1, 1 });
 
 
-            GameScreen ns = new GameScreen(game, ((mapIcon)screen.Controls[screen.selectedItem.X, screen.selectedItem.Y]).path);
+            GameScreen ns = new GameScreen(game, screen.icons[screen.selectedIconIndex].path);
             ns.animator.setDelay(2);
             ns.screenAlpha = 0;
             ns.animator.FinishAnimation += new EventHandler((sender2, e2) => { ns.animating = false; });

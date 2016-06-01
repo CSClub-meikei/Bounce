@@ -21,9 +21,9 @@ namespace Bounce
 
                 origin = new Vector2((float)(Texture.Width / 2), (float)(Texture.Height / 2));
             }
-            addAnimator(3);
-            animator[0].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.5F, 0F, 0.4F, 0.0F, 1F });
-            animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 0 });
+            addAnimator(2);
+            animator[1].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.5F, 0F, 0.4F, 0.0F, 1F });
+            animator[2].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 1 });
         
         }
        

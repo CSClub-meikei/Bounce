@@ -26,7 +26,7 @@ namespace Bounce
             setUIcell(1, 1);
             if (ch == 1)
             {
-                this.ch = new Character(game, this, Assets.graphics.Character.man, 50, 270, 200, 300);
+                this.ch = new Character(game, this, Assets.graphics.Character.man, 800, 270, 200, 300);
                 this.ch.face = face;
 
             }else if(ch==2)
@@ -35,7 +35,7 @@ namespace Bounce
             }
 
             back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_dialog,0, 0, 1100, 620);
-            label = new TextObject(game, this, Assets.graphics.ui.defultFont, msg, Color.Black, 220, 100);
+            label = new TextObject(game, this, Assets.graphics.ui.defultFont, msg, Color.Black, 100, 100);
 
 
         }

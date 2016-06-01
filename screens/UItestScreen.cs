@@ -12,6 +12,7 @@ namespace Bounce
     class UItestScreen:Screen
     {
         GraphicalGameObject title,sq1,sq2,back;
+        TextObject userNameLabel;
         float sqangle;
 
         public UItestScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
@@ -19,6 +20,11 @@ namespace Bounce
             title = new GraphicalGameObject(game,this,Assets.graphics.ui.titlelogo,200,25,880,350);
             sq1 = new GraphicalGameObject(game, this, Assets.graphics.ui.titleSquare,200,50,100,100);
             sq2 = new GraphicalGameObject(game, this, Assets.graphics.ui.titleSquare,1000,250,100,100);
+            userNameLabel = new TextObject(game, this, Assets.graphics.ui.defultFont, "", Color.White, 0, 0);
+            if (userData.userName != null)
+            {
+                userNameLabel.text = "ようこそ " + userData.userName + "さん";
+            }
             //back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_title, 0, 0, 1280, 1280);
             //back.alpha = 0.3f;
             setUIcell(1,2);
@@ -39,6 +45,7 @@ namespace Bounce
             sq2.setAngle(-sqangle);
             sq1.update(deltaTime);
             sq2.update(deltaTime);
+            userNameLabel.update(deltaTime);
             //back.update(deltaTime);
         }
         public override void Draw(SpriteBatch batch)
@@ -48,7 +55,7 @@ namespace Bounce
             title.Draw(batch, screenAlpha);
             sq1.Draw(batch, screenAlpha);
             sq2.Draw(batch, screenAlpha);
-
+            userNameLabel.Draw(batch, screenAlpha);
             base.Draw(batch);
         }
         public void ClickPlay(object sender,EventArgs e)

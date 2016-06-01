@@ -15,13 +15,21 @@ namespace Bounce
         int frame;
         float t;
         float animationSpeed=0.05f;
+
+        Texture2D water;
+
         public accel(Game1 game, Screen screen, eventData ed, int rotate, float x, float y, float width, float height) : base(game, screen,ed, x, y, width, height)
         {
 
             this.rotate = rotate;
 
             this.Texture = getChipTexture(mapChip.ACCEL, rotate);
-
+            if (rotate == 2)
+            {
+                Texture = Assets.getColorTexture(game, new Color(0, 145, 227));
+                water = Assets.graphics.game.water[0];
+                alpha = 0.7f;
+            }
             if (Texture != null)
             {
 
@@ -41,12 +49,18 @@ namespace Bounce
                 {
                     Texture = Assets.graphics.game.accel[frame];
                 }
-                else
+                else if(rotate==1)
                 {
                     Texture = Assets.graphics.game.brake[frame];
+                }else if(rotate==2)
+                {
+                    water = Assets.graphics.game.water[frame];
                 }
                
-                if (frame == 43)
+                if (frame == 43 && rotate!=2)
+                {
+                    frame = 0;
+                }else if(frame==30 && rotate == 2)
                 {
                     frame = 0;
                 }
@@ -73,7 +87,15 @@ namespace Bounce
             {
                 for (j = 0; j < Height / size; j++)
                 {
-                    batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha);
+                    if(rotate==2 && j== 0)
+                    {
+                        batch.Draw(water, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha);
+                    }
+                    else
+                    {
+                        batch.Draw(Texture, destinationRectangle: new Rectangle((int)(actX + i * size), (int)(actY + j * size), (int)size, (int)size), color: Color.White * alpha * screenAlpha);
+                    }
+                  
                 }
 
             }
@@ -89,6 +111,7 @@ namespace Bounce
                 }
             }
             batch.End();
+            smokeDraw(batch, screenAlpha,300,true);
         }
     }
 }

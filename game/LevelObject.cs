@@ -33,7 +33,10 @@ namespace Bounce
         public bool enable = true;
         new worldScreen parent;
 
-
+        float effectSpeed = 0.01f;
+        int frame=0;
+        bool effecting;
+        float effecttmp;
 
         public bool flag
         {
@@ -64,6 +67,7 @@ namespace Bounce
             }
             type2tmpX = (int)X;
             type2tmpY = (int)Y;
+            addAnimator(1);
         }
         public override void update(float delta)
         {
@@ -80,12 +84,56 @@ namespace Bounce
                 }
             }
             if(flag&&endFlagDelay)eventUpdate(delta);
+            if (effecting) smokeEffect(delta);
             base.update(delta);
+        }
+        public void smokeEffect(float deltaTime)
+        {
+            DebugConsole.write("update" + frame.ToString());
+            effecttmp += deltaTime / 1000;
+            if (effecttmp >= effectSpeed)
+            {
+                effecttmp = 0;
+                frame++;
+                if (frame == 40) effecting = false;
+            }
+        }
+        public void smokeDraw(SpriteBatch batch,float screenAlpha,int size,bool drawLoop)
+        {
+            if (effecting)
+            {
+                batch.Begin(transformMatrix: game.GetScaleMatrix());
+                if (drawLoop)
+                {
+                    int i = 0;
+                    int j = 0;
+                    for (i = 0; i < Width / size; i++)
+                    {
+                        for (j = 0; j < Height / size; j++)
+                        {
+                            batch.Draw(Assets.graphics.game.smoke[frame], new Rectangle((int)actX - 30+i*size, (int)actY - 30+j*size, 100, 100), Color.White * alpha * screenAlpha);
+                        }
+
+                    }
+
+
+                }
+                else
+                {
+                    batch.Draw(Assets.graphics.game.smoke[frame], new Rectangle((int)actX - 30, (int)actY - 30, 100, 100), Color.White * alpha * screenAlpha);
+                }
+                
+                batch.End();
+                DebugConsole.write("animating");
+            }
         }
         public override void Draw(SpriteBatch batch, float screenAlpha)
         {
+          
+            
             if (!enable) return;
             base.Draw(batch, screenAlpha);
+           
         }
         public Texture2D getChipTexture(int num, int rotate)
         {
@@ -157,6 +205,11 @@ namespace Bounce
                     else if (((eventData_1)eventData).mode == 1)
                     {
                         enable = true;
+                        effecting = true;
+                        animator[0] = new GameObjectAnimator(this, game);
+                        animator[0].setDelay(0.1f);
+                        animator[0].start(GameObjectAnimator.fadeInOut,new float[] { 0, 0.1f });
+                        //DebugConsole.write("イベント発生");
                     }
                 }
             }

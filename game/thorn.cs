@@ -65,6 +65,7 @@ namespace Bounce
                 }
             }
             batch.End();
+            smokeDraw(batch, screenAlpha, 40, true);
         }
        
     }

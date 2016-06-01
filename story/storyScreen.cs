@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Bounce.story;
+using Microsoft.Xna.Framework.Media;
 
 namespace Bounce
 {
@@ -59,7 +60,8 @@ namespace Bounce
            // text.finish += new EventHandler(this.nextLoad);
             text.play = true;
 
-
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(Assets.bgm.story);
         }
         public override void update(float deltaTime)
         {

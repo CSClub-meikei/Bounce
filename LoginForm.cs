@@ -29,20 +29,24 @@ namespace Bounce
             if(sp[0] == "success")
             {
                 userData.userName = sp[1];
+                Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,getSaveData"));
+
+
                 Invoke((MethodInvoker)delegate
                 {
                     Close();
+                    Dispose();
                 });
             }
             else
             {
-                MessageBox.Show("失敗しました");
+               
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Client.tcp.send(new packetData(Client.tcp.id, textBox1.Text, @const.request, textBox1.Text + "," + textBox2.Text));
+            Client.tcp.send(new packetData(Client.tcp.id, textBox1.Text, @const.request, "login,"+textBox1.Text + "," + textBox2.Text +",bounce"));
         }
 
         private void button2_Click(object sender, EventArgs e)

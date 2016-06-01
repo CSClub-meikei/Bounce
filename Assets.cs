@@ -81,6 +81,8 @@ namespace Bounce
                 public static Texture2D toast;
                 public static Texture2D repeat;
 
+                public static Texture2D waitPlay;
+
                 public static SpriteFont font;
                 public static SpriteFont defultFont;
 
@@ -99,6 +101,8 @@ namespace Bounce
                 public static Texture2D[] warpPoint;
                 public static Texture2D[] accel;
                 public static Texture2D[] brake;
+                public static Texture2D[] water;
+                public static Texture2D[] smoke;
                 public static Texture2D goal;
 
                 public static Texture2D ready;
@@ -120,12 +124,14 @@ namespace Bounce
                 public static Texture2D map;
                 public static Texture2D laboIcon;
                 public static Texture2D levelinfo;
+                public static Texture2D levelNamePlate;
             }
 
         }
         public static class bgm
         {
             public static Song bgm_title;
+            public static Song story;
         }
         public static class soundEffects
         {
@@ -216,6 +222,8 @@ namespace Bounce
             graphics.ui.back_storyComment = Content.Load<Texture2D>("back_storyComment");
             graphics.ui.toast = Content.Load<Texture2D>("toast");
             graphics.ui.repeat= Content.Load<Texture2D>("repeat");
+
+            graphics.ui.waitPlay= Content.Load<Texture2D>("waitPlay");
 
             graphics.ui.font = Content.Load<SpriteFont>("font");
             graphics.ui.defultFont = Content.Load<SpriteFont>("defult");
@@ -320,7 +328,15 @@ namespace Bounce
            
             for(i=0;i<=44;i++)graphics.game.ball_animation[i] = Content.Load<Texture2D>(i.ToString());
 
-           
+            Content.RootDirectory = "Content/graphics/game/animation/water";
+            graphics.game.water = new Texture2D[31];
+
+            for (i = 0; i <= 30; i++) graphics.game.water[i] = Content.Load<Texture2D>("water_"+i.ToString());
+
+            Content.RootDirectory = "Content/graphics/game/animation/smoke";
+            graphics.game.smoke = new Texture2D[40];
+
+            for (i = 0; i <= 39; i++) graphics.game.smoke[i] = Content.Load<Texture2D>("smoke_" + i.ToString());
         }
         public static void LoadCharacter(ContentManager Content)
         {
@@ -339,6 +355,7 @@ namespace Bounce
             graphics.worldMap.map = Content.Load<Texture2D>("map");
             graphics.worldMap.laboIcon = Content.Load<Texture2D>("laboIcon");
             graphics.worldMap.levelinfo = Content.Load<Texture2D>("levelinfo");
+            graphics.worldMap.levelNamePlate = Content.Load<Texture2D>("levelNamePlate");
         }
         public static void LoadSoundEffects(ContentManager Content)
         {
@@ -352,6 +369,7 @@ namespace Bounce
         {
             Content.RootDirectory = "Content/bgm";
             bgm.bgm_title = Song.FromUri("ELIMINATE_LOCKED.mp3", new Uri("Content/bgm/Blue_Ever.mp3", UriKind.Relative));
+            bgm.story = Song.FromUri("story.wav", new Uri("Content/bgm/story.wav", UriKind.Relative));
         }
         public static Texture2D getColorTexture(Game1 game,Color c)
         {

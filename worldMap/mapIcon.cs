@@ -17,6 +17,10 @@ namespace Bounce
 
         bool isHover;
         public Point dif;
+        public int next, back;
+        public int nextid, backid;
+        // >1 <2  \/ 3  /\ 4
+
 
         public string num, title, level, disctiprion,path;
         
@@ -44,7 +48,7 @@ namespace Bounce
             isHover = true;
             if (parent.isAnimate) return;
             parent.isAnimate = true;
-           
+            parent.selectedIconIndex = parent.icons.IndexOf(this);
             parent.animator[0].start(ScreenAnimator.SLIDE, new float[] { 1, (float)-X + 615+dif.X, (float)-Y + 335+dif.Y, 0, -1, 0.5f, 0.5f });
             parent.animator[1].start(ScreenAnimator.SLIDE, new float[] { 2, (float)-X + 615+dif.X, (float)-Y + 335+dif.Y, 0, -1, 0.5f, 0.5f });
         }
