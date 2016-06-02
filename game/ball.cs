@@ -83,7 +83,7 @@ namespace Bounce
             int flag21 = 0;
             int flag22 = 0;
 
-
+            bool accelFlag = false;
                 foreach (List<LevelObject> l in parent.Layor) foreach (LevelObject o in l)
                 {
                     if (!o.enable) continue;
@@ -404,6 +404,7 @@ namespace Bounce
                     {
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
+                            accelFlag = true;
                             if (o.rotate == 0)
                             {
                                 Speed = 0.5f;
@@ -443,9 +444,6 @@ namespace Bounce
                                 }
                             }
                            
-                        }else
-                        {
-                            Speed = 0.3f;
                         }
 
                     }
@@ -481,6 +479,30 @@ namespace Bounce
             if (flag1 != 0 && flag21 != 0 && flag1 == flag21) { die(); return; }
             if (flag21 == flag22 && flag21!=0 && flag22!=0) { die();return; }
             //Console.WriteLine("vx:" + velocityX.ToString());
+
+
+            if (!accelFlag)
+            {
+                Speed = 0.3f;
+
+                if (velocityX > 0)
+                {
+                    velocityX = Speed;
+                }
+                else if (velocityX < 0)
+                {
+                    velocityX = -Speed;
+                }
+                if (velocityY > 0)
+                {
+                    velocityY = Speed;
+                }
+                else if (velocityX < 0)
+                {
+                    velocityY = -Speed;
+                }
+            }
+
             if (parent.Status == worldScreen.RUNNING)
             {
                 X += velocityX * delta;

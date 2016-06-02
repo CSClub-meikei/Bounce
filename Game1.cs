@@ -52,9 +52,9 @@ namespace Bounce
             Assets.Initialize(this);
             counter = new FPSCounter();
             base.Initialize();
-            
-            
 
+
+            Window.Title = "Bounce build:" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build;
 
         }
 
