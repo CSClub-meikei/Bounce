@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace Bounce
 {
@@ -45,6 +46,9 @@ namespace Bounce
             world.onClear += new EventHandler(this.clear);
             readyScreen = new readyScreen(game, this);
             setUIcell(1, 1);
+
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(Assets.bgm.bgm1);
         }
         public override void update(float deltaTime)
         {

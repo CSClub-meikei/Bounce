@@ -357,3 +357,4 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\game\animati
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\worldmap\levelNamePlate.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\waitPlay.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\bgm\story.wav
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\bgm\BGM1.wav

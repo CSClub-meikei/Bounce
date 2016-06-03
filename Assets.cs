@@ -132,6 +132,7 @@ namespace Bounce
         {
             public static Song bgm_title;
             public static Song story;
+            public static Song bgm1;
         }
         public static class soundEffects
         {
@@ -370,6 +371,7 @@ namespace Bounce
             Content.RootDirectory = "Content/bgm";
             bgm.bgm_title = Song.FromUri("ELIMINATE_LOCKED.mp3", new Uri("Content/bgm/Blue_Ever.mp3", UriKind.Relative));
             bgm.story = Song.FromUri("story.wav", new Uri("Content/bgm/story.wav", UriKind.Relative));
+            bgm.bgm1 = Song.FromUri("BGM1.wav", new Uri("Content/bgm/BGM1.wav", UriKind.Relative));
         }
         public static Texture2D getColorTexture(Game1 game,Color c)
         {
