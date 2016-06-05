@@ -26,6 +26,9 @@ namespace Bounce.editor
             Close();
         }
 
-      
+        private void inputBox_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -396,8 +396,17 @@ namespace Bounce
                       
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
-                            if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING) parent.Status = worldScreen.CHANGING;
-                            else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING) parent.Status = worldScreen.RUNNING;
+                            if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING)
+                            {
+                                parent.fcScreen = new FrameChangeScreen(game, parent);
+                                parent.Status = worldScreen.CHANGING;
+                            }
+
+                            else if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.CHANGING)
+                            {
+                                parent.fcScreen.close();
+                                parent.Status = worldScreen.RUNNING;
+                            }
                         }
                     }
                     else if (o is accel)

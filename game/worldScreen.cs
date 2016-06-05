@@ -27,7 +27,7 @@ namespace Bounce
         public Point savePoint;
 
         public savedScreen savedScreen;
-
+        public FrameChangeScreen fcScreen;
         public const int READY=0;
         public const int RUNNING = 1;
         public const int PAUSE = 3;
@@ -126,8 +126,9 @@ namespace Bounce
             
             if (Status == CHANGING)
             {
-                if (Input.onKeyDown(Keys.Right)) { frameShape++; frame.LoadFrame(frameShape); }
-                if (Input.onKeyDown(Keys.Left)) { frameShape--; frame.LoadFrame(frameShape); }
+                if (Input.onKeyDown(Keys.Right)) { if(frame.getFrameName(frameShape+1)!="定義なし")frameShape++; frame.LoadFrame(frameShape); }
+                if (Input.onKeyDown(Keys.Left)) { if (frame.getFrameName(frameShape - 1) != "定義なし") frameShape--; frame.LoadFrame(frameShape); }
+               
             }
             base.update(deltaTime);
             if (Input.onKeyDown(Keys.P) && testPlay)
@@ -136,6 +137,7 @@ namespace Bounce
                 stopTest();
             }
             if (savedScreen != null) savedScreen.update(deltaTime);
+            if(fcScreen!=null) fcScreen.update(deltaTime);
             back.update(deltaTime);
             back.X = back.X * 0.5-10000;
             back.Y = back.Y * 0.5-10000;
@@ -161,6 +163,7 @@ namespace Bounce
               
             }
             if (savedScreen != null) savedScreen.Draw(batch);
+            if (fcScreen != null) fcScreen.Draw(batch);
             base.Draw(batch);
         }
         public void load(string fileName)

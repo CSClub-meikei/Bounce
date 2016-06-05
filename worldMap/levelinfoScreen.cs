@@ -71,7 +71,7 @@ namespace Bounce
             screen.animator[2].start(ScreenAnimator.fadeInOut, new float[] { 1, 1 });
 
 
-            GameScreen ns = new GameScreen(game, screen.icons[screen.selectedIconIndex].path);
+            GameScreen ns = new GameScreen(game, screen.selectedIconIndex, screen.icons[screen.selectedIconIndex].path);
             ns.animator.setDelay(2);
             ns.screenAlpha = 0;
             ns.animator.FinishAnimation += new EventHandler((sender2, e2) => { ns.animating = false; });

@@ -19,6 +19,11 @@ namespace Bounce
         public Point dif;
         public int next, back;
         public int nextid, backid;
+        public bool isShow=true;
+        bool animating;
+        float animationSpeed=0.05f;
+        float tmpTime;
+        int frame;
         // >1 <2  \/ 3  /\ 4
 
 
@@ -37,10 +42,35 @@ namespace Bounce
             {
                 Input.setPotition(new Point((int)actX+25, (int)actY+25));
             }
+            if (animating)
+            {
+                tmpTime += delta;
+                if (tmpTime >= animationSpeed)
+                {
+                    tmpTime = 0;
+                    frame++;
+                    if (frame == 40)
+                    {
+                        animating = false;
+                        isShow = true;
+                    }
+                }
+            }
             base.update(delta);
         }
         public override void Draw(SpriteBatch batch, float screenAlpha)
         {
+            if (animating)
+            {
+
+                batch.Begin(transformMatrix: game.GetScaleMatrix());
+
+                batch.Draw(Assets.graphics.game.smoke[frame], destinationRectangle: new Rectangle((int)actX + (int)((Texture.Width / 2) * (Width / Texture.Width)), (int)actY + (int)((Texture.Height / 2) * (Height / Texture.Height)), (int)Width, (int)Height), color: Color.White * alpha * screenAlpha, rotation: angle, origin: origin);
+
+                batch.End();
+                
+            }
+            if (!isShow) return;
             base.Draw(batch, screenAlpha);
         }
         public void hover(object sender, EventArgs e)
@@ -55,6 +85,10 @@ namespace Bounce
         public void leave(object sender, EventArgs e)
         {
             isHover = false;
+        }
+        public void Show()
+        {
+            animating = true;
         }
     }
 }

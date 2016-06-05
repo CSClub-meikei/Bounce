@@ -59,7 +59,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "inputBox";
             this.Text = "inputBox";
-           
+            this.Load += new System.EventHandler(this.inputBox_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

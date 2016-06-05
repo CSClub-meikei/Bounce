@@ -122,7 +122,7 @@ namespace Bounce
                 else if (((storyData_3)story.storyData[id]).command == 2)
                 {
                     game.screens.Clear();
-                    game.screens.Add(new worldMapScreen(game));
+                    game.screens.Add(new worldMapScreen(game,0));
                 }
             }
            

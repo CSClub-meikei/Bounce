@@ -62,7 +62,7 @@ namespace Bounce
             }
             if (Input.onKeyDown(Keys.D8) || Input.onKeyDown(Keys.NumPad8))
             {
-                textbox.text += "1";
+                textbox.text += "8";
             }
             if (Input.onKeyDown(Keys.D9) || Input.onKeyDown(Keys.NumPad9))
             {
@@ -79,7 +79,7 @@ namespace Bounce
             }
             if (Input.onKeyDown(Keys.Enter) || Input.onKeyDown(Keys.Space))
             {
-                Client.tcp.send(new packetData(Client.tcp.id, textbox.text, @const.request, "login," + textbox.text + "," +"1121" + ",bounce"));
+                Client.tcp.send(new packetData(Client.tcp.id, textbox.text, @const.request, "login," + textbox.text + "," +"defult" + ",bounce"));
             }
         }
         public override void Draw(SpriteBatch batch)
@@ -98,6 +98,7 @@ namespace Bounce
             if (sp[0] == "success")
             {
                 userData.userName = sp[1];
+                userData.userid = int.Parse(textbox.text);
                 Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,getSaveData"));
 
                 animator.FinishAnimation += new EventHandler((sender2, e2) => {

@@ -22,9 +22,9 @@ namespace Bounce.socket
 
         public static void received(object sender,packetData e)
         {
-            DebugConsole.write(e.data);
+            //DebugConsole.write(e.data);
             String[] sp = e.data.Split(',');
-
+           
             switch(sp[0])
             {
                 case "getSaveData":
@@ -33,7 +33,7 @@ namespace Bounce.socket
                         game.settingData = new SettingData();
                         game.settingData.BGM_volume = 1;
                         game.settingData.Effect_volume = 1;
-                        game.settingData.Cleared = 1;
+                        game.settingData.Cleared = 0;
                         DebugConsole.write(game.settingData.BGM_volume.ToString());
                         game.settingData.save();
                     }

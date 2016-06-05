@@ -75,6 +75,7 @@ namespace Bounce
                 public static Texture2D button_testplay;
 
                 public static Texture2D button_editMsg;
+                public static Texture2D button_editTitle;
 
                 public static Texture2D back_storyComment;
 
@@ -82,6 +83,14 @@ namespace Bounce
                 public static Texture2D repeat;
 
                 public static Texture2D waitPlay;
+
+                public static Texture2D graTop;
+                public static Texture2D graBottom;
+
+                public static Texture2D ranking;
+                public static Texture2D ranking_1;
+                public static Texture2D ranking_2;
+                public static Texture2D ranking_3;
 
                 public static SpriteFont font;
                 public static SpriteFont defultFont;
@@ -184,8 +193,8 @@ namespace Bounce
             graphics.ui.sp1 = Content.Load<Texture2D>("sp1");
             graphics.ui.sp2 = Content.Load<Texture2D>("sp2");
             graphics.ui.label_gameselect = Content.Load<Texture2D>("label-GameSelect");
-            graphics.ui.label_singleplay = Content.Load<Texture2D>("label-singleplay");
-            graphics.ui.label_multiplay = Content.Load<Texture2D>("label-multiplay");
+            graphics.ui.label_singleplay = Content.Load<Texture2D>("button-storymode");
+            graphics.ui.label_multiplay = Content.Load<Texture2D>("button-endlessmode");
             graphics.ui.label_back = Content.Load<Texture2D>("back-label");
             graphics.ui.HL = Content.Load<Texture2D>("HL");
             graphics.ui.arrowA = Content.Load<Texture2D>("arrow+");
@@ -212,6 +221,7 @@ namespace Bounce
             graphics.ui.button_mapSetting_h = Content.Load<Texture2D>("button-mapSetting-h");
 
             graphics.ui.button_editMsg = Content.Load<Texture2D>("editMsgButton");
+            graphics.ui.button_editTitle = Content.Load<Texture2D>("editTitleButton");
 
             graphics.ui.back_textbox = Content.Load<Texture2D>("back-textbox");
             graphics.ui.back_dialog = Content.Load<Texture2D>("back-dialog");
@@ -225,6 +235,14 @@ namespace Bounce
             graphics.ui.repeat= Content.Load<Texture2D>("repeat");
 
             graphics.ui.waitPlay= Content.Load<Texture2D>("waitPlay");
+
+            graphics.ui.graTop = Content.Load<Texture2D>("graTop");
+            graphics.ui.graBottom = Content.Load<Texture2D>("graBottom");
+
+            graphics.ui.ranking = Content.Load<Texture2D>("r");
+            graphics.ui.ranking_1 = Content.Load<Texture2D>("r-1");
+            graphics.ui.ranking_2 = Content.Load<Texture2D>("r-2");
+            graphics.ui.ranking_3 = Content.Load<Texture2D>("r-3");
 
             graphics.ui.font = Content.Load<SpriteFont>("font");
             graphics.ui.defultFont = Content.Load<SpriteFont>("defult");

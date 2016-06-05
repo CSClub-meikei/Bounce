@@ -358,3 +358,12 @@ D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\worldmap\lev
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\waitPlay.png
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\bgm\story.wav
 D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\bgm\BGM1.wav
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\GraBottom.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\GraTop.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\editTitleButton.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\r-1.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\r-2.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\r-3.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\r.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\button-endlessmode.png
+D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\button-storymode.png

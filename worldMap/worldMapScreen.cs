@@ -23,8 +23,10 @@ namespace Bounce
         public int selectedIconIndex;
         public bool enable = true;
         public  List<mapIcon> icons = new List<mapIcon>();
+        
 
-        public worldMapScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
+
+        public worldMapScreen(Game1 game, int index = 0,bool isClear=false, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             map = new GraphicalGameObject(game, this, Assets.graphics.worldMap.map,0,0,2688,2688);
             levelNamePlate = new GraphicalGameObject(game, this, Assets.graphics.worldMap.levelNamePlate, -20,-20, 400, 100);
@@ -46,16 +48,16 @@ namespace Bounce
             //  Controls[0, 1] = w1; Controls[1, 1] = w8; Controls[2, 1] = w7; Controls[3, 1] = w6;
             //  Controls[0, 2] = labo;
 
-
-
-            mapIconBuild();
+            DebugConsole.write(game.settingData.Cleared.ToString());
+            selectedIconIndex = index;
+            mapIconBuild(isClear);
 
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(Assets.bgm.story);
             //  selectedItem = new Point(0,2);
         }
 
-        public void  mapIconBuild()
+        public void  mapIconBuild(bool isClear)
         {
             labo = new mapIcon(game, this, Assets.graphics.worldMap.laboIcon, 600, 2000, 50, 50);
             labo.dif = new Point(-200, 200);
@@ -111,9 +113,42 @@ namespace Bounce
             w3.back = 2;
             w3.backid = 2;
 
-            icons.AddRange(new mapIcon[] { labo, w1, w2, w3, w4, w5, w6, w7, w8 });
 
-            icons[selectedIconIndex].hover(null, null);
+
+            mapIcon[] tmp = new mapIcon[] { w1, w2, w3, w4, w5, w6, w7, w8 };
+
+            int i = 0;
+            icons.Add(labo);
+            for (i = 0; i < game.settingData.Cleared;i++) icons.Add(tmp[i]);
+
+            if (isClear && game.settingData.Cleared<=selectedIconIndex)
+            {
+                
+                game.settingData.Cleared = selectedIconIndex + 1;
+                game.settingData.save();
+                tmp[game.settingData.Cleared - 1].isShow = false;
+                icons.Add(tmp[game.settingData.Cleared - 1]);
+
+                animator[1].FinishAnimation += new EventHandler((sender, e) =>
+                {
+                    icons[game.settingData.Cleared].hover(null, null);
+                    selectedIconIndex++;
+                    icons[game.settingData.Cleared].Show();
+                    //System.Windows.Forms.MessageBox.Show(game.settingData.Cleared.ToString());
+
+                });
+                icons[selectedIconIndex].hover(null, null);
+               
+            }
+            else
+            {
+                icons[selectedIconIndex].hover(null, null);
+            }
+           
+
+
+
+          
         }
 
 
@@ -130,8 +165,13 @@ namespace Bounce
                 {
                     if (icons[selectedIconIndex].next == 4)
                     {
-                        icons[selectedIconIndex].leave(null, null);
-                        selectedIconIndex = icons[selectedIconIndex].nextid;
+                        if(icons.Count != selectedIconIndex + 1)
+                        {
+                            icons[selectedIconIndex].leave(null, null);
+                            selectedIconIndex = icons[selectedIconIndex].nextid;
+                        }
+
+                      
                     }
                     else if (icons[selectedIconIndex].back == 4)
                     {
@@ -146,8 +186,11 @@ namespace Bounce
                 {
                     if (icons[selectedIconIndex].next == 3)
                     {
-                        icons[selectedIconIndex].leave(null, null);
-                        selectedIconIndex = icons[selectedIconIndex].nextid;
+                        if (icons.Count != selectedIconIndex + 1)
+                        {
+                            icons[selectedIconIndex].leave(null, null);
+                            selectedIconIndex = icons[selectedIconIndex].nextid;
+                        }
                     }
                     else if (icons[selectedIconIndex].back == 3)
                     {
@@ -162,8 +205,11 @@ namespace Bounce
                 {
                     if (icons[selectedIconIndex].next == 1)
                     {
-                        icons[selectedIconIndex].leave(null, null);
-                        selectedIconIndex = icons[selectedIconIndex].nextid;
+                        if (icons.Count != selectedIconIndex + 1)
+                        {
+                            icons[selectedIconIndex].leave(null, null);
+                            selectedIconIndex = icons[selectedIconIndex].nextid;
+                        }
                     }
                     else if (icons[selectedIconIndex].back == 1)
                     {
@@ -178,8 +224,11 @@ namespace Bounce
                 {
                     if (icons[selectedIconIndex].next == 2)
                     {
-                        icons[selectedIconIndex].leave(null, null);
-                        selectedIconIndex = icons[selectedIconIndex].nextid;
+                        if (icons.Count != selectedIconIndex + 1)
+                        {
+                            icons[selectedIconIndex].leave(null, null);
+                            selectedIconIndex = icons[selectedIconIndex].nextid;
+                        }
                     }
                     else if (icons[selectedIconIndex].back == 2)
                     {

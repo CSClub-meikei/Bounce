@@ -27,7 +27,9 @@ namespace Bounce
 
         public bool animating=true;
 
-        public GameScreen(Game1 game,string filePath ="", int sx = 0, int sy = 0) : base(game, sx, sy)
+        public int levelIndex=0;
+
+        public GameScreen(Game1 game,int levelIndex,string filePath ="", int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             this.filePath = filePath;
             if (this.filePath == ""){
@@ -38,20 +40,21 @@ namespace Bounce
                     this.filePath = dialog.FileName;
                     animating = false;
                 }
-
+                
             }
-
+           // System.Windows.Forms.MessageBox.Show(levelIndex.ToString());
             timeLabel = new TextObject(game, this, Assets.graphics.ui.font, "time: --", Color.White,0,0);
             world = new worldScreen(game,this.filePath, false,Point.Zero);
             world.onClear += new EventHandler(this.clear);
             readyScreen = new readyScreen(game, this);
             setUIcell(1, 1);
-
+            this.levelIndex = levelIndex;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(Assets.bgm.bgm1);
         }
         public override void update(float deltaTime)
         {
+           // DebugConsole.write("in:"+levelIndex.ToString());
             base.update(deltaTime);
             if (animating)
             {

@@ -12,7 +12,7 @@ namespace Bounce
 {
     class TextObject:GraphicalGameObject
     {
-        protected SpriteFont font;
+        public SpriteFont font;
         public String text;
         public Color color;
 

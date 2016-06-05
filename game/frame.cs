@@ -138,5 +138,33 @@ namespace Bounce
         {
             foreach (GraphicalGameObject g in frames) g.Draw(batch, screenAlpha);
         }
+        public string getFrameName(int mode)
+        {
+            string res = "定義なし";
+
+            switch (mode)
+            {
+                case 1:
+                    res = "スクエア";
+                    break;
+                case 2:
+                    res = "ホライズン";
+                    break;
+                case 3:
+                    res = "バーティカル";
+                    break;
+                case 4:
+                    res = "L";
+                    break;
+                case 5:
+                    res = "ピアス";
+                    break;
+                case 6:
+
+                    
+                    break;
+            }
+            return res;
+        }
     }
 }

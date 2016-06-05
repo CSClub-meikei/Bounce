@@ -60,6 +60,7 @@
     <Compile Include="editor\specialScreen_warp.cs" />
     <Compile Include="game\accel.cs" />
     <Compile Include="game\clearScreen.cs" />
+    <Compile Include="game\FrameChangeScreen.cs" />
     <Compile Include="game\goal.cs" />
     <Compile Include="game\readyScreen.cs" />
     <Compile Include="gameObject\tileObject.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="screens\adviceScreen.cs" />
     <Compile Include="screens\inputScreen.cs" />
     <Compile Include="screens\LoginScreen.cs" />
+    <Compile Include="screens\RankScreen.cs" />
     <Compile Include="screens\waitScreen.cs" />
     <Compile Include="socket\Client.cs" />
     <Compile Include="socket\const.cs" />
@@ -107,6 +109,7 @@
     <Compile Include="map\mapChip_p.cs" />
     <Compile Include="map\mapData.cs" />
     <Compile Include="gameObject\moveScreenObject.cs" />
+    <Compile Include="uiControl\rankingBoard.cs" />
     <Compile Include="uiControl\toast.cs" />
     <Compile Include="uiControl\ToggleButton.cs" />
     <Compile Include="uiControl\progressBar.cs" />
@@ -1021,6 +1024,9 @@
     <Content Include="Content\graphics\ui\back_storyComment.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\button-endlessmode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\button-file-d.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1045,6 +1051,9 @@
     <Content Include="Content\graphics\ui\button-savenewfile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\button-storymode.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\button-testPlay.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1060,7 +1069,28 @@
     <Content Include="Content\graphics\ui\editMsgButton.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\editTitleButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\GraBottom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\GraTop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\HL.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\r-1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\r-2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\r-3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\r.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\repeat.png">

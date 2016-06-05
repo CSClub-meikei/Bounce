@@ -30,7 +30,10 @@ namespace Bounce.editor
             label1 = new TextObject(game, this, Assets.graphics.ui.defultFont, "テクスチャ", Color.Black, 50, 100);
             label2 = new TextObject(game, this, Assets.graphics.ui.defultFont, "レベル", Color.Black, 50, 150);
             c = new checkBox(game, this, 0, 200, 80, 80);
-            
+            title = new SimpleButton(game, this, Assets.graphics.ui.button_editTitle, 50, 200, 200, 80);
+
+
+
             tex.changed+=new EventHandler((sender, e) => {
                 
                 Assets.LoadGame(game.Content, (int)tex.value);DebugConsole.write("loaded");
@@ -43,6 +46,14 @@ namespace Bounce.editor
                 screen.map.level = (int)level.value;
                 level.text.text = level.value.ToString();
             });
+
+            title.Enter += new EventHandler((sender, e) =>
+             {
+                 inputBox f = new inputBox(screen.map.title);
+                 f.ShowDialog();
+                 screen.map.title = f.msg;
+             });
+
             tex.value = screen.map.texSet;
             level.value = screen.map.level;
             tex.text.text = tex.value.ToString();
@@ -57,6 +68,7 @@ namespace Bounce.editor
             back.update(deltaTime);
             label1.update(deltaTime);
             label2.update(deltaTime);
+            title.update(deltaTime);
             //  c.update(deltaTime);
             if (!Input.IsHover(new Rectangle(X, Y, (int)back.Width, (int)back.Height)) && Input.OnMouseDown(Input.LeftButton))
             {
@@ -73,6 +85,7 @@ namespace Bounce.editor
             level.Draw(batch, screenAlpha);
             label1.Draw(batch, screenAlpha);
             label2.Draw(batch, screenAlpha);
+            title.Draw(batch, screenAlpha);
             //    c.Draw(batch, screenAlpha);
         }
     }
