@@ -25,8 +25,8 @@ namespace Bounce
             if(screen.disTime) time = new TextObject(game, this, Assets.graphics.ui.defultFont, "クリアタイム : 中間ポイント\nからの再開のため無し" + screen.time, Color.White, 400, 400);
             else time = new TextObject(game, this, Assets.graphics.ui.defultFont, "クリアタイム : " + Math.Round(screen.time, 2, MidpointRounding.AwayFromZero).ToString(), Color.White, 400, 400);
             Client.tcp.received += Tcp_received;
-            if(!screen.disTime)Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,setTimeRecord,"+userData.userid + "," + userData.userName + "," + screen.world.map.title + "," + Math.Round(screen.time, 2, MidpointRounding.AwayFromZero).ToString()));
-            Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,getTimeRecord,"+ screen.world.map.title ));
+            if(!screen.disTime && game.enableNet) Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,setTimeRecord,"+userData.userid + "," + userData.userName + "," + screen.world.map.title + "," + Math.Round(screen.time, 2, MidpointRounding.AwayFromZero).ToString()));
+            if (game.enableNet)Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,getTimeRecord,"+ screen.world.map.title ));
 
             title.addAnimator(2);
             title.animator[0].setLimit(0.5f);
@@ -38,16 +38,7 @@ namespace Bounce
             time.animator[0].setDelay(1);
             time.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.2f });
             //animator.setDelay(4f);
-            animator.FinishAnimation += new EventHandler((sender, e) => {
-                screen.animator.FinishAnimation += new EventHandler((sender2, e2) => {
-                    game.screens.Clear();
-                   // System.Windows.Forms.MessageBox.Show(screen.levelIndex.ToString());
-                    game.screens.Add(new worldMapScreen(game, screen.levelIndex,true));
-                });
-                screen.animating=true;
-                screen.animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });
-
-            });
+           
           //  animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });
             setUIcell(1, 1);
         }
@@ -62,6 +53,8 @@ namespace Bounce
                 int i = 0;
                 int hIndex = -1;
                 rs = new RankScreen(game, true);
+                rs.animator.setDelay(2);
+                rs.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 0.5f });
                 for (i=0;i < sp.Length-1;i+=2)
                 {
                     rs.ranking.Add(new rankingBoard(game, rs, i/2 + 1, sp[i + 1] + ":" + sp[i + 2], 200, i/2 * 80, 880, 80));
@@ -99,9 +92,11 @@ namespace Bounce
             {
                 animator.FinishAnimation += new EventHandler((sender, e) => {
                     screen.animator.FinishAnimation += new EventHandler((sender2, e2) => {
-                        game.screens.Clear();
+                        game.clearScreen();
                         // System.Windows.Forms.MessageBox.Show(screen.levelIndex.ToString());
-                        game.screens.Add(new worldMapScreen(game, screen.levelIndex, true));
+                        if(screen.levelIndex==-1) game.AddScreen(new EndlessScreen(game));
+                        else if (screen.levelIndex == 8) game.AddScreen(new endScreen(game));
+                        else game.AddScreen(new worldMapScreen(game, screen.levelIndex, true));
                     });
                     screen.animating = true;
                     screen.animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });

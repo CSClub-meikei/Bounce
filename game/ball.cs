@@ -300,7 +300,8 @@ namespace Bounce
                         {
                             case 1:
                                 velocityX = -Speed;
-                               // DebugConsole.write(",1");
+                                X = o.X - Width;
+                                // DebugConsole.write(",1");
                                 // X = b.X - Width;
                                 // System.Windows.Forms.MessageBox.Show("1");
                                 if (flag21 == 0)
@@ -314,9 +315,10 @@ namespace Bounce
                                 break;
                             case 2:
                                 velocityX = Speed;
+                                X = o.X + o.Width;
                                 // X = b.X+b.Width;
                                 // System.Windows.Forms.MessageBox.Show("2");
-                              //  DebugConsole.write(",2");
+                                //  DebugConsole.write(",2");
                                 if (flag21 == 0)
                                 {
                                     flag21 = 2;
@@ -328,8 +330,9 @@ namespace Bounce
                                 break;
                             case 3:
                                 velocityY = -Speed;
+                               Y = o.Y - Height;
                                 // Y = b.Y - Height;
-                              //  DebugConsole.write(",3");
+                                //  DebugConsole.write(",3");
                                 // System.Windows.Forms.MessageBox.Show("3");
 
                                 if (flag21 == 0)
@@ -343,9 +346,10 @@ namespace Bounce
                                 break;
                             case 4:
                                 velocityY = Speed;
+                                Y = o.Y + o.Height;
                                 //  Y = b.Y + b.Height;
                                 //  System.Windows.Forms.MessageBox.Show("4");]
-                             //   DebugConsole.write(",4");
+                                //   DebugConsole.write(",4");
                                 if (flag21 == 0)
                                 {
                                     flag21 = 4;
@@ -396,6 +400,7 @@ namespace Bounce
                       
                         if (overlapTester.overlapRectangles(new Rectangle((int)o.X, (int)o.Y, (int)o.Width, (int)o.Height), new Rectangle((int)X, (int)Y, (int)Width, (int)Height)))
                         {
+                            game.assist(1, false);
                             if (Input.onKeyDown(Keys.Space) && parent.Status == worldScreen.RUNNING)
                             {
                                 parent.fcScreen = new FrameChangeScreen(game, parent);
@@ -407,6 +412,9 @@ namespace Bounce
                                 parent.fcScreen.close();
                                 parent.Status = worldScreen.RUNNING;
                             }
+                        }else
+                        {
+                            game.assist(1, true);
                         }
                     }
                     else if (o is accel)
@@ -537,7 +545,7 @@ namespace Bounce
             breaking =true;
             setLocation(X - 210, Y - 180);
             setSize(266, 266);
-            Assets.soundEffects.glass.Play();
+            Assets.soundEffects.glass.Play(game.settingData.Effect_volume, 0, 0);
         }
         public void spread(float deltaTime)
         {
@@ -560,9 +568,9 @@ namespace Bounce
                 parent.stopTest();
                 return;
             }
-            // game.screens.Clear();
+            // game.clearScreen();
             parent.Status = worldScreen.DIED;
-           // game.screens.Add(new GameScreen(game));
+           //game.AddScreen(new GameScreen(game));
         }
         public void clearAnimation(float deltaTime)
         {

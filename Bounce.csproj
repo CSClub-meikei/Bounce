@@ -41,6 +41,7 @@
     <Compile Include="appSettings.cs" />
     <Compile Include="Assets.cs" />
     <Compile Include="AssetsLoadScreen.cs" />
+    <Compile Include="assistScreen.cs" />
     <Compile Include="deepCopy.cs" />
     <Compile Include="editor\eventEditScreen.cs" />
     <Compile Include="editor\eventEditScreen_1.cs" />
@@ -58,6 +59,10 @@
     <Compile Include="editor\menuBar.cs" />
     <Compile Include="editor\specialScreen_switch.cs" />
     <Compile Include="editor\specialScreen_warp.cs" />
+    <Compile Include="game\pauseScreen.cs" />
+    <Compile Include="screens\endContentScreen.cs" />
+    <Compile Include="screens\EndlessScreen.cs" />
+    <Compile Include="screens\endScreen.cs" />
     <Compile Include="game\accel.cs" />
     <Compile Include="game\clearScreen.cs" />
     <Compile Include="game\FrameChangeScreen.cs" />
@@ -73,6 +78,7 @@
     <Compile Include="screens\inputScreen.cs" />
     <Compile Include="screens\LoginScreen.cs" />
     <Compile Include="screens\RankScreen.cs" />
+    <Compile Include="screens\SettingScreen.cs" />
     <Compile Include="screens\waitScreen.cs" />
     <Compile Include="socket\Client.cs" />
     <Compile Include="socket\const.cs" />
@@ -88,6 +94,7 @@
     <Compile Include="story\storyData_3.cs" />
     <Compile Include="story\storyScreen.cs" />
     <Compile Include="uiControl\checkBox.cs" />
+    <Compile Include="uiControl\levelSelectList.cs" />
     <Compile Include="uiControl\NumUpDown.cs" />
     <Compile Include="screens\BackScreen.cs" />
     <Compile Include="game\ball.cs" />
@@ -110,6 +117,7 @@
     <Compile Include="map\mapData.cs" />
     <Compile Include="gameObject\moveScreenObject.cs" />
     <Compile Include="uiControl\rankingBoard.cs" />
+    <Compile Include="uiControl\Slider.cs" />
     <Compile Include="uiControl\toast.cs" />
     <Compile Include="uiControl\ToggleButton.cs" />
     <Compile Include="uiControl\progressBar.cs" />
@@ -1003,6 +1011,12 @@
     <Content Include="Content\graphics\ui\arrowR.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\assist-space.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\assist-yazirushi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\back-ChipToolbar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1022,6 +1036,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\back_storyComment.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\button-back.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\button-endlessmode.png">
@@ -1081,6 +1098,12 @@
     <Content Include="Content\graphics\ui\HL.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\graphics\ui\label-exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\label-toTitle.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\graphics\ui\r-1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1115,6 +1138,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\moveEditButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\slideBack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\graphics\ui\slideCircle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\graphics\ui\sp1.png">

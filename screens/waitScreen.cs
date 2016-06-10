@@ -25,10 +25,10 @@ namespace Bounce
             back.update(deltaTime);
             if (Input.onKeyDown(Keys.Space))
             {
-                animator.FinishAnimation += new EventHandler((sender, e) => { game.screens.Remove(this); });
+                animator.FinishAnimation += new EventHandler((sender, e) => { game.removeScreen(this); });
 
                 animator.start(ScreenAnimator.SLIDE, new float[] { 2, 0, -720, -1, -1,3,3 });
-                game.screens.Insert(0, new LoginScreen(game));
+               game.InsertScreen( new LoginScreen(game));
 
             }
         }

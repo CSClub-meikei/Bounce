@@ -35,9 +35,10 @@ namespace Bounce
                 public static Texture2D label_play;
                 public static Texture2D label_settings;
                 public static Texture2D label_gameselect;
-                public static Texture2D label_back;
+                public static Texture2D label_return;
                 public static Texture2D label_multiplay;
                 public static Texture2D label_singleplay;
+                public static Texture2D label_back;
                 public static Texture2D back_title;
                 public static Texture2D cursor;
                 public static Texture2D sp1;
@@ -50,6 +51,9 @@ namespace Bounce
                 public static Texture2D arrowR;
                 public static Texture2D arrowL;
                 public static Texture2D moveEditButton;
+
+                public static Texture2D sliderBack;
+                public static Texture2D sliderCircle;
 
                 public static Texture2D check;
 
@@ -92,6 +96,11 @@ namespace Bounce
                 public static Texture2D ranking_2;
                 public static Texture2D ranking_3;
 
+                public static Texture2D assist_S;
+                public static Texture2D assist_Y;
+
+                public static Texture2D label_toTitle;
+                public static Texture2D label_exit;
                 public static SpriteFont font;
                 public static SpriteFont defultFont;
 
@@ -196,6 +205,8 @@ namespace Bounce
             graphics.ui.label_singleplay = Content.Load<Texture2D>("button-storymode");
             graphics.ui.label_multiplay = Content.Load<Texture2D>("button-endlessmode");
             graphics.ui.label_back = Content.Load<Texture2D>("back-label");
+            graphics.ui.label_return = Content.Load<Texture2D>("button-back");
+            graphics.ui.label_toTitle = Content.Load<Texture2D>("label-ToTitle");
             graphics.ui.HL = Content.Load<Texture2D>("HL");
             graphics.ui.arrowA = Content.Load<Texture2D>("arrow+");
             graphics.ui.arrowS = Content.Load<Texture2D>("arrow-");
@@ -204,6 +215,9 @@ namespace Bounce
             graphics.ui.back_ChipToolbar = Content.Load<Texture2D>("back-ChipToolbar");
             graphics.ui.trashBox = Content.Load<Texture2D>("trashBox");
             graphics.ui.moveEditButton = Content.Load<Texture2D>("moveEditButton");
+
+            graphics.ui.sliderBack = Content.Load<Texture2D>("slideBack");
+            graphics.ui.sliderCircle = Content.Load<Texture2D>("slideCircle");
 
             graphics.ui.check = Content.Load<Texture2D>("check");
 
@@ -243,6 +257,11 @@ namespace Bounce
             graphics.ui.ranking_1 = Content.Load<Texture2D>("r-1");
             graphics.ui.ranking_2 = Content.Load<Texture2D>("r-2");
             graphics.ui.ranking_3 = Content.Load<Texture2D>("r-3");
+
+            graphics.ui.assist_S = Content.Load<Texture2D>("assist-space");
+            graphics.ui.assist_Y = Content.Load<Texture2D>("assist-yazirushi");
+
+            graphics.ui.label_exit = Content.Load<Texture2D>("label-exit");
 
             graphics.ui.font = Content.Load<SpriteFont>("font");
             graphics.ui.defultFont = Content.Load<SpriteFont>("defult");

@@ -134,7 +134,7 @@ namespace Bounce.story
 
             if (str.ch == 1)
             {
-                str.serif = str.serif.Insert(0, "CH1 : ");
+                str.serif = str.serif.Insert(0, "");
             }else
             {
                 str.serif = str.serif.Insert(0, "unknown : ");

@@ -17,7 +17,7 @@ namespace Bounce
 
         GraphicalGameObject map,levelNamePlate;
         TextObject levelNamePlateLabel;
-        levelinfoScreen levelinfoScreen;
+        public levelinfoScreen levelinfoScreen;
         mapIcon labo,w1,w2,w3,w4,w5,w6,w7,w8;
         public bool isAnimate;
         public int selectedIconIndex;
@@ -29,13 +29,13 @@ namespace Bounce
         public worldMapScreen(Game1 game, int index = 0,bool isClear=false, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
             map = new GraphicalGameObject(game, this, Assets.graphics.worldMap.map,0,0,2688,2688);
-            levelNamePlate = new GraphicalGameObject(game, this, Assets.graphics.worldMap.levelNamePlate, -20,-20, 400, 100);
+            levelNamePlate = new GraphicalGameObject(game, this, Assets.graphics.worldMap.levelNamePlate, -20,-20, 500, 100);
             levelNamePlateLabel = new TextObject(game, this, Assets.graphics.ui.defultFont, "", Color.Black,20,20);
             levelNamePlateLabel.lockPlace = true;
             animator.Add(new ScreenAnimator(this, game));
             animator.Add(new ScreenAnimator(this, game));
             animator.Add(new ScreenAnimator(this, game));
-
+            DebugConsole.write("mapworld :" + isClear.ToString());
             animator[0].FinishAnimation += new EventHandler(fa1);
             animator[1].FinishAnimation += new EventHandler(fa2);
             //animator[0].setLimit(1);
@@ -55,6 +55,9 @@ namespace Bounce
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(Assets.bgm.story);
             //  selectedItem = new Point(0,2);
+
+            game.assist(1, true);
+            game.assist(2, true);
         }
 
         public void  mapIconBuild(bool isClear)
@@ -86,7 +89,7 @@ namespace Bounce
             w1.num = "world1";
             w1.title = "はじまりの草原";
             w1.level = "レベル : 1  ☆";
-            w1.disctiprion = "さあ、冒険の始まりだ。\nそこまで難しくはないから\n焦らず行こう！";
+            w1.disctiprion = "さあ、冒険の始まりだ。\nそこまで難しくはないから焦らず行こう！";
             w1.path = "level/w1.bmd";
             w1.next = 4;
             w1.nextid = 2;
@@ -106,13 +109,61 @@ namespace Bounce
             w3.num = "world3";
             w3.title = "湖ダンジョン";
             w3.level = "レベル : ３  ☆☆☆";
-            w3.disctiprion = "このダンジョンは一部水に浸かっているようだ。\n水の中ではボールの動きが遅くなるから注意だ";
+            w3.disctiprion = "このダンジョンは水に浸かっているようだ。\n水の中ではボールの動きが遅くなるから注意だ";
             w3.path = "level/w3.bmd";
             w3.next = 1;
             w3.nextid = 4;
             w3.back = 2;
             w3.backid = 2;
 
+            w4.num = "world4";
+            w4.title = "ジャングル宮殿";
+            w4.level = "レベル : ４  ☆☆☆☆";
+            w4.disctiprion = "だんだん仕掛けが増えてきてコースも\n複雑になってきた。\nここではL字のフレームが活躍しそうだ";
+            w4.path = "level/w4.bmd";
+            w4.next = 1;
+            w4.nextid = 5;
+            w4.back = 2;
+            w4.backid = 3;
+
+            w5.num = "world5";
+            w5.title = "からくり島";
+            w5.level = "レベル : ３  ☆☆☆";
+            w5.disctiprion = "ココのコースでは初めてボールをフレームの外に\nだすぞ。仕掛けの力を借りてゴールを目指せ！";
+            w5.path = "level/w5.bmd";
+            w5.next = 3;
+            w5.nextid = 6;
+            w5.back = 4;
+            w5.backid = 4;
+
+            w6.num = "world6";
+            w6.title = "波よせる海";
+            w6.level = "レベル : ４  ☆☆☆☆";
+            w6.disctiprion = "水が満ちたり引いたりする。\nタイミングを見極めよう。";
+            w6.path = "level/w6.bmd";
+            w6.next = 2;
+            w6.nextid = 7;
+            w6.back = 4;
+            w6.backid = 5;
+
+            w7.num = "world7";
+            w7.title = "天まで届く山";
+            w7.level = "レベル : ４  ☆☆☆☆";
+            w7.disctiprion = "ブロックが複雑に動いている。\n挟まれないように気をつけるんだ。";
+            w7.path = "level/w7.bmd";
+            w7.next = 4;
+            w7.nextid = 8;
+            w7.back = 1;
+            w7.backid = 6;
+
+            w8.num = "world8";
+            w8.title = "神秘の神殿";
+            w8.level = "レベル : ５  ☆☆☆☆";
+            w8.disctiprion = "最終コースだ。とても複雑な構造をしている。\nがんばってくれ！";
+            w8.path = "level/w8.bmd";
+           
+            w8.back = 3;
+            w8.backid = 7;
 
 
             mapIcon[] tmp = new mapIcon[] { w1, w2, w3, w4, w5, w6, w7, w8 };
@@ -121,28 +172,33 @@ namespace Bounce
             icons.Add(labo);
             for (i = 0; i < game.settingData.Cleared;i++) icons.Add(tmp[i]);
 
-            if (isClear && game.settingData.Cleared<=selectedIconIndex)
+            if (isClear && game.settingData.Cleared==selectedIconIndex)
             {
-                
-                game.settingData.Cleared = selectedIconIndex + 1;
+                selectedIconIndex++;
+                game.settingData.Cleared = selectedIconIndex;
                 game.settingData.save();
-                tmp[game.settingData.Cleared - 1].isShow = false;
-                icons.Add(tmp[game.settingData.Cleared - 1]);
-
-                animator[1].FinishAnimation += new EventHandler((sender, e) =>
+                tmp[game.settingData.Cleared-1].isShow = false;
+                icons.Add(tmp[game.settingData.Cleared-1]);
+                icons[game.settingData.Cleared].isShow = false;
+                DebugConsole.write(game.settingData.Cleared.ToString());
+                animator[0].FinishAnimation += new EventHandler((sender, e) =>
                 {
-                    icons[game.settingData.Cleared].hover(null, null);
-                    selectedIconIndex++;
+                   
+                    
                     icons[game.settingData.Cleared].Show();
                     //System.Windows.Forms.MessageBox.Show(game.settingData.Cleared.ToString());
 
                 });
-                icons[selectedIconIndex].hover(null, null);
                
+                icons[selectedIconIndex].hover(null, null);
+                DebugConsole.write("ha");
             }
             else
             {
-                icons[selectedIconIndex].hover(null, null);
+                DebugConsole.write("sine");
+
+               
+               icons[selectedIconIndex].hover(null, null);
             }
            
 
@@ -246,11 +302,21 @@ namespace Bounce
                     levelinfoScreen.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 0.2f });
                     enable = false;
                 }
-
+                if (Input.onKeyDown(Keys.Escape))
+                {
+                    game.clearScreen();
+                    game.AddScreen(new BackScreen(game));
+                    game.AddScreen(new UItestScreen(game));
+                }
             }
 
+            map.update(deltaTime);
 
-            foreach (mapIcon icon in icons) icon.update(deltaTime);
+            levelNamePlateLabel.text = icons[selectedIconIndex].title;
+            levelNamePlateLabel.update(deltaTime);
+            levelNamePlate.update(deltaTime);
+            if (levelNamePlateLabel.text == null) levelNamePlateLabel.text = "";
+                foreach (mapIcon icon in icons) icon.update(deltaTime);
            
             try
             {
@@ -265,11 +331,7 @@ namespace Bounce
                 //throw;
             }
            
-            map.update(deltaTime);
-
-            levelNamePlateLabel.text = icons[selectedIconIndex].title;
-            levelNamePlateLabel.update(deltaTime);
-            levelNamePlate.update(deltaTime);
+            
            // labo.update(deltaTime);
           //  w1.update(deltaTime);
         }

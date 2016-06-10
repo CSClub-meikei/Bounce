@@ -241,7 +241,7 @@ namespace Bounce
                     parent.Status = worldScreen.RUNNING;
                 });
                 parent.Status = worldScreen.PAUSE;
-                game.screens.Add(ns);
+               game.AddScreen(ns);
             }
 
 

@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Bounce.editor;
 using Bounce.socket;
+using System.Runtime.Serialization;
+using System.Xml;
+
 namespace Bounce
 {
     /// <summary>
@@ -23,9 +26,18 @@ namespace Bounce
 
         FPSCounter counter;
 
+        public assistScreen assistScreen;
+
+        bool OnclearScreen;
+
         public List<Screen> screens;
+        public List<Screen> Rscreens;
+        public List<Screen> Ascreens;
+        public List<Screen> Iscreens;
         public debugScreen debugScreen;
-       
+
+        public bool enableNet = false;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -48,14 +60,21 @@ namespace Bounce
 
             IsMouseVisible = true;
             screens = new List<Screen>();
+            Rscreens = new List<Screen>();
+            Ascreens = new List<Screen>();
+            Iscreens = new List<Screen>();
             Input.Initialize(this);
             Assets.Initialize(this);
             counter = new FPSCounter();
             base.Initialize();
-
+           // IsMouseVisible = false;
 
             Window.Title = "Bounce build:" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build;
-
+            Window.IsBorderless = true;
+            Window.Position = Point.Zero;
+            graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;
+            graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -69,7 +88,7 @@ namespace Bounce
             debugScreen = new debugScreen(this);
             debugScreen.screenAlpha = 0;
             screens.Add(new AssetsLoadScreen(this));
-
+           
             string[] cmds = System.Environment.GetCommandLineArgs();
             
             if (cmds.Length >=2)
@@ -79,13 +98,36 @@ namespace Bounce
 
                     Client.connect(this);
                     Client.tcp.startReceive();
-                   // LoginForm f = new LoginForm();
-                   // f.ShowDialog();
+                    enableNet = true;
+                   
+                    //保存元のファイル名
+                    string fileName = @"tmp.tmp";
 
-                  
+                    //DataContractSerializerオブジェクトを作成
+                    DataContractSerializer serializer =
+                        new DataContractSerializer(typeof(SettingData));
+                    //読み込むファイルを開く
+                    XmlReader xr = XmlReader.Create(fileName);
+                    //XMLファイルから読み込み、逆シリアル化する
+                    settingData = (SettingData)serializer.ReadObject(xr);
+                    //ファイルを閉じる
+                    xr.Close();
+                    // System.Windows.Forms.MessageBox.Show(game.settingData.BGM_volume.ToString());
+                    // DebugConsole.write(game.settingData.BGM_volume.ToString());
+
                 }
             }
-
+            if (!enableNet)
+            {
+                userData.userName = "プレイヤー";
+                settingData = new SettingData();
+                settingData.init(this);
+                if (!System.IO.File.Exists("saveData.save"))
+                {
+                   
+                    settingData.save();
+                }
+            }
             // TODO: use this.Content to load your game content here
         }
 
@@ -108,21 +150,18 @@ namespace Bounce
             float deltaTime = counter.getDeltaTime(gameTime);
             // Window.Title = (1 / counter.getDeltaTime(gameTime) ).ToString();
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            {
-               if(Client.tcp!=null) Client.tcp.disConnect();
-                Exit(); }
+          
             if (Input.onKeyDown(Keys.Q))
             {
                 SettingForm f = new SettingForm(this);
                 f.ShowDialog();
             }
-            if (Input.onKeyDown(Keys.T)) { screens.Clear(); screens.Add(new BackScreen(this)); screens.Add(new UItestScreen(this)); }
+          
             if (Input.onKeyDown(Keys.G))
             {
-                screens.Clear();
+               // screens.Clear();
                
-                screens.Add(new GameScreen(this,0));
+              //  screens.Add(new GameScreen(this,0));
             }
             if (Input.onKeyDown(Keys.T))
             {
@@ -137,41 +176,53 @@ namespace Bounce
             }
             if (Input.onKeyDown(Keys.W))
             {
-                screens.Clear();
-                screens.Add(new worldMapScreen(this,0));
+              //  screens.Clear();
+              //  screens.Add(new worldMapScreen(this,0));
             }
             if (Input.onKeyDown(Keys.C))
             {
                // screens.Add(new adviceScreen(this,1,0,"メッセージのテストです\nここにアドバイス等が表示されます"));
             }
-            if (Input.IsKeyDown(Keys.D) && Input.IsKeyDown(Keys.LeftShift))
+            if (Input.IsKeyDown(Keys.S))
             {
-               // debugScreen.AutoScroll = !debugScreen.AutoScroll;
+               // clearScreen();
+               // AddScreen(new endScreen(this));
             }
             else if (Input.onKeyDown(Keys.D))
             {
-                if (debugScreen.screenAlpha == 0) debugScreen.screenAlpha = 1;
-                else if (debugScreen.screenAlpha == 1) debugScreen.screenAlpha = 0;
+              //  if (debugScreen.screenAlpha == 0) debugScreen.screenAlpha = 1;
+              //  else if (debugScreen.screenAlpha == 1) debugScreen.screenAlpha = 0;
             }
 
 
             // TODO: Add your update logic here
-            try
-            {
+          
                 foreach (Screen s in screens)
                 {
                     s.update(deltaTime);
                 }
-            }
-            catch (Exception)
+            if (OnclearScreen)
             {
-
-                //throw;
+                screens.Clear();
+                OnclearScreen = false;
             }
-                
-            
-            
+            foreach (Screen s in Rscreens)
+            {
+                screens.Remove(s);
+            }
+            Rscreens.Clear();
+            foreach (Screen s in Ascreens)
+            {
+                screens.Add(s);
+            }
+            Ascreens.Clear();
+            foreach (Screen s in Iscreens)
+            {
+                screens.Insert(0,s);
+            }
+            Iscreens.Clear();
 
+            if(assistScreen!=null)assistScreen.update(deltaTime);
 
             debugScreen.update(deltaTime);
             Input.update();
@@ -191,7 +242,7 @@ namespace Bounce
             {
                 s.Draw(spriteBatch);
             }
-
+            if (assistScreen != null) assistScreen.Draw(spriteBatch);
             spriteBatch.Begin(transformMatrix: GetScaleMatrix());
             spriteBatch.Draw(Assets.graphics.ui.cursor, new Rectangle(Input.getPosition().X-20, Input.getPosition().Y-10, 100, 100), Color.White);
             spriteBatch.End();
@@ -202,14 +253,34 @@ namespace Bounce
 
         public void ShowToast(string msg,float time)
         {
-            screens.Add(new toast(this, msg, time));
+            AddScreen(new toast(this, msg, time));
 
+        }
+        public void assist(int mode,bool show)
+        {
+            assistScreen.setShow(mode, show);
         }
         public Matrix GetScaleMatrix()
         {
             var scaleX = (float)graphics.PreferredBackBufferWidth / 1280;
             var scaleY = (float)graphics.PreferredBackBufferHeight / 720;
             return Matrix.CreateScale(scaleX, scaleY, 1.0f);
+        }
+        public void removeScreen(Screen screen)
+        {
+            Rscreens.Add(screen);
+        }
+        public void AddScreen(Screen screen)
+        {
+            Ascreens.Add(screen);
+        }
+        public void InsertScreen(Screen screen)
+        {
+            Iscreens.Add(screen);
+        }
+        public void clearScreen()
+        {
+            OnclearScreen = true;
         }
     }
 }

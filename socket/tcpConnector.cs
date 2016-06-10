@@ -80,6 +80,7 @@ namespace Bounce.socket
                 int resSize = 0;
                 do
                 {
+                    if (!tcp.Connected) break;
                     //データの一部を受信する
                     resSize = ns.Read(resBytes, 0, resBytes.Length);
                     //Readが0を返した時はサーバーが切断したと判断

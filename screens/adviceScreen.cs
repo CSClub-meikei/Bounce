@@ -50,7 +50,7 @@ namespace Bounce
             {
                 animator.FinishAnimation += new EventHandler((sender, e) => {
                     if (closed != null) closed(this, EventArgs.Empty);
-                    game.screens.Remove(this);
+                    game.removeScreen(this);
 
                 });
                 animator.setDelay(0);

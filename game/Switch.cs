@@ -17,7 +17,7 @@ namespace Bounce
         public bool IsPush
         {
             get { return _IsPush; }
-            set { if (!_IsPush && value)  if(specialData!=1)Assets.soundEffects.pushSwitch.Play(); _IsPush = value;  }
+            set { if (!_IsPush && value)  if(specialData!=1)Assets.soundEffects.pushSwitch.Play(game.settingData.Effect_volume, 0, 0); _IsPush = value;  }
         }
         
 

@@ -51,7 +51,18 @@ namespace Bounce.editor
             interval.value = ((eventData_2)eventEditScreen.chip.eventData).interval;
             interval.text.text = interval.value.ToString();
 
-
+            speed.changed += new EventHandler((sender, e) =>
+              {
+                  ((eventData_2)eventEditScreen.chip.eventData).speed = (int)speed.value;
+              });
+            interval.changed += new EventHandler((sender, e) =>
+              {
+                  ((eventData_2)eventEditScreen.chip.eventData).interval = interval.value;
+              });
+            isLoop.Enter += new EventHandler((sender, e) =>
+              {
+                  ((eventData_2)eventEditScreen.chip.eventData).isLoop = isLoop.value;
+              });
         }
         public override void update(float deltaTime)
         {
@@ -74,9 +85,9 @@ namespace Bounce.editor
             }
 
 
-            ((eventData_2)eventEditScreen.chip.eventData).speed = (int)speed.value;
-            ((eventData_2)eventEditScreen.chip.eventData).isLoop = isLoop.value;
-            ((eventData_2)eventEditScreen.chip.eventData).interval = interval.value;
+          
+           
+            
 
 
         }

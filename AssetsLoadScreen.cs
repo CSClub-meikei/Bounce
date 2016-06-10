@@ -51,7 +51,8 @@ namespace Bounce
         {
             animator.FinishAnimation += new EventHandler((ss, ee) =>
             {
-            string[] cmds = System.Environment.GetCommandLineArgs();
+                game.assistScreen = new assistScreen(game);
+                string[] cmds = System.Environment.GetCommandLineArgs();
                 Screen ns;
                 ns = new SplashScreen(game);
                 if (cmds.Length >= 2)
@@ -62,11 +63,11 @@ namespace Bounce
                     }
                 }
 
-                   
-               // ns.animator.setDelay(2f);
+                
+                // ns.animator.setDelay(2f);
                 ns.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 1 });
-                game.screens.Add(ns);
-                game.screens.Remove(this);
+               game.AddScreen(ns);
+                game.removeScreen(this);
             });
             animator.setDelay(0.6f);
             animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.2f });

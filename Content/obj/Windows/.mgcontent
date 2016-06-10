@@ -4,12 +4,12 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>D:/Documents/GitHub/bounce/Content/soundEffects/cursor6.mp3</File>
-    <File>D:/Documents/GitHub/bounce/Content/soundEffects/decision21.mp3</File>
-    <File>D:/Documents/GitHub/bounce/Content/font</File>
-    <File>D:/Documents/GitHub/bounce/Content/soundEffects/glass-break2.mp3</File>
-    <File>D:/Documents/GitHub/bounce/Content/soundEffects/switch.mp3</File>
-    <File>D:/Documents/GitHub/bounce/Content/defult.spritefont</File>
-    <File>D:/Documents/GitHub/bounce/Content/small.spritefont</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/cursor6.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/decision21.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/font</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/glass-break2.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/soundEffects/switch.mp3</File>
+    <File>D:/Documents/GitHub/Bounce/Content/defult.spritefont</File>
+    <File>D:/Documents/GitHub/Bounce/Content/small.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

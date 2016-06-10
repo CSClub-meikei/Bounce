@@ -35,7 +35,7 @@ namespace Bounce
         public override void update(float deltaTime)
         {
             if(!AutoScroll)line=(Input.getWheel() / 120);
-            Console.WriteLine(DebugConsole.getOutput(line, line + 5));
+           // Console.WriteLine(DebugConsole.getOutput(line, line + 5));
             console.text = DebugConsole.getOutput(line, line + 6);
            // console.Y = line * fontSize;
             //if (_AutoScroll) console.Y = DebugConsole.lines * fontSize;

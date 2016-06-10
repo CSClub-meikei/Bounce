@@ -53,7 +53,7 @@ namespace Bounce
         }
         public void got(object sender,EventArgs e)
         {
-            if(enableSound) Assets.soundEffects.s.Play();
+            if(enableSound) Assets.soundEffects.s.Play(game.settingData.Effect_volume,0,0);
             back.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.1f });
             al = 1;
             //front.animator[2].start(GameObjectAnimator.fadeInOut, new float[] { 0, 1});
@@ -72,7 +72,7 @@ namespace Bounce
         }
         public void accepted(object sender, EventArgs e)
         {
-            if (enableSound) Assets.soundEffects.d.Play();
+            if (enableSound) Assets.soundEffects.d.Play(game.settingData.Effect_volume, 0, 0);
         }
     }
 }

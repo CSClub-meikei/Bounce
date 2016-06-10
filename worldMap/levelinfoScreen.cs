@@ -25,10 +25,15 @@ namespace Bounce
             level = new TextObject(game, this, Assets.graphics.ui.defultFont, screen.icons[screen.selectedIconIndex].level, Color.White, new Rectangle(0, 280, 1280, 0));
             dis = new TextObject(game, this, Assets.graphics.ui.defultFont, screen.icons[screen.selectedIconIndex].disctiprion, Color.White, new Rectangle(0, 400, 1280, 0));
             
-            setUIcell(1, 1);
+            setUIcell(2, 1);
             Controls[0, 0] = (new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_play, 370, 600, 540, 120));
+            Controls[1, 0] = (new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_return, 950, 600, 300, 100));
             Controls[0, 0].Enter += play;
-            
+            Controls[1, 0].Enter += new EventHandler((sender, e) =>
+              {
+                  screen.levelinfoScreen = null;
+                  screen.enable = true;
+              });
             this.screen = screen;
         }
         public override void update(float deltaTime)
@@ -66,7 +71,7 @@ namespace Bounce
             screen.animator[2].setDelay(2);
             screen.animator[2].FinishAnimation += new EventHandler((sender2, e2) =>
               {
-                  game.screens.Remove(screen);
+                  game.removeScreen(screen);
               });
             screen.animator[2].start(ScreenAnimator.fadeInOut, new float[] { 1, 1 });
 
@@ -76,7 +81,7 @@ namespace Bounce
             ns.screenAlpha = 0;
             ns.animator.FinishAnimation += new EventHandler((sender2, e2) => { ns.animating = false; });
            ns.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 0.5f });
-            game.screens.Add(ns);
+           game.AddScreen(ns);
            
         }
     }

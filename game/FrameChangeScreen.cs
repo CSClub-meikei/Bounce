@@ -43,6 +43,7 @@ namespace Bounce
 
             setUIcell(1, 1);
             label.text = parent.frame.getFrameName(parent.frameShape);
+            game.assist(2, true);
         }
         public override void update(float deltaTime)
         {
@@ -78,6 +79,7 @@ namespace Bounce
             gb.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.2f });
             gb.animator[1].start(GameObjectAnimator.SLIDE, new float[] { 2, 0, 720, -1, -1, 2, 2 });
             label.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.2f });
+            game.assist(2, false);
         }
     }
 }

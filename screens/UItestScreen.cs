@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Audio;
+using Bounce.socket;
+
 namespace Bounce
 {
     class UItestScreen:Screen
@@ -14,6 +16,8 @@ namespace Bounce
         GraphicalGameObject title,sq1,sq2,back;
         TextObject userNameLabel;
         float sqangle;
+        public bool enable = true;
+
 
         public UItestScreen(Game1 game, int sx = 0, int sy = 0) : base(game, sx, sy)
         {
@@ -27,16 +31,26 @@ namespace Bounce
             }
             //back = new GraphicalGameObject(game, this, Assets.graphics.ui.back_title, 0, 0, 1280, 1280);
             //back.alpha = 0.3f;
-            setUIcell(1,2);
-            Controls[0,0]=(new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_play, 370, 400, 540, 120));
-            Controls[0,1]=(new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_settings, 370, 550, 540, 120));
+            setUIcell(1,3);
+            Controls[0,0]=(new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_play, 370, 380, 540, 120));
+            Controls[0, 1] = (new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_settings, 370, 530, 540, 120));
+            Controls[0, 2] = (new WideButton(game, this, Assets.graphics.ui.wideButtonBack, Assets.graphics.ui.label_exit, 800, 650, 270, 70));
             Controls[0, 0].Enter += new EventHandler(this.ClickPlay);
+            Controls[0, 1].Enter += new EventHandler(this.ClickSetting);
+            Controls[0, 2].Enter += new EventHandler((sender, e) =>
+              {
+                  if (Client.tcp != null) { Client.tcp.disConnect(); Client.tcp = null; }
+                  game.Exit();
+              });
             selectedItem = new Point(0,0);
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(Assets.bgm.bgm_title);   
+            MediaPlayer.Play(Assets.bgm.bgm_title);
+            game.assist(1, true);
+            game.assist(2, true);
         }
         public override void update(float deltaTime)
         {
+            if (!enable) return;
             base.update(deltaTime);
 
             title.update(deltaTime);
@@ -70,10 +84,17 @@ namespace Bounce
             Screen ns = new SelectGameScreen(game, 1280, 0);
             ns.animator.setDelay(1f);
             ns.animator.start(GameObjectAnimator.SLIDE, new float[] { 1, 0, 0, 0, -1, 5f, 5f });
-            ns.animator.FinishAnimation += new EventHandler((se, ee) => { game.screens.Remove(this); });
-            game.screens.Add(ns);
+            ns.animator.FinishAnimation += new EventHandler((se, ee) => { game.removeScreen(this); });
+           game.AddScreen(ns);
             game.screens[0].animator.setDelay(1f);
             game.screens[0].animator.start(GameObjectAnimator.SLIDE, new float[] { 1, -100, 0, 0, 0,1f, 1f });
+        }
+
+        public void ClickSetting(object sender,EventArgs e)
+        {
+            screenAlpha = 0.2f;
+            game.AddScreen(new SettingScreen(game,this));
+            enable = false;
         }
     }
 }

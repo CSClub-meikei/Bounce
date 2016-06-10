@@ -24,6 +24,7 @@ namespace Bounce
 
             Client.tcp.received += Tcp_received;
             setUIcell(1, 1);
+            game.assist(1, true);
         }
         public override void update(float deltaTime)
         {
@@ -102,11 +103,11 @@ namespace Bounce
                 Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,getSaveData"));
 
                 animator.FinishAnimation += new EventHandler((sender2, e2) => {
-                    game.screens.Remove(this);
+                    game.removeScreen(this);
                     Screen ns = new SplashScreen(game);
                     // ns.animator.setDelay(2f);
                     ns.animator.start(ScreenAnimator.fadeInOut, new float[] { 0, 1 });
-                    game.screens.Add(ns);
+                   game.AddScreen(ns);
                 });
                 animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });
 

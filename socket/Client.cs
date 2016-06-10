@@ -31,6 +31,7 @@ namespace Bounce.socket
                     if(sp[1]=="" || sp[1] == "null")
                     {
                         game.settingData = new SettingData();
+                        game.settingData.init(game);
                         game.settingData.BGM_volume = 1;
                         game.settingData.Effect_volume = 1;
                         game.settingData.Cleared = 0;
@@ -59,6 +60,7 @@ namespace Bounce.socket
                         XmlReader xr = XmlReader.Create(fileName);
                         //XMLファイルから読み込み、逆シリアル化する
                         game.settingData = (SettingData)serializer.ReadObject(xr);
+                        game.settingData.init(game);
                         //ファイルを閉じる
                         xr.Close();
                        // System.Windows.Forms.MessageBox.Show(game.settingData.BGM_volume.ToString());

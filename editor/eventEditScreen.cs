@@ -154,14 +154,16 @@ namespace Bounce.editor
             base.update(deltaTime);
             if (eventdataScreen != null)
             {
-                eventdataScreen.update(deltaTime);
                 eventdataScreen.X = X;
+                eventdataScreen.update(deltaTime);
+               
                // eventdataScreen.Y = Y;
             }
             if (special != null)
             {
-                special.update(deltaTime);
                 special.X = X;
+                special.update(deltaTime);
+                
                // special.Y = Y;
             }
             back.update(deltaTime);

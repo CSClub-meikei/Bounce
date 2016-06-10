@@ -42,7 +42,7 @@ namespace Bounce
             {
                 animator.FinishAnimation += new EventHandler((sender, e) =>
                   {
-                      game.screens.Remove(this);
+                      game.removeScreen(this);
                   });
                 animator = new ScreenAnimator(this, game);
                 animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });

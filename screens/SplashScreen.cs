@@ -25,8 +25,10 @@ namespace Bounce
             sp1.animator[0].FinishAnimation += new EventHandler((sender, e) => {  sp1.animator[1].setDelay(3); sp1.animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.5f }); });
             sp1.animator[1].FinishAnimation += new EventHandler((sender, e) => { sp2.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.5f }); });
             sp2.animator[0].FinishAnimation+=new EventHandler((sender,e) => { sp2.animator[1].setDelay(5); sp2.animator[1].start(GameObjectAnimator.fadeInOut, new float[] { 1, 0.5f }); });
-            sp2.animator[1].FinishAnimation += new EventHandler((sender, e) => { game.screens.Add(new BackScreen(game)); game.screens.Add(new UItestScreen(game)); game.screens.Remove(this); });
+            sp2.animator[1].FinishAnimation += new EventHandler((sender, e) => {game.AddScreen(new BackScreen(game));game.AddScreen(new UItestScreen(game)); game.removeScreen(this); });
             sp1.animator[0].start(GameObjectAnimator.fadeInOut, new float[] { 0, 0.5f });
+            game.assist(1, false);
+            game.assist(2, false);
         }
         public override void update(float deltaTime)
         {

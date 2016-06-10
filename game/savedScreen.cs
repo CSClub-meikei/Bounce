@@ -19,7 +19,7 @@ namespace Bounce
             title.animator[0].start(GameObjectAnimator.GLOW, new float[] { 1, 0.5F, 0.5F, 0F, 0.4F, 0.0F, 1F });
             title.animator[1].start(GameObjectAnimator.FLASH, new float[] { 0.2F, 0.2F, 1F, 0.0F, 0 });
             animator.setDelay(2f);
-            //animator.FinishAnimation += new EventHandler((sender, e) => { game.screens.Remove(this); });
+            //animator.FinishAnimation += new EventHandler((sender, e) => { game.removeScreen(this); });
             animator.start(ScreenAnimator.fadeInOut, new float[] { 1, 0.5f });
             setUIcell(1, 1);
         }

@@ -51,6 +51,8 @@ namespace Bounce
             this.levelIndex = levelIndex;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(Assets.bgm.bgm1);
+            game.assist(1, false);
+            game.assist(2, false);
         }
         public override void update(float deltaTime)
         {
@@ -85,8 +87,12 @@ namespace Bounce
                 time += deltaTime / 1000;
                 timeLabel.text = "Time : " + Math.Round(time,2, MidpointRounding.AwayFromZero).ToString();
             }
-            
 
+            if (Input.onKeyDown(Keys.Escape) && world.Status==worldScreen.RUNNING)
+            {
+                world.Status = worldScreen.PAUSE;
+                game.AddScreen(new pauseScreen(game,this));
+            }
            
         }
         public override void Draw(SpriteBatch batch)

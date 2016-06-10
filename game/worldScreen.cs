@@ -133,7 +133,7 @@ namespace Bounce
             base.update(deltaTime);
             if (Input.onKeyDown(Keys.P) && testPlay)
             {
-                // game.screens.Remove(this);
+                // game.removeScreen(this);
                 stopTest();
             }
             if (savedScreen != null) savedScreen.update(deltaTime);

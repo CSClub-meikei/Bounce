@@ -367,3 +367,10 @@ D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\r-3.png
 D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\r.png
 D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\button-endlessmode.png
 D:\Documents\GitHub\bounce\bin\Windows\x86\Release\Content\graphics\ui\button-storymode.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\assist-space.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\assist-yazirushi.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\slideBack.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\slideCircle.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\button-back.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\label-exit.png
+D:\Documents\GitHub\Bounce\bin\Windows\x86\Release\Content\graphics\ui\label-toTitle.png

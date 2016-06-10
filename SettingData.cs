@@ -18,13 +18,26 @@ namespace Bounce
         public int  userid;
 
         public int Cleared;
+        Game1 game;
 
-
+        public  void init(Game1 game)
+        {
+            this.game = game;
+        }
       
         public void save()
         {
+            string fileName;
+            if (game.enableNet)
+            {
+               fileName = @"tmp.tmp";
+            }
+            else
+            {
+                fileName = @"saveData.save";
+            }
             //保存先のファイル名
-            string fileName = @"tmp.tmp";
+            
 
             //保存するクラス(TestClass)のインスタンスを作成
             SettingData obj = this;
@@ -51,9 +64,13 @@ namespace Bounce
             //閉じる
             sr.Close();
 
-            Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,setSaveData," + s));
+            if (game.enableNet)
+            {
+                Client.tcp.send(new packetData(Client.tcp.id, userData.userid.ToString(), @const.request, "bounce,setSaveData," + s));
+            }
+           
 
         }
-
+       
     }
 }
